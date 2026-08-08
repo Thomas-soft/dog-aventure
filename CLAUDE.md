@@ -11,6 +11,11 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - `npm run build` — seule vérification du projet (pas de suite de tests) : toujours la lancer après une série de modifications
 - `npm run lint` — ESLint
 
+## Préview client (GitHub Pages)
+
+- URL à partager au client : **https://thomas-soft.github.io/dog-aventure/** — redéployée à chaque push sur `main` (`.github/workflows/deploy-pages.yml`).
+- Le build préview est activé par `GITHUB_PAGES=true` : export statique + basePath `/dog-aventure` + loader d'images custom (`lib/image-loader.ts`) + `noindex`. Ces options ne doivent jamais servir pour la mise en ligne réelle (qui se fera sur un hébergeur Next.js avec le domaine du client).
+
 ## Règle d'or : le contenu vit dans `content/site.config.ts`
 
 - Tout texte, prix, ville, avis ou image éditable passe par `content/site.config.ts` (types dans `content/types.ts`). Ne jamais coder de contenu en dur dans les composants.
