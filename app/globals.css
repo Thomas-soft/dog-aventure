@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ════════════════════════════════════════════════════════════════════
+   TOKENS DE MARQUE — SEUL BLOC À ÉDITER POUR REHABILLER LE TEMPLATE
+   (mêmes slots sémantiques que les templates « Braise » et « Comptoir » ;
+   les fonts se changent dans app/layout.tsx — 2 lignes next/font)
+   ════════════════════════════════════════════════════════════════════ */
+:root {
+  --ink: #233a1b;        /* vert forêt foncé (flyer) — texte, sections inversées */
+  --surface: #fcfaf2;    /* cartes, blanc cassé */
+  --line: #e2dbc5;       /* bordures subtiles */
+  --cream: #f4efe4;      /* fond crème du flyer */
+  --smoke: #6e6c55;      /* texte secondaire kaki */
+  --flame: #55771e;      /* ACCENT fonctionnel : vert feuille assombri (AA sur crème) */
+  --flame-soft: #446014; /* hover de l'accent */
+  --leaf: #7ca430;       /* vert vif du flyer — décoratif uniquement (icônes, sticker, sur fond ink) */
+  --radius: 1rem;
+
+  /* ── mapping shadcn : suit automatiquement les tokens ci-dessus ── */
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--flame);
+  --primary-foreground: #fbf7ec;
+  --secondary: #eae3d0;
+  --secondary-foreground: var(--ink);
+  --muted: #eae3d0;
+  --muted-foreground: var(--smoke);
+  --accent: #eae3d0;
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.2 27);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--flame);
+  --chart-1: var(--flame);
+  --chart-2: var(--flame-soft);
+  --chart-3: var(--ink);
+  --chart-4: var(--smoke);
+  --chart-5: var(--line);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--flame);
+  --sidebar-primary-foreground: #fbf7ec;
+  --sidebar-accent: #eae3d0;
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--flame);
+}
+
+@theme inline {
+  /* alias marque → utilities bg-cream, text-ink, text-flame, border-line… */
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-cream: var(--cream);
+  --color-smoke: var(--smoke);
+  --color-flame: var(--flame);
+  --color-flame-soft: var(--flame-soft);
+  --color-leaf: var(--leaf);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-anton);
+  --font-script: var(--font-caveat);
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-heading: var(--font-anton);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ── animations des effets (components/fx) ── */
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-spin-slow: spin-slow 22s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap, 1rem)));
+    }
+  }
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  ::selection {
+    background: var(--flame);
+    color: #fbf7ec;
+  }
+  section[id] {
+    scroll-margin-top: 4.5rem;
+  }
+}
+
+/* grain papier — désactivable en supprimant ce bloc */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}

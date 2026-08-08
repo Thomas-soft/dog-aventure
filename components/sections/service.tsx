@@ -1,0 +1,155 @@
+import type { ElementType } from "react";
+import {
+  Droplets,
+  Home,
+  MessageCircle,
+  PawPrint,
+  Phone,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import { site } from "@/content/site.config";
+import type { FeatureIcon } from "@/content/types";
+import { SectionHeader } from "@/components/sections/section-header";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { Button } from "@/components/ui/button";
+import { cn, formatPrice } from "@/lib/utils";
+
+const FEATURE_ICONS: Record<FeatureIcon, ElementType> = {
+  "paw-print": PawPrint,
+  zap: Zap,
+  droplets: Droplets,
+  home: Home,
+};
+
+export function ServiceSection() {
+  return (
+    <section id="service" className="py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeader
+          overline="La promenade"
+          title={
+            <>
+              Une heure rien que{" "}
+              <span className="font-script normal-case text-flame">
+                pour lui
+              </span>
+            </>
+          }
+          sub="Pas de garderie, pas de meute : une promenade individuelle, adaptée au rythme de votre chien, de votre porte à votre porte."
+        />
+
+        <div className="grid gap-8 lg:grid-cols-5 lg:gap-12">
+          {/* Offres — une carte par service, la 2ᵉ offre s'ajoutera ici toute seule */}
+          <Stagger stagger={0.12} className="flex flex-col gap-6 lg:col-span-3">
+            {site.services.map((service) => (
+              <StaggerItem key={service.id}>
+                <article
+                  className={cn(
+                    "flex h-full flex-col gap-6 rounded-3xl border bg-surface p-7 md:p-9",
+                    service.highlight ? "border-flame shadow-sm" : "border-line",
+                  )}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-display text-3xl uppercase tracking-tight md:text-4xl">
+                        {service.name}
+                      </h3>
+                      {service.badge && (
+                        <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-flame/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-flame">
+                          <ShieldCheck className="size-3.5" aria-hidden />
+                          {service.badge}
+                        </p>
+                      )}
+                    </div>
+                    <p className="flex flex-col items-end">
+                      <span className="font-display text-5xl text-flame">
+                        {formatPrice(service.price)}
+                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-wide text-smoke">
+                        {service.duration} de promenade
+                      </span>
+                    </p>
+                  </div>
+
+                  <p className="leading-relaxed text-smoke">{service.desc}</p>
+
+                  <ul className="grid gap-3 sm:grid-cols-2">
+                    {service.features.map((feature) => {
+                      const Icon = FEATURE_ICONS[feature.icon];
+                      return (
+                        <li
+                          key={feature.label}
+                          className="flex items-center gap-3 rounded-xl border border-line bg-cream px-4 py-3"
+                        >
+                          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-flame text-primary-foreground">
+                            <Icon className="size-4.5" aria-hidden />
+                          </span>
+                          <span className="text-sm font-semibold text-ink/85">
+                            {feature.label}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <div className="mt-auto flex flex-wrap gap-3 pt-2">
+                    <Button
+                      size="lg"
+                      nativeButton={false}
+                      render={<a href={site.phoneHref} />}
+                      className="h-11 rounded-full px-6 text-base font-semibold"
+                    >
+                      <Phone data-icon="inline-start" />
+                      Réserver au {site.phone}
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      nativeButton={false}
+                      render={<a href={site.smsHref} />}
+                      className="h-11 rounded-full border-ink bg-transparent px-6 text-base hover:border-flame hover:bg-flame hover:text-primary-foreground"
+                    >
+                      <MessageCircle data-icon="inline-start" />
+                      Par SMS
+                    </Button>
+                  </div>
+                </article>
+              </StaggerItem>
+            ))}
+          </Stagger>
+
+          {/* Comment ça marche */}
+          <Reveal delay={0.15} className="lg:col-span-2">
+            <div className="flex h-full flex-col gap-6 rounded-3xl border border-line bg-cream p-7 md:p-8">
+              <h3 className="font-display text-2xl uppercase tracking-tight">
+                Comment ça marche&nbsp;?
+              </h3>
+              <ol className="flex flex-col gap-6">
+                {site.steps.map((step, i) => (
+                  <li key={step.title} className="flex gap-4">
+                    <span
+                      className="grid size-9 shrink-0 place-items-center rounded-full bg-ink font-display text-lg text-cream"
+                      aria-hidden
+                    >
+                      {i + 1}
+                    </span>
+                    <div>
+                      <p className="font-bold text-ink">{step.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-smoke">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-auto font-script text-2xl leading-snug text-flame">
+                {site.slogan}
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
