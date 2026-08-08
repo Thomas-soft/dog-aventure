@@ -16,12 +16,15 @@ const display = Anton({
 const body = Nunito_Sans({
   variable: "--font-nunito",
   subsets: ["latin"],
+  // Graisses réellement utilisées uniquement : la variable complète pèse 75 Ko
+  weight: ["400", "500", "600", "700"],
   preload: false,
 });
 
 const script = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
+  weight: "400",
   preload: false,
 });
 
