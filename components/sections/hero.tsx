@@ -106,8 +106,7 @@ export function Hero() {
                 src={site.images.hero}
                 alt={site.images.heroAlt}
                 fill
-                loading="eager"
-                fetchPriority="high"
+                preload
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, calc(100vw - 3rem)"
               />
