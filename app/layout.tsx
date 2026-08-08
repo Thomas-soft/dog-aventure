@@ -10,14 +10,19 @@ const display = Anton({
   weight: "400",
 });
 
+/* preload: false — seule Anton (titres, 12 Ko) reste sur le chemin critique :
+   précharger les 3 polices (118 Ko) retardait l'image LCP sur mobile.
+   Le fallback ajusté de next/font évite tout layout shift pendant le swap. */
 const body = Nunito_Sans({
   variable: "--font-nunito",
   subsets: ["latin"],
+  preload: false,
 });
 
 const script = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
