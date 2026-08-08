@@ -109,7 +109,7 @@ export function Hero() {
                 loading="eager"
                 fetchPriority="high"
                 className="object-cover"
-                sizes="(min-width: 1024px) 45vw, 100vw"
+                sizes="(min-width: 1024px) 45vw, calc(100vw - 3rem)"
               />
             </div>
             <CircularSticker
