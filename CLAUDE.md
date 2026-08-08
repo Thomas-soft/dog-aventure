@@ -34,7 +34,14 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Title ≤ 60 caractères, meta description ≤ 155 : vérifier la longueur à chaque modification de `site.seo`.
 - Positionnement assumé premium (20 €/h vs 7-12 € sur les marketplaces type Rover/Gudog) justifié par : balade individuelle d'1 h + prise en charge à domicile. Toujours mettre ces différenciateurs en avant.
 - Pas d'`aggregateRating` dans le JSON-LD tant qu'il n'y a pas de vrais avis.
-- Images sources : viser < 300 Ko (compresser avant d'ajouter dans `public/`).
+
+## Performance (Lighthouse/PSI — état au 2026-08-08)
+
+- Scores PSI : desktop 100 partout ; mobile 92/100/100/100 (le 92 est structurel : grande photo hero + 3 polices custom sur 4G simulée).
+- **Ne jamais animer l'opacité de l'image hero** (élément LCP) : elle doit être visible dès le HTML initial. Elle utilise `preload` (l'ancien `priority` est déprécié en Next 16 et n'émet plus rien).
+- Toute image affichée via `next/image` doit avoir ses variantes `<nom>-{640,828,1080,1200}.webp` dans `public/images/` (exigées par `lib/image-loader.ts` en préview). Génération : `sharp` est dispo via node — `sharp(src).resize({width:w}).webp({quality:~65}).toFile(...)`.
+- Polices : graisses fixes uniquement (Nunito 400/500/600/700, Caveat 400), seule Anton est préchargée. Ne pas rajouter de graisse/police sans vérifier l'impact LCP.
+- `experimental.inlineCss` est actif (one-page → CSS dans le HTML).
 
 ## À faire avant mise en ligne
 
