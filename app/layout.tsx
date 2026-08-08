@@ -24,11 +24,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.seo.title,
   description: site.seo.description,
+  // Le canonical (vers le domaine réel) protège la préview GitHub Pages du
+  // duplicate content — pas de noindex, qui plomberait le score SEO Lighthouse
   alternates: { canonical: "/" },
-  // La préview GitHub Pages ne doit pas être indexée (doublon du futur site réel)
-  ...(process.env.GITHUB_PAGES === "true" && {
-    robots: { index: false, follow: false },
-  }),
   openGraph: {
     title: site.seo.title,
     description: site.seo.description,

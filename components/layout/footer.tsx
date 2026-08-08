@@ -100,7 +100,7 @@ export function Footer() {
         </p>
         <p>
           Site réalisé par{" "}
-          <a href="#" className="text-ink/70 underline-offset-4 hover:underline">
+          <a href="#" className="text-ink/70 underline underline-offset-4 hover:text-ink">
             Votre Agence
           </a>
         </p>

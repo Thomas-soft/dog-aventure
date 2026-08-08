@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { MessageCircle, PawPrint, Phone } from "lucide-react";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
-import { BlurFade } from "@/components/fx/blur-fade";
 import { CircularSticker } from "@/components/fx/circular-sticker";
 import { Button } from "@/components/ui/button";
 import { site } from "@/content/site.config";
@@ -95,7 +94,9 @@ export function Hero() {
         </Stagger>
 
         <div className="lg:col-span-6">
-          <BlurFade delay={0.35} direction="left" className="relative mr-4 sm:mr-0">
+          {/* Pas d'animation d'opacité ici : c'est l'élément LCP, il doit être
+              visible dès le HTML initial (sinon le rendu attend l'hydratation) */}
+          <div className="relative mr-4 sm:mr-0">
             <div
               className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border-2 border-flame"
               aria-hidden
@@ -105,7 +106,8 @@ export function Hero() {
                 src={site.images.hero}
                 alt={site.images.heroAlt}
                 fill
-                priority
+                loading="eager"
+                fetchPriority="high"
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
               />
@@ -115,7 +117,7 @@ export function Hero() {
               center={<PawPrint className="size-7 md:size-9" aria-hidden />}
               className="absolute -bottom-8 -left-2 sm:-left-6 md:-left-10"
             />
-          </BlurFade>
+          </div>
         </div>
       </div>
     </section>

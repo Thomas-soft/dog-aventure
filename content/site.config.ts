@@ -135,7 +135,7 @@ export const site: SiteConfig = {
   social: {},
 
   images: {
-    hero: "/images/hero.jpg",
+    hero: "/images/hero.webp",
     heroAlt: "Golden retriever en balade sur un chemin forestier",
   },
 
