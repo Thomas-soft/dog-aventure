@@ -9,7 +9,8 @@ import { site } from "@/content/site.config";
 import { formatPrice } from "@/lib/utils";
 
 export function Hero() {
-  const balade = site.services[0];
+  // Le prix d'appel, pas services[0] : l'ordre des offres reste libre
+  const fromPrice = Math.min(...site.services.map((s) => s.price));
 
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:px-6 md:pb-24 md:pt-36">
@@ -39,13 +40,18 @@ export function Hero() {
 
           <StaggerItem>
             <div className="flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-3 shadow-sm">
-              <span className="font-display text-4xl text-flame sm:text-5xl">
-                {formatPrice(balade.price)}
+              <span className="flex flex-col items-start">
+                <span className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-smoke">
+                  À partir de
+                </span>
+                <span className="font-display text-4xl leading-none text-flame sm:text-5xl">
+                  {formatPrice(fromPrice)}
+                </span>
               </span>
               <span className="text-sm font-semibold leading-snug text-ink/80">
                 la balade individuelle
                 <br />
-                d&rsquo;{balade.duration} — à domicile
+                à domicile
               </span>
             </div>
           </StaggerItem>

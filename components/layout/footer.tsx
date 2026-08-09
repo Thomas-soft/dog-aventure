@@ -1,13 +1,17 @@
+import Link from "next/link";
 import { site } from "@/content/site.config";
 import { Separator } from "@/components/ui/separator";
 import { asset } from "@/lib/utils";
 
+/* Ancres absolues via asset() — même raison que dans la barre de navigation :
+   le pied de page est aussi rendu sur /mentions-legales, et un next/link vers
+   « /#service » change l'URL sans défiler. */
 const NAV = [
-  { label: "La promenade", href: "#service" },
-  { label: "Les chiens", href: "#chiens" },
-  { label: "Où j'interviens", href: "#zones" },
-  { label: "Avis", href: "#avis" },
-  { label: "Contact", href: "#contact" },
+  { label: "La promenade", href: asset("/#service") },
+  { label: "Les chiens", href: asset("/#chiens") },
+  { label: "Où j'interviens", href: asset("/#zones") },
+  { label: "Avis", href: asset("/#avis") },
+  { label: "Contact", href: asset("/#contact") },
 ];
 
 export function Footer() {
@@ -28,7 +32,7 @@ export function Footer() {
           <img
             src={asset(site.images.logo)}
             alt={site.images.logoAlt}
-            width={103}
+            width={111}
             height={96}
             loading="lazy"
             className="h-24 w-auto"
@@ -99,10 +103,16 @@ export function Footer() {
 
       <Separator className="bg-line" />
       {/* pb-24 mobile : laisse la place à la barre d'appel fixe */}
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 pb-24 pt-6 text-xs text-smoke sm:flex-row sm:px-6 md:pb-6">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 pb-24 pt-6 text-xs text-smoke sm:flex-row sm:gap-6 sm:px-6 md:pb-6">
         <p>
-          © {new Date().getFullYear()} {site.name} — Tous droits réservés.
+          © {new Date().getFullYear()} {site.name} — SIRET {site.siret}
         </p>
+        <Link
+          href="/mentions-legales"
+          className="underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Mentions légales
+        </Link>
         <p>
           Site réalisé par{" "}
           <a href="#" className="text-ink/70 underline underline-offset-4 hover:text-ink">

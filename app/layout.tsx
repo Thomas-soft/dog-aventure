@@ -54,7 +54,14 @@ const jsonLd = {
   image: `${site.url}${site.seo.ogImage}`,
   description: site.seo.description,
   telephone: site.phoneHref.replace("tel:", ""),
-  priceRange: "€",
+  priceRange: "14,90 € - 20 €",
+  // PropertyValue plutôt que taxID : le SIRET identifie l'établissement, ce
+  // n'est pas un identifiant fiscal — nommer le référentiel lève l'ambiguïté
+  identifier: {
+    "@type": "PropertyValue",
+    name: "SIRET",
+    value: site.siret.replace(/\s/g, ""),
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: site.base.city,

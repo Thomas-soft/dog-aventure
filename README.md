@@ -1,10 +1,10 @@
 # Dog Aventure — one-page « Promenade de chiens » (Louvres, 95380)
 
 Site vitrine one-page pour un promeneur de chiens solo : balade individuelle
-d'1 heure avec prise en charge et retour à domicile, **20 €**. Pensé pour du
-trafic Facebook Ads mobile (prix + appel above the fold, barre d'appel fixe)
-et pour appuyer une fiche Google (villes desservies partout, JSON-LD
-`LocalBusiness` avec `areaServed`).
+avec prise en charge et retour à domicile, **à partir de 14,90 €** (25-30 min ;
+1 heure à 20 €). Pensé pour du trafic Facebook Ads mobile (prix + appel above
+the fold, barre d'appel fixe) et pour appuyer une fiche Google (villes
+desservies partout, JSON-LD `LocalBusiness` avec `areaServed`).
 
 Next.js · TypeScript · Tailwind CSS v4 · shadcn/ui (base-ui) · Motion. Même
 architecture rebrandable que la famille de templates restaurants
@@ -24,10 +24,14 @@ Tout le site rend depuis ce fichier typé (`content/types.ts`) :
 - **`towns`** : les villes desservies — affichées dans le marquee sous le
   hero, la section `#zones`, le footer et le JSON-LD `areaServed`. C'est
   l'argument n°1 du client : le prospect doit voir sa ville.
-- **`services`** : un tableau — une seule offre pour l'instant (« La balade
-  d'1 heure », 20 €). Pour lancer l'offre « Dog Aventure » (2 h en forêt,
-  29,90 €), **ajouter une entrée** ici : carte, JSON-LD et prix suivent tout
-  seuls (`formatPrice` gère les décimales à la française).
+- **`services`** : un tableau — « La petite balade » (25-30 min, 14,90 €) et
+  « La balade d'1 heure » (20 €, `highlight: true`). Pour lancer l'offre
+  « Dog Aventure » (2 h en forêt, 29,90 €), **ajouter une entrée** ici : carte,
+  JSON-LD et prix suivent tout seuls (`formatPrice` gère les décimales à la
+  française). Le hero affiche `Math.min(services)` derrière un « à partir de ».
+- **`siret` et `legal`** : la barre du bas du footer et la page
+  `/mentions-legales`. Tout champ de `legal` laissé vide s'affiche
+  `[à compléter]` sur la page — volontairement visible.
 - **`breeds`** : les races du secteur (Golden, Berger Australien, Staffy,
   Caniche) — photos + notes de la section `#chiens`.
 - **`reviews`** : ⚠️ **avis de démonstration** — à remplacer par les vrais
@@ -49,8 +53,10 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
   uniquement : icônes, sticker, accents sur fond sombre).
 - **Typos** : `app/layout.tsx` — Anton (titres capitales), Nunito Sans
   (texte), Caveat (`font-script`, les accroches manuscrites).
-- **Logo** : logo texte (`TreePine` + nom) en attendant le logo définitif du
-  client — navbar + footer.
+- **Logo** : vectorisé depuis la source client par `scripts/trace-logo.js` —
+  marque seule dans la navbar, logo complet dans le footer, favicon
+  `app/icon.svg`. **Les trois SVG sont générés : ne pas les éditer à la main**
+  (voir la section « Logo » de `CLAUDE.md`).
 
 ## À faire avant mise en production
 
@@ -59,8 +65,10 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
 - [ ] Remplacer les photos placeholders de `public/images/` (hero, breeds/,
   og.jpg 1200 × 630) par de vraies photos client si possible.
 - [ ] Vrais avis Google à la place des avis de démonstration.
-- [ ] Logo définitif du client (navbar, footer, `app/icon.svg`).
+- [x] Logo définitif du client (navbar, footer, `app/icon.svg`).
 - [ ] Liens Facebook/Instagram (`social` dans la config) — il fera de la pub
   Facebook, la page existera.
-- [ ] Mentions légales / SIREN dans le footer.
+- [x] Mentions légales / SIRET dans le footer — page `/mentions-legales`.
+- [ ] Compléter `site.legal` : `publisher`, `address`, `email`, `mediator`, et
+  l'hébergeur définitif à la place de GitHub Pages.
 - [ ] Plus tard : ajouter l'offre « Dog Aventure 2 h » dans `services`.

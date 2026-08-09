@@ -7,11 +7,18 @@ import { Button } from "@/components/ui/button";
 import { site } from "@/content/site.config";
 import { asset, cn } from "@/lib/utils";
 
+/* Ancres absolues, parce que la barre est aussi rendue sur /mentions-legales
+   où un « #service » nu ne mènerait nulle part. <a> et non next/link : un
+   Link vers « /#service » depuis l'accueil change l'URL sans défiler
+   (vérifié au navigateur). Avec un <a>, seul le fragment diffère de l'URL
+   courante — le navigateur fait un saut d'ancre natif, donc doux via le
+   `scroll-smooth` du CSS — et depuis la page légale c'est une vraie
+   navigation. asset() ajoute le basePath, que Next ne met pas ici. */
 const NAV = [
-  { label: "La promenade", href: "#service" },
-  { label: "Les chiens", href: "#chiens" },
-  { label: "Où j'interviens", href: "#zones" },
-  { label: "Avis", href: "#avis" },
+  { label: "La promenade", href: asset("/#service") },
+  { label: "Les chiens", href: asset("/#chiens") },
+  { label: "Où j'interviens", href: asset("/#zones") },
+  { label: "Avis", href: asset("/#avis") },
 ];
 
 export function Navbar() {
@@ -38,18 +45,22 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <a href="#" className="flex items-center gap-2.5">
+        {/* « /# » plutôt que « / » : depuis l'accueil, seul le fragment change
+            et le navigateur remonte en haut, comme avant. Depuis la page
+            légale, c'est un retour à l'accueil. */}
+        <a href={asset("/#")} className="flex items-center gap-2.5">
           {/* Marque seule : à 40 px, le texte en arc du logo complet ne serait
               qu'un anneau de taches. alt vide — le nom est déjà dans le texte
               à côté. Fichier plutôt qu'inline : la barre étant un composant
-              client, un SVG inline pèserait deux fois (HTML + bundle JS). */}
+              client, un SVG inline pèserait deux fois (HTML + bundle JS).
+              h-10 w-auto et non size-10 : la marque n'est pas carrée (1,243). */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={asset(site.images.logoMark)}
             alt=""
-            width={40}
+            width={50}
             height={40}
-            className="size-10 shrink-0"
+            className="h-10 w-auto shrink-0"
           />
           <span className="flex flex-col">
             <span className="font-display text-lg uppercase leading-none tracking-wide">
@@ -125,7 +136,7 @@ export function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href={asset("/#contact")}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink/70 transition-colors hover:bg-surface hover:text-ink"
               >

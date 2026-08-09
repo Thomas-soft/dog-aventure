@@ -12,13 +12,24 @@ export const site: SiteConfig = {
   subSlogan: "Simple, locale & de confiance",
   tagline: "Moins de temps pour vous, plus de bonheur pour votre chien. ♡",
   description:
-    "Je viens chercher votre chien chez vous pour une promenade individuelle d'1 heure, et je le raccompagne à votre domicile — dépensé, hydraté et heureux.",
+    "Je viens chercher votre chien chez vous pour une promenade individuelle — 30 minutes ou 1 heure — et je le raccompagne à votre domicile, dépensé, hydraté et heureux.",
 
   phone: "07 45 37 50 80",
   phoneHref: "tel:+33745375080",
   smsHref: "sms:+33745375080",
 
   base: { city: "Louvres", zip: "95380", region: "Val-d'Oise" },
+
+  siret: "988 412 136 00018",
+  legal: {
+    publisher: "", // ⚠️ à demander au client : nom et prénom
+    address: "", // ⚠️ à demander au client : adresse du siège
+    email: "", // ⚠️ à demander au client
+    // ⚠️ vrai à l'heure de la préview — à changer pour l'hébergeur définitif
+    host: "GitHub, Inc. (GitHub Pages)",
+    hostAddress: "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA",
+    mediator: "", // ⚠️ à demander au client : nom et site du médiateur souscrit
+  },
   towns: [
     "Louvres",
     "Saint-Witz",
@@ -39,6 +50,20 @@ export const site: SiteConfig = {
   ],
 
   services: [
+    /* La petite balade d'abord : c'est le prix d'appel, et il porte le
+       « à partir de 14,90 € » du hero. La balade d'1 h garde `highlight`
+       et reste la meilleure valeur (20 €/h contre 29,80 €/h ici). */
+    {
+      id: "balade-30min",
+      name: "La petite balade",
+      duration: "25 à 30 min",
+      price: 14.9,
+      desc: "La sortie qui sauve une journée serrée : je passe le prendre, il se dégourdit les pattes et fait ses besoins, puis je le raccompagne chez vous. Idéale pour les chiots, les chiens âgés ou une pause en milieu de journée.",
+      features: [
+        { icon: "paw-print", label: "Promenade individuelle" },
+        { icon: "home", label: "Aller et retour à votre domicile" },
+      ],
+    },
     {
       id: "balade-1h",
       name: "La balade d'1 heure",
@@ -68,7 +93,7 @@ export const site: SiteConfig = {
       desc: "Prise en charge directement chez vous, à l'heure convenue — vous n'avez rien à organiser.",
     },
     {
-      title: "1 heure de balade, puis retour",
+      title: "La balade, puis le retour",
       desc: "Il se dépense, boit, profite — et je le raccompagne à la maison, heureux.",
     },
   ],
@@ -148,9 +173,9 @@ export const site: SiteConfig = {
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)
     title: "Promeneur de chien à Louvres & alentours | Dog Aventure",
-    // 147 caractères — la limite d'affichage est ~155-160
+    // 149 caractères — la limite d'affichage est ~155-160
     description:
-      "Promeneur de chien à Louvres (95) et alentours : balade individuelle d'1 h, prise en charge et retour à domicile, 20 €. Réservez au 07 45 37 50 80.",
+      "Promeneur de chien à Louvres (95) et alentours : balade individuelle, prise en charge et retour à domicile, à partir de 14,90 €. Tél. 07 45 37 50 80.",
     ogImage: "/images/og.jpg",
   },
 };

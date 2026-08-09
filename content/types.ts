@@ -59,6 +59,22 @@ export interface SiteConfig {
   smsHref: string;
   /** Ville d'attache — affichée « Basé à … » et utilisée dans le JSON-LD */
   base: { city: string; zip: string; region: string };
+  /** SIRET, groupé 3-3-3-5 — pied de page, mentions légales et JSON-LD */
+  siret: string;
+  /** Mentions légales (LCEN art. 6-III). Un champ vide s'affiche
+   *  « [à compléter] » sur /mentions-legales — impossible à oublier. */
+  legal: {
+    /** Nom et prénom du responsable de la publication */
+    publisher: string;
+    /** Adresse du siège de l'activité */
+    address: string;
+    email: string;
+    host: string;
+    hostAddress: string;
+    /** Médiateur de la consommation — obligatoire pour un prestataire B2C
+     *  (art. L612-1 du Code de la consommation) */
+    mediator: string;
+  };
   /** Villes desservies, ordre d'affichage (marquee, section zones, footer, areaServed) */
   towns: string[];
   /** Suffixe après la liste (ex : "et alentours") */

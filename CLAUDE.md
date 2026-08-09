@@ -34,7 +34,9 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 
 - Mot-clé principal : « promeneur de chien » + ville (validé par analyse des SERPs — c'est le terme utilisé par tous les concurrents qui rankent).
 - Title ≤ 60 caractères, meta description ≤ 155 : vérifier la longueur à chaque modification de `site.seo`.
-- Positionnement assumé premium (20 €/h vs 7-12 € sur les marketplaces type Rover/Gudog) justifié par : balade individuelle d'1 h + prise en charge à domicile. Toujours mettre ces différenciateurs en avant.
+- Positionnement assumé premium (20 €/h vs 7-12 € sur les marketplaces type Rover/Gudog) justifié par : balade individuelle + prise en charge à domicile. Toujours mettre ces différenciateurs en avant.
+- **Échelle de prix (2026-08-09)** : « La petite balade » 25-30 min à 14,90 € (soit 29,80 €/h) et « La balade d'1 heure » à 20 €. La courte est un prix d'appel — elle sert le « à partir de 14,90 € » du hero et de la meta description ; l'heure reste la meilleure valeur et garde `highlight: true`. Ne pas inverser cette hiérarchie.
+- Le hero lit `Math.min(services)`, plus `services[0]` : l'ordre du tableau `services` n'engage que l'ordre des cartes.
 - Pas d'`aggregateRating` dans le JSON-LD tant qu'il n'y a pas de vrais avis.
 
 ## Performance (Lighthouse/PSI — état au 2026-08-08)
@@ -45,18 +47,30 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Polices : graisses fixes uniquement (Nunito 400/500/600/700, Caveat 400), seule Anton est préchargée. Ne pas rajouter de graisse/police sans vérifier l'impact LCP.
 - `experimental.inlineCss` est actif (one-page → CSS dans le HTML).
 
-## Logo (2026-08-09)
+## Logo (2026-08-09, source remplacée le même jour)
 
 - Trois assets, tous générés par `scripts/trace-logo.js` — **ne jamais les éditer à la main** :
   `public/images/logo.svg` (complet, footer), `public/images/logo-mark.svg` (marque seule, barre de navigation), `app/icon.svg` (favicon).
-- Le client n'a fourni qu'une capture d'écran (`scripts/logo-source.jpg`) où le logo mesure 160×149 px. Le script le vectorise ; le résultat est net à toute taille, mais les contours restent légèrement irréguliers. **Redemander le fichier vectoriel d'origine** et relancer le script reste la bonne fin de l'histoire.
+- Source : `scripts/logo-source.jpg`, **1254×1254 px**, le dessin y occupe 1024×881 px **d'un seul vert `#327E1C`**. Elle remplace la première capture d'écran où le logo ne faisait que 160×149 px et mêlait deux verts ; toute la machinerie de séparation colorimétrique (profondeur au fond, germes, BFS) a disparu du script avec elle — un seuil de couverture suffit désormais.
+- Relancer : `npm i --no-save potrace && node scripts/trace-logo.js`. Le script cadre tout seul sur le dessin (`contentBox`) — pas de constante de crop à ajuster si la source change.
+- Deux tris purement géométriques dans le script : `RING_R` (340 px source) sépare les onze lettres, dont le centre est à r ≥ 387, des morceaux du personnage, tous à r ≤ 307 ; `removeGroundLine()` retire le trait de sol de la **marque seule** (avec lui, la marque fait 1,24 de ratio et à 40 px le bandeau mange toute la largeur).
+- Le favicon est retracé à part sur un masque réduit à 200 px avec une tolérance large : 5,9 Ko au lieu de 15-20 Ko, pour un rendu identique à 32 px.
+- Ratios à respecter côté composants : logo complet **1,160**, marque **1,243**. La marque n'est **pas carrée** — `h-10 w-auto` dans la barre, jamais `size-10`.
 - Marque seule dans la barre de navigation, logo complet dans le footer : à 40 px, le texte en arc n'est qu'un anneau de taches.
 - Servis en `<img>` (via `asset()`), pas en SVG inline ni en `next/image` : l'optimiseur Next refuse les SVG, et un SVG inline dans la barre — composant client — pèserait deux fois, dans le HTML **et** dans le bundle JS. Mesuré : +5,9 Ko en fichier contre +12,5 Ko en inline.
+- Le fichier vectoriel d'origine (SVG/AI/PDF) reste préférable, mais ce n'est plus un problème pour le web : à 1024 px de source, le tracé est propre. C'est pour l'impression (flyer, marquage véhicule) qu'il faudra le demander.
+
+## Mentions légales (2026-08-09)
+
+- Page `/mentions-legales` (`app/mentions-legales/page.tsx`), liée depuis la barre du bas du footer. SIRET affiché aussi dans cette barre et repris dans le JSON-LD (`identifier` en `PropertyValue`, pas `taxID` : le SIRET identifie un établissement, pas une fiscalité).
+- Les champs vivent dans `site.legal`. **Un champ vide s'affiche `[à compléter]` en clair sur la page** — c'est voulu, pour qu'on ne l'oublie pas.
+- `Navbar` et `Footer` sont maintenant rendus sur deux pages : leurs ancres sont préfixées (`/#service`) et passent par `next/link`, seul moyen d'ajouter le basePath de la préview.
 
 ## À faire avant mise en ligne
 
 - [ ] Remplacer le domaine placeholder `https://dog-aventure.fr` par le domaine réel du client (`site.config.ts`, champ `url`)
 - [ ] Remplacer les avis de démonstration (`site.config.ts`, `reviews`) par de vrais avis Google — risque légal sinon
+- [ ] **Compléter `site.legal`** : `publisher` (nom et prénom), `address` (siège), `email`, `mediator` (médiateur de la consommation, obligatoire en B2C) — et remplacer `host`/`hostAddress`, aujourd'hui renseignés sur GitHub Pages, par l'hébergeur définitif
 - [ ] Créer la fiche Google Business Profile du client (levier SEO local n° 1, devant le site)
 - [ ] Brancher Google Search Console et soumettre `/sitemap.xml`
-- [ ] Demander au client le fichier vectoriel du logo (SVG/AI/PDF) et relancer `scripts/trace-logo.js`
+- [ ] Pour l'impression seulement : demander le fichier vectoriel du logo (SVG/AI/PDF) et relancer `scripts/trace-logo.js`

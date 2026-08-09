@@ -30,7 +30,7 @@ export function ServiceSection() {
           overline="La promenade"
           title={
             <>
-              Une heure rien que{" "}
+              Une balade rien que{" "}
               <span className="font-script normal-case text-flame">
                 pour lui
               </span>
@@ -93,6 +93,8 @@ export function ServiceSection() {
                     })}
                   </ul>
 
+                  {/* Le SMS n'est doublé que sur l'offre phare : deux cartes
+                      × deux boutons feraient quatre CTA identiques d'affilée */}
                   <div className="mt-auto flex flex-wrap gap-3 pt-2">
                     <Button
                       size="lg"
@@ -103,16 +105,18 @@ export function ServiceSection() {
                       <Phone data-icon="inline-start" />
                       Réserver au {site.phone}
                     </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      nativeButton={false}
-                      render={<a href={site.smsHref} />}
-                      className="h-11 rounded-full border-ink bg-transparent px-6 text-base hover:border-flame hover:bg-flame hover:text-primary-foreground"
-                    >
-                      <MessageCircle data-icon="inline-start" />
-                      Par SMS
-                    </Button>
+                    {service.highlight && (
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        nativeButton={false}
+                        render={<a href={site.smsHref} />}
+                        className="h-11 rounded-full border-ink bg-transparent px-6 text-base hover:border-flame hover:bg-flame hover:text-primary-foreground"
+                      >
+                        <MessageCircle data-icon="inline-start" />
+                        Par SMS
+                      </Button>
+                    )}
                   </div>
                 </article>
               </StaggerItem>
