@@ -97,6 +97,9 @@ export interface SiteConfig {
   images: {
     hero: string;
     heroAlt: string;
+    /** Seconde photo du hero, en médaillon dans le coin du cadre */
+    heroSecondary: string;
+    heroSecondaryAlt: string;
     /** Logo complet, texte en arc compris — footer */
     logo: string;
     logoAlt: string;

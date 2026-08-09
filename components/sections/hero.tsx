@@ -108,14 +108,34 @@ export function Hero() {
               aria-hidden
             />
             <div className="relative aspect-square max-h-[600px] w-full overflow-hidden rounded-[2rem] sm:aspect-[4/5]">
+              {/* object-position remonté sur mobile : la photo est cadrée en
+                  4/5, et un recadrage carré centré couperait le haut du
+                  crâne. À 13 % on garde le visage, on perd les pattes. */}
               <Image
                 src={site.images.hero}
                 alt={site.images.heroAlt}
                 fill
                 preload
-                className="object-cover"
-                sizes="(min-width: 1024px) 45vw, calc(100vw - 3rem)"
+                className="object-cover object-[50%_13%] sm:object-center"
+                /* Au-delà de 1216 px le conteneur max-w-6xl est atteint et la
+                   colonne se fige à 544 px : l'annoncer évite de charger une
+                   variante trop petite, donc floue à l'affichage. */
+                sizes="(min-width: 1216px) 544px, (min-width: 1024px) 45vw, calc(100vw - 3rem)"
               />
+              {/* Seconde photo en médaillon : elle montre la prestation là où
+                  la grande montre la personne. Chargée en lazy (défaut
+                  next/image) — elle ne doit pas concurrencer le LCP. */}
+              <div className="absolute bottom-3 right-3 w-[34%] max-w-[168px] overflow-hidden rounded-2xl shadow-lg ring-2 ring-cream/90 sm:bottom-4 sm:right-4">
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={site.images.heroSecondary}
+                    alt={site.images.heroSecondaryAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 640px) 168px, 34vw"
+                  />
+                </div>
+              </div>
             </div>
             <CircularSticker
               text="confiance ✦ bienveillance ✦ "
