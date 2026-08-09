@@ -115,9 +115,18 @@ export function Footer() {
         </Link>
         <p>
           Site réalisé par{" "}
-          <a href="#" className="text-ink/70 underline underline-offset-4 hover:text-ink">
-            Votre Agence
-          </a>
+          {site.credits.url ? (
+            <a
+              href={site.credits.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink/70 underline underline-offset-4 hover:text-ink"
+            >
+              {site.credits.label}
+            </a>
+          ) : (
+            <span className="text-ink/70">{site.credits.label}</span>
+          )}
         </p>
       </div>
     </footer>

@@ -39,6 +39,12 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Le hero lit `Math.min(services)`, plus `services[0]` : l'ordre du tableau `services` n'engage que l'ordre des cartes.
 - Pas d'`aggregateRating` dans le JSON-LD tant qu'il n'y a pas de vrais avis.
 
+### Placement du mot-clé dans les titres (audit du 2026-08-09)
+
+- Le mot-clé ne vivait dans **aucun** des six titres de la page : le h1 et les h2 sont de la copy chaleureuse (« Je le promène… », « Une balade rien que pour lui »). Il est désormais porté par le **h2 de la section `#zones`** — « Promeneur de chien à Louvres et alentours » — dont le sujet est précisément le secteur couvert. C'est le seul titre factuel du site, et c'est volontaire : les autres gardent la voix.
+- **Le h1 reste le slogan**, décision assumée : c'est l'accroche de la marque, il est en dur pour sa mise en forme sur deux lignes, et le title + la meta description portent déjà le mot-clé en tête. Ne pas le « SEO-iser » sans en reparler au client.
+- Le reste de l'audit était propre : un seul h1, hiérarchie sans saut, 7/7 images avec `alt` (le `alt=""` de la marque est correct, elle est décorative), JSON-LD `LocalBusiness` complet, canonical + Open Graph + Twitter sur les deux pages, `og.jpg` en 1200×630.
+
 ## Performance (Lighthouse/PSI — état au 2026-08-08)
 
 - Scores PSI : desktop 100 partout ; mobile 92/100/100/100 (le 92 est structurel : grande photo hero + 3 polices custom sur 4G simulée).
@@ -68,7 +74,8 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 
 ## À faire avant mise en ligne
 
-- [ ] Remplacer le domaine placeholder `https://dog-aventure.fr` par le domaine réel du client (`site.config.ts`, champ `url`)
+- [ ] **Domaine réel** à la place du placeholder `https://dog-aventure.fr` (`site.config.ts`, champ `url`). C'est le blocage n° 1 du référencement : tant qu'il est là, le canonical, le sitemap et le JSON-LD désignent un domaine qui ne sert pas le site. Une seule ligne à changer, tout le reste en découle.
+- [ ] **Crédit du réalisateur** (`site.config.ts`, champ `credits`) : mettre le vrai nom d'agence, et l'`url` pour que ce soit un lien. Sans `url`, c'est rendu en texte simple — c'était un `href="#"` mort, corrigé le 2026-08-09.
 - [ ] Remplacer les avis de démonstration (`site.config.ts`, `reviews`) par de vrais avis Google — risque légal sinon
 - [ ] **Compléter `site.legal`** : `publisher` (nom et prénom), `address` (siège), `email`, `mediator` (médiateur de la consommation, obligatoire en B2C) — et remplacer `host`/`hostAddress`, aujourd'hui renseignés sur GitHub Pages, par l'hébergeur définitif
 - [ ] Créer la fiche Google Business Profile du client (levier SEO local n° 1, devant le site)

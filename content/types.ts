@@ -91,6 +91,9 @@ export interface SiteConfig {
   breeds: Breed[];
   reviews: Review[];
   social: { instagram?: string; facebook?: string };
+  /** Crédit du réalisateur, barre du bas. Rendu en lien seulement si `url`
+   *  est renseignée — sinon en texte simple, pour éviter un href="#" mort. */
+  credits: { label: string; url?: string };
   images: {
     hero: string;
     heroAlt: string;

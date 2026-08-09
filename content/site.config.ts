@@ -159,6 +159,9 @@ export const site: SiteConfig = {
 
   social: {},
 
+  // ⚠️ à personnaliser : ton nom d'agence, et l'URL pour en faire un lien
+  credits: { label: "Votre Agence" },
+
   images: {
     hero: "/images/hero.webp",
     heroAlt: "Golden retriever en balade sur un chemin forestier",

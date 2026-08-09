@@ -11,12 +11,15 @@ export function ZonesSection() {
         <Reveal className="mb-12 flex max-w-2xl flex-col gap-4 md:mb-16">
           <span className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.28em] text-leaf">
             <span className="h-px w-8 bg-leaf" aria-hidden />
-            J&rsquo;interviens à
+            Où j&rsquo;interviens
           </span>
+          {/* Le seul titre porteur du mot-clé, et c'est sa place : la section
+              parle précisément du secteur couvert. Les autres titres gardent
+              la voix du site — voir la section SEO de CLAUDE.md. */}
           <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
-            Votre ville est{" "}
+            Promeneur de chien{" "}
             <span className="font-script normal-case text-leaf">
-              sur la liste
+              à {site.base.city} {site.townsSuffix}
             </span>
           </h2>
           <p className="leading-relaxed text-cream/60 md:text-lg">
