@@ -62,7 +62,7 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
 
 - [ ] `metadataBase` dans `app/layout.tsx` → vrai domaine (placeholder
   `https://dog-aventure.fr`).
-- [x] Photo du hero : vraies photos client (`scripts/prepare-photos.js`).
+- [x] Photo du hero : vraie photo client (`scripts/prepare-photos.js`).
 - [ ] Reste en photo de stock : `breeds/` (4 races) et `og.jpg` (1200 × 630,
   la vignette des partages Facebook — à refaire depuis la photo du client).
 - [ ] Vrais avis Google à la place des avis de démonstration.

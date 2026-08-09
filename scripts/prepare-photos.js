@@ -43,14 +43,12 @@ const PHOTOS = [
     reference: [878, 62],
     variants: { 640: [640, 58], 828: [700, 52], 1080: [878, 52], 1200: [878, 52] },
   },
-  {
-    name: "hero-balade",
-    src: "balade-chemin.jpg",
-    // 3/4 resserré : à la taille d'un médaillon, le cadrage large se perdait
-    crop: { left: 120, top: 423, width: 700, height: 933 },
-    reference: [560, 58],
-    variants: { 640: [400, 52], 828: [400, 52], 1080: [480, 54], 1200: [480, 54] },
-  },
+  /* scripts/photos/balade-chemin.jpg (le promeneur de dos sur un chemin) a
+     servi à un médaillon dans le coin du hero, retiré : deux photos de la
+     même personne, même tenue, même décor, l'une collée sur l'autre, ça
+     faisait collage. L'original est conservé pour la replacer ailleurs le
+     jour venu — recadrage qui marchait bien à petite taille :
+       crop { left: 120, top: 423, width: 700, height: 933 }  (3/4 resserré) */
 ];
 
 const encode = (photo, width, quality, file) =>

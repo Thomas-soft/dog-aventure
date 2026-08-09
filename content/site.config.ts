@@ -163,14 +163,11 @@ export const site: SiteConfig = {
   credits: { label: "Votre Agence" },
 
   images: {
-    // Vraies photos du client (août 2026) — recadrages et variantes générés
+    // Vraie photo du client (août 2026) — recadrage et variantes générés
     // par scripts/prepare-photos.js
     hero: "/images/hero.webp",
     heroAlt:
       "Le promeneur de Dog Aventure accroupi aux côtés d’un grand chien noir, pendant une balade",
-    heroSecondary: "/images/hero-balade.webp",
-    heroSecondaryAlt:
-      "Balade en laisse sur un chemin de campagne, le chien devant, détendu",
     // Générés par scripts/trace-logo.js — ne pas éditer à la main
     logo: "/images/logo.svg",
     logoAlt: "Dog Aventure — promeneur avec ses deux chiens en laisse",

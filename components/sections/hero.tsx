@@ -122,20 +122,6 @@ export function Hero() {
                    variante trop petite, donc floue à l'affichage. */
                 sizes="(min-width: 1216px) 544px, (min-width: 1024px) 45vw, calc(100vw - 3rem)"
               />
-              {/* Seconde photo en médaillon : elle montre la prestation là où
-                  la grande montre la personne. Chargée en lazy (défaut
-                  next/image) — elle ne doit pas concurrencer le LCP. */}
-              <div className="absolute bottom-3 right-3 w-[34%] max-w-[168px] overflow-hidden rounded-2xl shadow-lg ring-2 ring-cream/90 sm:bottom-4 sm:right-4">
-                <div className="relative aspect-[3/4]">
-                  <Image
-                    src={site.images.heroSecondary}
-                    alt={site.images.heroSecondaryAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 640px) 168px, 34vw"
-                  />
-                </div>
-              </div>
             </div>
             <CircularSticker
               text="confiance ✦ bienveillance ✦ "
