@@ -75,7 +75,15 @@ export interface SiteConfig {
   breeds: Breed[];
   reviews: Review[];
   social: { instagram?: string; facebook?: string };
-  images: { hero: string; heroAlt: string };
+  images: {
+    hero: string;
+    heroAlt: string;
+    /** Logo complet, texte en arc compris — footer */
+    logo: string;
+    logoAlt: string;
+    /** Le promeneur seul, sans le texte — barre de navigation et favicon */
+    logoMark: string;
+  };
   /** URL du site en production, sans slash final — metadataBase, canonical, sitemap, robots et JSON-LD */
   url: string;
   seo: { title: string; description: string; ogImage: string };

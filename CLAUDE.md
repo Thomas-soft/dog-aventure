@@ -14,7 +14,9 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 ## Préview client (GitHub Pages)
 
 - URL à partager au client : **https://thomas-soft.github.io/dog-aventure/** — redéployée à chaque push sur `main` (`.github/workflows/deploy-pages.yml`).
-- Le build préview est activé par `GITHUB_PAGES=true` : export statique + basePath `/dog-aventure` + loader d'images custom (`lib/image-loader.ts`) + `noindex`. Ces options ne doivent jamais servir pour la mise en ligne réelle (qui se fera sur un hébergeur Next.js avec le domaine du client).
+- Le build préview est activé par `GITHUB_PAGES=true` : export statique + basePath `/dog-aventure` + loader d'images custom (`lib/image-loader.ts`). Ces options ne doivent jamais servir pour la mise en ligne réelle (qui se fera sur un hébergeur Next.js avec le domaine du client).
+- Pas de `noindex` sur la préview : il coûtait 34 points de SEO à Lighthouse. C'est le canonical vers `site.url` qui la protège du duplicate content.
+- Next ne préfixe le basePath qu'aux URLs qu'il génère : tout `<img>`/`<a>` écrit à la main doit passer par `asset()` (`lib/utils.ts`).
 
 ## Règle d'or : le contenu vit dans `content/site.config.ts`
 
@@ -43,9 +45,18 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Polices : graisses fixes uniquement (Nunito 400/500/600/700, Caveat 400), seule Anton est préchargée. Ne pas rajouter de graisse/police sans vérifier l'impact LCP.
 - `experimental.inlineCss` est actif (one-page → CSS dans le HTML).
 
+## Logo (2026-08-09)
+
+- Trois assets, tous générés par `scripts/trace-logo.js` — **ne jamais les éditer à la main** :
+  `public/images/logo.svg` (complet, footer), `public/images/logo-mark.svg` (marque seule, barre de navigation), `app/icon.svg` (favicon).
+- Le client n'a fourni qu'une capture d'écran (`scripts/logo-source.jpg`) où le logo mesure 160×149 px. Le script le vectorise ; le résultat est net à toute taille, mais les contours restent légèrement irréguliers. **Redemander le fichier vectoriel d'origine** et relancer le script reste la bonne fin de l'histoire.
+- Marque seule dans la barre de navigation, logo complet dans le footer : à 40 px, le texte en arc n'est qu'un anneau de taches.
+- Servis en `<img>` (via `asset()`), pas en SVG inline ni en `next/image` : l'optimiseur Next refuse les SVG, et un SVG inline dans la barre — composant client — pèserait deux fois, dans le HTML **et** dans le bundle JS. Mesuré : +5,9 Ko en fichier contre +12,5 Ko en inline.
+
 ## À faire avant mise en ligne
 
 - [ ] Remplacer le domaine placeholder `https://dog-aventure.fr` par le domaine réel du client (`site.config.ts`, champ `url`)
 - [ ] Remplacer les avis de démonstration (`site.config.ts`, `reviews`) par de vrais avis Google — risque légal sinon
 - [ ] Créer la fiche Google Business Profile du client (levier SEO local n° 1, devant le site)
 - [ ] Brancher Google Search Console et soumettre `/sitemap.xml`
+- [ ] Demander au client le fichier vectoriel du logo (SVG/AI/PDF) et relancer `scripts/trace-logo.js`

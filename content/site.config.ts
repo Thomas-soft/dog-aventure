@@ -137,6 +137,10 @@ export const site: SiteConfig = {
   images: {
     hero: "/images/hero.webp",
     heroAlt: "Golden retriever en balade sur un chemin forestier",
+    // Générés par scripts/trace-logo.js — ne pas éditer à la main
+    logo: "/images/logo.svg",
+    logoAlt: "Dog Aventure — promeneur avec ses deux chiens en laisse",
+    logoMark: "/images/logo-mark.svg",
   },
 
   url: "https://dog-aventure.fr", // ← remplacer par le domaine réel du client

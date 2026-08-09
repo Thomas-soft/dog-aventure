@@ -1,6 +1,6 @@
-import { TreePine } from "lucide-react";
 import { site } from "@/content/site.config";
 import { Separator } from "@/components/ui/separator";
+import { asset } from "@/lib/utils";
 
 const NAV = [
   { label: "La promenade", href: "#service" },
@@ -20,16 +20,21 @@ export function Footer() {
     <footer className="border-t border-line bg-surface">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div className="space-y-3">
-          <p className="flex items-center gap-2.5">
-            <TreePine className="size-6 text-flame" aria-hidden />
-            <span className="flex flex-col">
-              <span className="font-display text-xl uppercase leading-none tracking-wide">
-                {site.name}
-              </span>
-              <span className="text-[0.6rem] font-bold uppercase tracking-[0.22em] text-smoke">
-                {site.activity}
-              </span>
-            </span>
+          {/* Logo complet ici, marque seule dans la barre de navigation : le
+              texte en arc n'est lisible qu'à cette taille. <img> plutôt que
+              next/image — l'optimiseur refuse le SVG, et le loader de la
+              préview ne sait réécrire que les bitmaps (lib/image-loader.ts). */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset(site.images.logo)}
+            alt={site.images.logoAlt}
+            width={103}
+            height={96}
+            loading="lazy"
+            className="h-24 w-auto"
+          />
+          <p className="text-[0.6rem] font-bold uppercase tracking-[0.22em] text-smoke">
+            {site.activity}
           </p>
           <p className="max-w-xs text-sm leading-relaxed text-smoke">
             {site.description}

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, Phone, TreePine, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { site } from "@/content/site.config";
-import { cn } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 
 const NAV = [
   { label: "La promenade", href: "#service" },
@@ -38,9 +38,19 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        {/* Logo texte — en attendant le logo définitif du client */}
         <a href="#" className="flex items-center gap-2.5">
-          <TreePine className="size-6 text-flame" aria-hidden />
+          {/* Marque seule : à 40 px, le texte en arc du logo complet ne serait
+              qu'un anneau de taches. alt vide — le nom est déjà dans le texte
+              à côté. Fichier plutôt qu'inline : la barre étant un composant
+              client, un SVG inline pèserait deux fois (HTML + bundle JS). */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset(site.images.logoMark)}
+            alt=""
+            width={40}
+            height={40}
+            className="size-10 shrink-0"
+          />
           <span className="flex flex-col">
             <span className="font-display text-lg uppercase leading-none tracking-wide">
               {site.name}
