@@ -22,13 +22,21 @@ export const site: SiteConfig = {
 
   siret: "988 412 136 00018",
   legal: {
-    publisher: "", // ⚠️ à demander au client : nom et prénom
-    address: "", // ⚠️ à demander au client : adresse du siège
-    email: "", // ⚠️ à demander au client
-    // ⚠️ vrai à l'heure de la préview — à changer pour l'hébergeur définitif
-    host: "GitHub, Inc. (GitHub Pages)",
-    hostAddress: "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA",
-    mediator: "", // ⚠️ à demander au client : nom et site du médiateur souscrit
+    /* Entreprise individuelle : le responsable de la publication au sens de
+       l'article 6-III de la LCEN est l'exploitant lui-même. */
+    publisher: "Martin Tofil",
+    address: "29 Rue Branly, 95380 Louvres",
+    email: "Dogflow@outlook.fr",
+    /* Auto-hébergement depuis le 2026-08-10 : le site a quitté GitHub Pages
+       pour un Raspberry Pi derrière Traefik et Cloudflare. C'est donc
+       l'exploitant de la machine qui est l'hébergeur au sens de la LCEN —
+       Cloudflare n'en est pas un, ce n'est qu'un intermédiaire technique.
+       Commune sans numéro de rue : nomme un responsable identifiable sans
+       publier une adresse personnelle. */
+    host: "Thomas Tofil",
+    hostAddress: "Louvres (95380), France",
+    // ⚠️ obligatoire en B2C (art. L.612-1) : à souscrire, puis à renseigner
+    mediator: "",
   },
   towns: [
     "Louvres",
@@ -168,8 +176,7 @@ export const site: SiteConfig = {
 
   social: {},
 
-  // ⚠️ à personnaliser : ton nom d'agence, et l'URL pour en faire un lien
-  credits: { label: "Votre Agence" },
+  credits: { label: "Thomas Tofil", url: "https://thomastofil.fr" },
 
   images: {
     // Vraie photo du client (août 2026) — recadrage et variantes générés

@@ -110,9 +110,10 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 ## À faire avant mise en ligne
 
 - [x] ~~**Domaine réel**~~ — `https://dog-aventure.com`, confirmé par le client le 2026-08-10 (`site.config.ts`, champ `url`). Attention : **le `.com`, pas le `.fr`** qui servait de placeholder. Reste à ce que le domaine serve effectivement le site — d'ici là, le canonical de la préview désigne une adresse qui ne répond pas encore, ce qui est le comportement voulu.
-- [ ] **Crédit du réalisateur** (`site.config.ts`, champ `credits`) : mettre le vrai nom d'agence, et l'`url` pour que ce soit un lien. Sans `url`, c'est rendu en texte simple — c'était un `href="#"` mort, corrigé le 2026-08-09.
+- [x] ~~**Crédit du réalisateur**~~ — « Thomas Tofil », lié à `https://thomastofil.fr` (2026-08-10).
 - [ ] Remplacer les avis de démonstration (`site.config.ts`, `reviews`) par de vrais avis Google — risque légal sinon
-- [ ] **Compléter `site.legal`** : `publisher` (nom et prénom), `address` (siège), `email`, `mediator` (médiateur de la consommation, obligatoire en B2C) — et remplacer `host`/`hostAddress`, aujourd'hui renseignés sur GitHub Pages, par l'hébergeur définitif
+- [ ] **`site.legal.mediator`** — dernier champ vide, il s'affiche `[à compléter]` en clair sur `/mentions-legales`. **Obligation légale** (art. L.612-1 du Code de la consommation) : tout professionnel vendant à des particuliers doit adhérer à un médiateur de la consommation et publier son nom et son site. Ça se souscrit auprès d'un médiateur agréé (liste sur le site de la CECMC), pour quelques dizaines d'euros par an. C'est le seul point qui reste ouvert sur cette page.
+- [x] ~~Reste de `site.legal`~~ — `publisher` (Martin Tofil), `address` (29 Rue Branly, 95380 Louvres), `email` (Dogflow@outlook.fr) renseignés le 2026-08-10. `host`/`hostAddress` corrigés le même jour : le site ayant quitté GitHub Pages pour le Pi, déclarer GitHub était devenu faux — c'est désormais « Thomas Tofil, Louvres (95380) », l'exploitant de la machine. Cloudflare n'est **pas** l'hébergeur, seulement un intermédiaire technique.
 - [ ] Créer la fiche Google Business Profile du client (levier SEO local n° 1, devant le site)
 - [ ] Brancher Google Search Console et soumettre `/sitemap.xml`
 - [ ] Pour l'impression seulement : demander le fichier vectoriel du logo (SVG/AI/PDF) et relancer `scripts/trace-logo.js`
