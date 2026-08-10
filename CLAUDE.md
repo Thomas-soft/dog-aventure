@@ -29,6 +29,15 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Voix à la première personne (« je »), le prestataire parle directement — jamais « nous ».
 - Le message doit rester cohérent : c'est LUI qui promène le chien, pas le client (une v1 du slogan disait « Promenez-le » — erreur déjà corrigée, ne pas la réintroduire).
 - Apostrophes typographiques (’) dans les chaînes, `&nbsp;` avant `!` et `?` dans le JSX.
+- **Le site ne vend que des balades (décision client, 2026-08-10).** Le texte fourni par le client mentionne aussi des « visites à domicile » et des « séances d'éducation » : elles sont volontairement absentes du site, faute de tarif et de description. Ne pas les ajouter sans que le client les ait cadrées. « Formé en éducation canine » (`trust.credential`) est une **qualification**, pas une prestation — c'est la seule occurrence autorisée du mot.
+- **Rien de biographique.** Le client raconte volontiers son enfance et les chiens de sa vie ; ça n'aide pas un maître à décider et c'est écarté à la réécriture. Ne garder que ce qui rassure le client sur ce qui arrive à SON chien pendant l'heure où il n'est pas là.
+
+## Section confiance (2026-08-10)
+
+- `components/sections/trust.tsx` (ancre `#confiance`), entre « La promenade » et « Où j'interviens » — la place laissée par la section des races supprimée le même jour, et elle en reprend le bandeau `border-y bg-surface` qui tient le rythme crème → surface → sombre.
+- Contenu dans `site.trust` : `credential` (la qualification, seule en bandeau au-dessus), `points` (4 cartes) et `signature` (la phrase manuscrite de fin).
+- **L'ACACED est mis en avant seul**, au-dessus des quatre autres arguments : c'est la seule preuve *vérifiable* de la page, tout le reste n'est qu'un engagement. Repris en `hasCredential` dans le JSON-LD (`app/layout.tsx`).
+- Quatre points, pas cinq : la grille est en `lg:grid-cols-4`. Le renforcement des bonnes habitudes (laisse, calme, rappel) est fondu dans le bloc ACACED — il découle de la formation, il n'a pas besoin de sa carte.
 
 ## Décisions SEO (2026-08-08)
 

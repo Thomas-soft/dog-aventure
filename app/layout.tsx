@@ -68,6 +68,14 @@ const jsonLd = {
     postalCode: site.base.zip,
     addressCountry: "FR",
   },
+  // L'ACACED est la seule qualification vérifiable du prestataire : elle vaut
+  // d'être déclarée, pour Google comme pour les assistants qui citent le site
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    name: site.trust.credential.badge,
+    description: site.trust.credential.title,
+    credentialCategory: "certification",
+  },
   areaServed: site.towns.map((town) => ({ "@type": "City", name: town })),
   makesOffer: site.services.map((service) => ({
     "@type": "Offer",

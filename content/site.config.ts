@@ -98,6 +98,42 @@ export const site: SiteConfig = {
     },
   ],
 
+  /* Réécrit depuis le texte du client (août 2026). Tout ce qui relevait de sa
+     biographie — passionné depuis l’enfance, chiens de sa vie — a été retiré :
+     ça n’aide pas un maître à décider. Ne restent que les preuves qui le
+     rassurent, lui, sur ce qui arrive à son chien pendant l’heure où il n’est
+     pas là. */
+  trust: {
+    credential: {
+      badge: "ACACED",
+      title: "Formé en éducation canine",
+      desc: "Je suis titulaire de l’ACACED, l’attestation officielle exigée en France pour exercer auprès des animaux de compagnie. Concrètement : je sais lire le comportement d’un chien et m’adapter au vôtre — et j’en profite pour entretenir ses bonnes habitudes en balade, marche en laisse, calme au croisement et rappel selon son niveau.",
+    },
+    points: [
+      {
+        icon: "camera",
+        title: "Des nouvelles pendant la balade",
+        desc: "Je vous envoie des photos et des vidéos pendant la sortie. Vous voyez où il est et comment il va, sans avoir à demander.",
+      },
+      {
+        icon: "clipboard-check",
+        title: "Vos consignes, à la lettre",
+        desc: "Ses habitudes, son harnais, ce qu’il a le droit de faire ou non : vous me le dites une fois, je m’y tiens à chaque balade.",
+      },
+      {
+        icon: "dog",
+        title: "Le rythme de votre chien",
+        desc: "Jeune ou âgé, sportif ou plus réservé : c’est le parcours qui s’adapte à lui, jamais l’inverse.",
+      },
+      {
+        icon: "calendar-check",
+        title: "En semaine comme le week-end",
+        desc: "Je cale la balade sur vos horaires, et je réponds rapidement à vos demandes.",
+      },
+    ],
+    signature: "Je m’occupe de chaque chien comme s’il était le mien.",
+  },
+
   // ⚠️ AVIS DE DÉMONSTRATION — à remplacer par les vrais avis Google du client
   reviews: [
     {

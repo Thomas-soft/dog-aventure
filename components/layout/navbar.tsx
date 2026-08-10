@@ -16,6 +16,7 @@ import { asset, cn } from "@/lib/utils";
    navigation. asset() ajoute le basePath, que Next ne met pas ici. */
 const NAV = [
   { label: "La promenade", href: asset("/#service") },
+  { label: "Confiance", href: asset("/#confiance") },
   { label: "Où j'interviens", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },
 ];

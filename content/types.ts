@@ -27,6 +27,34 @@ export interface Step {
   desc: string;
 }
 
+/** Icônes des arguments de confiance — résolues en composants lucide dans la section */
+export type TrustIcon =
+  | "camera"
+  | "clipboard-check"
+  | "dog"
+  | "calendar-check";
+
+export interface TrustPoint {
+  icon: TrustIcon;
+  title: string;
+  desc: string;
+}
+
+/** Ce qui décide un maître à confier son chien — qualification, puis preuves
+ *  concrètes. Rien de biographique ici : uniquement ce qui le rassure, lui. */
+export interface Trust {
+  /** La qualification, mise en avant au-dessus des autres arguments */
+  credential: {
+    /** Sigle ou intitulé du diplôme, affiché en pastille (ex : "ACACED") */
+    badge: string;
+    title: string;
+    desc: string;
+  };
+  points: TrustPoint[];
+  /** Phrase de conclusion, rendue en manuscrit */
+  signature: string;
+}
+
 export interface Review {
   author: string;
   /** Ville du propriétaire — l'ancrage local, affiché sous l'auteur */
@@ -79,6 +107,8 @@ export interface SiteConfig {
   services: Service[];
   /** Les 3 étapes « Comment ça marche » */
   steps: Step[];
+  /** Arguments de confiance — section « Pourquoi me confier votre chien » */
+  trust: Trust;
   reviews: Review[];
   social: { instagram?: string; facebook?: string };
   /** Crédit du réalisateur, barre du bas. Rendu en lien seulement si `url`

@@ -4,6 +4,7 @@ import { StickyCallBar } from "@/components/layout/sticky-call-bar";
 import { Hero } from "@/components/sections/hero";
 import { TownsMarquee } from "@/components/sections/towns-marquee";
 import { ServiceSection } from "@/components/sections/service";
+import { TrustSection } from "@/components/sections/trust";
 import { ZonesSection } from "@/components/sections/zones";
 import { ReviewsSection } from "@/components/sections/reviews";
 import { ContactSection } from "@/components/sections/contact";
@@ -16,6 +17,7 @@ export default function Home() {
         <Hero />
         <TownsMarquee />
         <ServiceSection />
+        <TrustSection />
         <ZonesSection />
         <ReviewsSection />
         <ContactSection />
