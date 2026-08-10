@@ -1,0 +1,46 @@
+# Deux profils, jamais lancés ensemble :
+#
+#   docker compose --profile dev up            → http://localhost:3777 (rechargement à chaud)
+#   docker compose --profile prod up -d --build → http://localhost:3000 (image de prod)
+#
+# Sans --profile, `docker compose up` ne démarre rien : c'est voulu, ça évite
+# de lancer la prod en croyant lancer le dev.
+
+services:
+  # ─────────────────────────── développement ───────────────────────────
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3777:3777"
+    volumes:
+      # Le code vient de l'hôte : une modification est prise à chaud
+      - .:/app
+      # Volumes anonymes : gardent les node_modules et le .next DU CONTENEUR.
+      # Sans eux, le montage ci-dessus les écraserait avec ceux du Mac —
+      # binaires compilés pour la mauvaise plateforme, sharp en tête.
+      - /app/node_modules
+      - /app/.next
+    environment:
+      NODE_ENV: development
+    restart: unless-stopped
+
+  # ────────────────────────────── production ───────────────────────────
+  web:
+    profiles: ["prod"]
+    build:
+      context: .
+      target: runner
+    # Exposé sur la boucle locale seulement : c'est le reverse proxy ou
+    # cloudflared qui doit joindre le conteneur, jamais l'internet en direct.
+    # Pour tester depuis une autre machine du réseau, mettre "3000:3000".
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    # Le HEALTHCHECK est défini dans le Dockerfile
+    restart: unless-stopped

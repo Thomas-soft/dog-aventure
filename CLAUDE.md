@@ -11,6 +11,16 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - `npm run build` — seule vérification du projet (pas de suite de tests) : toujours la lancer après une série de modifications
 - `npm run lint` — ESLint
 
+## Docker (2026-08-10)
+
+- `docker compose --profile dev up` (port 3777, à chaud) et `docker compose --profile prod up -d --build` (port 3000). **Sans `--profile`, rien ne démarre** — volontaire.
+- Un `Dockerfile`, deux cibles : `dev` et `runner`. `runner` est bâti sur `.next/standalone`, tourne en utilisateur non-root et embarque un `HEALTHCHECK`.
+- **`next.config.ts` a désormais trois modes mutuellement exclusifs** : `output: "export"` + `basePath` si `GITHUB_PAGES=true`, sinon `output: "standalone"`. Ne jamais les cumuler — Next refuse.
+- **`standalone` n'embarque ni `public/` ni `.next/static/`** : le Dockerfile les copie explicitement. Si ces deux `COPY` sautent, le site répond 200 mais sans aucune image ni police.
+- Alpine (musl) et pas Debian : la doc Next signale un problème d'allocateur mémoire de `sharp` sur les Linux glibc. `sharp` arrive comme dépendance de `next` (0.35.3), il n'est pas à installer à la main.
+- Testé sans Docker (non installé sur le poste) en rejouant l'étage `runner` à la main : `cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && PORT=3999 node .next/standalone/server.js`. Accueil, mentions, sitemap, assets et `/_next/image` répondent tous 200. **L'image elle-même n'a jamais été construite** — à faire à la première machine équipée.
+- Réglages Cloudflare qui cassent le site : SSL en « Flexible » (boucle de redirection), Rocket Loader (casse l'hydratation), Auto Minify. Détail dans le README.
+
 ## Préview client (GitHub Pages)
 
 - URL à partager au client : **https://thomas-soft.github.io/dog-aventure/** — redéployée à chaque push sur `main` (`.github/workflows/deploy-pages.yml`).

@@ -1,0 +1,32 @@
+# Tout ce qui n'a rien à faire dans le contexte de build : ça accélère le
+# `docker build` et évite qu'un .next/ local (peut-être un export GitHub Pages)
+# ne se retrouve dans l'image.
+
+node_modules
+.next
+out
+build
+
+.git
+.github
+.gitignore
+
+# Sources de travail, jamais servies : originaux photo et logo pèsent lourd
+scripts/photos
+scripts/logo-source.jpg
+
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+*.md
+!README.md
+
+.env*
+.vercel
+.DS_Store
+*.pem
+npm-debug.log*
+*.tsbuildinfo
+next-env.d.ts

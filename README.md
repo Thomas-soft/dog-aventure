@@ -17,6 +17,59 @@ npm run dev     # http://localhost:3777 (le port est fixé dans package.json)
 npm run build   # build de production
 ```
 
+## Docker
+
+```bash
+docker compose --profile dev  up                # http://localhost:3777, rechargement à chaud
+docker compose --profile prod up -d --build     # http://localhost:3000, image de prod
+docker compose --profile prod logs -f           # suivre les logs
+docker compose --profile prod down              # arrêter
+```
+
+Sans `--profile`, `docker compose up` ne démarre **rien** : c'est voulu, pour
+ne pas lancer la prod en croyant lancer le dev.
+
+Un seul `Dockerfile`, deux cibles :
+
+| Cible    | Sert à                | Contenu                                              |
+| -------- | --------------------- | ---------------------------------------------------- |
+| `dev`    | profil `dev`          | `next dev`, sources montées en volume depuis l'hôte  |
+| `runner` | profil `prod`         | `.next/standalone` + `public` + `.next/static`, sans le code source ni les dépendances de build |
+
+`next.config.ts` choisit la sortie selon l'environnement : `output: "export"`
+quand `GITHUB_PAGES=true` (la préview), `output: "standalone"` partout ailleurs
+(c'est ce que copie l'étage `runner`). Les deux ne peuvent pas coexister.
+
+> La doc Next recommande `npm run dev` **hors** Docker sur macOS et Windows :
+> la surveillance de fichiers à travers un volume monté est nettement plus
+> lente. Le profil `dev` existe pour reproduire l'environnement Linux, pas pour
+> remplacer le confort du dev local.
+
+### Mise en ligne derrière Cloudflare
+
+Le conteneur de prod n'écoute que sur `127.0.0.1:3000` : il n'est pas joignable
+depuis l'internet en direct, et c'est intentionnel. Deux façons de l'exposer :
+
+- **Cloudflare Tunnel** (le plus simple) — `cloudflared` sur la machine pointe
+  vers `http://localhost:3000`. Aucun port à ouvrir, aucune IP publique
+  nécessaire, le certificat est géré par Cloudflare.
+- **DNS + reverse proxy** — enregistrement A vers l'IP du serveur, nuage orange
+  activé, et un nginx/Caddy qui termine le TLS devant le conteneur.
+
+Trois réglages Cloudflare à vérifier, ils cassent le site s'ils sont mal posés :
+
+1. **SSL/TLS en « Full (strict) »**, jamais « Flexible » — en Flexible,
+   Cloudflare parle en HTTP au serveur alors que le site se croit en HTTPS :
+   boucle de redirection et contenu mixte.
+2. **Rocket Loader désactivé** — il réordonne l'exécution des scripts et casse
+   l'hydratation React.
+3. **Auto Minify laissé sur off** — Next livre déjà du JS et du CSS minifiés
+   (le CSS est même inliné dans le HTML), une seconde passe n'apporte rien et
+   peut abîmer la sortie.
+
+`/_next/static/*` est servi avec un cache immuable : Cloudflare le met en cache
+sans réglage particulier.
+
 ## Contenu — `content/site.config.ts`
 
 Tout le site rend depuis ce fichier typé (`content/types.ts`) :
