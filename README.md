@@ -85,6 +85,44 @@ visiteurs. Pour que les logs Traefik affichent aussi la vraie IP, il faut
 déclarer les plages Cloudflare en `forwardedHeaders.trustedIPs` sur
 l'entrypoint — ça se règle dans la configuration statique de Traefik, pas ici.
 
+### Les certificats — deux, et aucun chez IONOS
+
+Il y a deux liaisons TLS distinctes, chacune avec son propre certificat, tous
+les deux gratuits et renouvelés automatiquement :
+
+| Liaison | Certificat | Émis par |
+| ------- | ---------- | -------- |
+| visiteur → Cloudflare | Universal SSL | Cloudflare (Google Trust Services) |
+| Cloudflare → Pi | Let's Encrypt | Traefik, `certresolver=letsencrypt` |
+
+**Ne rien acheter ni activer chez IONOS.** IONOS ne fait plus que registrar : il
+propose un certificat pour *son* hébergement, qui ne sert pas ce site. Son
+avertissement « votre domaine ne dispose pas du protocole SSL » ne regarde que
+son propre serveur, vide — le domaine sert bien du HTTPS valide.
+
+### DNS — la configuration en place
+
+Serveurs de noms délégués à Cloudflare depuis IONOS (onglet **Serveur de
+noms**, « Vos serveurs de noms »). Les paramètres DNS IONOS deviennent alors
+inactifs, c'est normal : la zone vit chez Cloudflare.
+
+| Enregistrement | Valeur | Proxy |
+| -------------- | ------ | ----- |
+| `A` `dog-aventure.com` | IP publique du Pi | 🟠 proxifié |
+| `CNAME` `www` | `dog-aventure.com` | 🟠 proxifié |
+| `MX` × 2, `TXT` (SPF) | IONOS | ⚪ DNS only |
+| `CNAME` `autodiscover`, `_dmarc` | IONOS | ⚪ DNS only |
+
+Le nuage orange ne vaut que pour les noms qui servent le site en HTTP. Sur les
+autres il ne protège rien et casse : proxifié, `_dmarc` ne renvoie plus aucun
+TXT (la politique DMARC disparaît) et `autodiscover` répond 521, la cible IONOS
+n'écoutant qu'en HTTP. Une `AAAA` héritée d'IONOS doit être supprimée : elle
+enverrait Cloudflare vers l'ancien hébergeur une fois sur deux.
+
+L'IP est résidentielle : si l'opérateur la change, le `A` devient faux et le
+site tombe. Un DDNS qui met à jour l'enregistrement via l'API Cloudflare règle
+la question.
+
 Trois réglages côté Cloudflare, qui cassent le site s'ils sont mal posés :
 
 1. **SSL/TLS en « Full (strict) »**, jamais « Flexible ». Traefik présente un

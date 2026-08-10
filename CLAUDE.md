@@ -25,6 +25,13 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Le rate limit porte `sourceCriterion.requestHeaderName=CF-Connecting-IP` : derrière Cloudflare, Traefik ne verrait sinon que les IP des serveurs Cloudflare et renverrait des 429 à de vrais visiteurs.
 - Volume nommé `image-cache` sur `/app/.next/cache` : sans lui `next/image` ré-encode toutes les images à chaque redémarrage. Le dossier est créé dans le Dockerfile avec le bon propriétaire pour que le volume en hérite.
 
+## En ligne depuis le 2026-08-10
+
+- **https://dog-aventure.com** — Docker + Traefik sur le Raspberry Pi 5 du réalisateur, profil `traefik`. Build ARM : 67 s. Vérifié en ligne : accueil, `/mentions-legales`, `sitemap.xml`, `robots.txt`, assets et `/_next/image` (WebP, sharp tourne sur ARM) répondent tous 200, `www` redirige en 301 vers l'apex.
+- **Deux certificats, aucun chez IONOS** : Cloudflare Universal SSL côté visiteur, Let's Encrypt via Traefik côté origine. IONOS n'est plus que registrar — son alerte « pas de SSL » ne concerne que son propre hébergement, vide. Ne rien y acheter.
+- Serveurs de noms délégués à Cloudflare (`dara` + `mario.ns.cloudflare.com` — Cloudflare réutilise la même paire pour toutes les zones d'un même compte, celle de voice-doc.com était donc la bonne).
+- La préview GitHub Pages reste en service et garde son intérêt : c'est le lien à envoyer au client pour valider une modification avant qu'elle ne parte en production.
+
 ## Préview client (GitHub Pages)
 
 - URL à partager au client : **https://thomas-soft.github.io/dog-aventure/** — redéployée à chaque push sur `main` (`.github/workflows/deploy-pages.yml`).
