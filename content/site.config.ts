@@ -36,8 +36,6 @@ export const site: SiteConfig = {
        teste le champ avant de rendre la virgule. */
     host: "Thomas Tofil",
     hostAddress: "",
-    // ⚠️ obligatoire en B2C (art. L.612-1) : à souscrire, puis à renseigner
-    mediator: "",
   },
   towns: [
     "Louvres",

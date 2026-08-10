@@ -116,17 +116,6 @@ export default function MentionsLegales() {
               l&rsquo;accès, la rectification ou la suppression au {site.phone}.
             </p>
           </Section>
-
-          <Section title="Médiation de la consommation">
-            <p>
-              Conformément à l&rsquo;article L.&nbsp;612-1 du Code de la consommation,
-              vous pouvez recourir gratuitement à un médiateur de la consommation
-              en vue de la résolution amiable d&rsquo;un litige.
-            </p>
-            <p>
-              Médiateur compétent&nbsp;: <Value>{legal.mediator}</Value>
-            </p>
-          </Section>
         </div>
       </main>
       <Footer />

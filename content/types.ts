@@ -91,9 +91,6 @@ export interface SiteConfig {
     email: string;
     host: string;
     hostAddress: string;
-    /** Médiateur de la consommation — obligatoire pour un prestataire B2C
-     *  (art. L612-1 du Code de la consommation) */
-    mediator: string;
   };
   /** Villes desservies, ordre d'affichage (marquee, section zones, footer, areaServed) */
   towns: string[];

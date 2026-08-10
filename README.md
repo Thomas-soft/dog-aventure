@@ -225,6 +225,5 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
 - [ ] Liens Facebook/Instagram (`social` dans la config) — il fera de la pub
   Facebook, la page existera.
 - [x] Mentions légales / SIRET dans le footer — page `/mentions-legales`.
-- [ ] Compléter `site.legal` : `publisher`, `address`, `email`, `mediator`, et
-  l'hébergeur définitif à la place de GitHub Pages.
+- [x] `site.legal` complété : éditeur, adresse, e-mail, hébergeur.
 - [ ] Plus tard : ajouter l'offre « Dog Aventure 2 h » dans `services`.
