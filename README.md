@@ -20,21 +20,25 @@ npm run build   # build de production
 ## Docker
 
 ```bash
-docker compose --profile dev  up                # http://localhost:3777, rechargement à chaud
-docker compose --profile prod up -d --build     # http://localhost:3000, image de prod
-docker compose --profile prod logs -f           # suivre les logs
-docker compose --profile prod down              # arrêter
+docker compose --profile dev     up             # http://localhost:3777, rechargement à chaud
+docker compose --profile prod    up -d --build  # http://localhost:3000, image de prod en local
+docker compose --profile traefik up -d --build  # mise en ligne, derrière Traefik
+docker compose --profile prod    logs -f        # suivre les logs
+docker compose --profile prod    down           # arrêter
 ```
 
 Sans `--profile`, `docker compose up` ne démarre **rien** : c'est voulu, pour
 ne pas lancer la prod en croyant lancer le dev.
 
-Un seul `Dockerfile`, deux cibles :
+| Profil    | Service | Exposition                  | Sert à                          |
+| --------- | ------- | --------------------------- | ------------------------------- |
+| `dev`     | `dev`   | `3777` sur l'hôte           | développer                      |
+| `prod`    | `web`   | `127.0.0.1:3000`            | vérifier l'image avant déploiement |
+| `traefik` | `site`  | **aucun port publié**       | la mise en ligne réelle         |
 
-| Cible    | Sert à                | Contenu                                              |
-| -------- | --------------------- | ---------------------------------------------------- |
-| `dev`    | profil `dev`          | `next dev`, sources montées en volume depuis l'hôte  |
-| `runner` | profil `prod`         | `.next/standalone` + `public` + `.next/static`, sans le code source ni les dépendances de build |
+Un seul `Dockerfile`, deux cibles : `dev` (sources montées en volume) et
+`runner` (`.next/standalone` + `public` + `.next/static`, sans le code source
+ni les dépendances de build).
 
 `next.config.ts` choisit la sortie selon l'environnement : `output: "export"`
 quand `GITHUB_PAGES=true` (la préview), `output: "standalone"` partout ailleurs
@@ -45,30 +49,61 @@ quand `GITHUB_PAGES=true` (la préview), `output: "standalone"` partout ailleurs
 > lente. Le profil `dev` existe pour reproduire l'environnement Linux, pas pour
 > remplacer le confort du dev local.
 
-### Mise en ligne derrière Cloudflare
+### Mise en ligne — Traefik + Cloudflare
 
-Le conteneur de prod n'écoute que sur `127.0.0.1:3000` : il n'est pas joignable
-depuis l'internet en direct, et c'est intentionnel. Deux façons de l'exposer :
+Le profil `traefik` ne publie **aucun port** : Traefik joint le conteneur par le
+réseau Docker partagé. Publier un port ici ouvrirait un accès en clair qui
+contournerait le proxy, ses en-têtes de sécurité et sa limitation de débit.
 
-- **Cloudflare Tunnel** (le plus simple) — `cloudflared` sur la machine pointe
-  vers `http://localhost:3000`. Aucun port à ouvrir, aucune IP publique
-  nécessaire, le certificat est géré par Cloudflare.
-- **DNS + reverse proxy** — enregistrement A vers l'IP du serveur, nuage orange
-  activé, et un nginx/Caddy qui termine le TLS devant le conteneur.
+Le réseau attendu est celui où tourne déjà Traefik, `n8n-network` par défaut.
+Pour un autre nom, pas besoin de modifier le fichier :
 
-Trois réglages Cloudflare à vérifier, ils cassent le site s'ils sont mal posés :
+```bash
+TRAEFIK_NETWORK=mon-reseau docker compose --profile traefik up -d --build
+```
 
-1. **SSL/TLS en « Full (strict) »**, jamais « Flexible » — en Flexible,
-   Cloudflare parle en HTTP au serveur alors que le site se croit en HTTPS :
-   boucle de redirection et contenu mixte.
+**La CSP est taillée pour ce site**, à partir des origines réellement présentes
+dans le HTML produit — ne pas la recopier d'un autre projet :
+
+- `frame-src https://www.google.com` — l'iframe Maps de la section « Où
+  j'interviens ». C'est la **seule** origine externe de toute la page ; sans
+  cette directive, la carte reste blanche.
+- **Pas de `fonts.googleapis.com` ni `fonts.gstatic.com`** : `next/font`
+  télécharge les polices au build et les sert depuis le domaine.
+- `style-src 'unsafe-inline'` est obligatoire — le CSS est inliné dans le HTML
+  (`experimental.inlineCss`).
+- `script-src` est **sans `'unsafe-eval'`**, volontairement. Un build Next de
+  production n'en a pas besoin. À vérifier dans la console du navigateur au
+  premier déploiement : si une erreur CSP mentionne `eval`, ajouter
+  `'unsafe-eval'` à cette seule directive plutôt que d'élargir le reste.
+
+**Limitation de débit derrière Cloudflare** : le middleware utilise
+`sourceCriterion.requestHeaderName=CF-Connecting-IP`. Sans ça, Traefik ne voit
+que les IP des serveurs Cloudflare, agrège tout le trafic d'un même point de
+présence sur un seul compteur et finit par renvoyer des 429 à de vrais
+visiteurs. Pour que les logs Traefik affichent aussi la vraie IP, il faut
+déclarer les plages Cloudflare en `forwardedHeaders.trustedIPs` sur
+l'entrypoint — ça se règle dans la configuration statique de Traefik, pas ici.
+
+Trois réglages côté Cloudflare, qui cassent le site s'ils sont mal posés :
+
+1. **SSL/TLS en « Full (strict) »**, jamais « Flexible ». Traefik présente un
+   certificat Let's Encrypt valide, donc « Full (strict) » fonctionne. En
+   « Flexible », Cloudflare parle en HTTP à Traefik alors que le site se croit
+   en HTTPS : boucle de redirection et contenu mixte.
 2. **Rocket Loader désactivé** — il réordonne l'exécution des scripts et casse
    l'hydratation React.
-3. **Auto Minify laissé sur off** — Next livre déjà du JS et du CSS minifiés
-   (le CSS est même inliné dans le HTML), une seconde passe n'apporte rien et
-   peut abîmer la sortie.
+3. **Auto Minify laissé sur off** — Next livre déjà du JS et du CSS minifiés.
 
-`/_next/static/*` est servi avec un cache immuable : Cloudflare le met en cache
-sans réglage particulier.
+Le nuage orange peut rester activé : le challenge HTTP-01 de Let's Encrypt
+passe à travers le proxy Cloudflare. Si le certificat n'est pas délivré, passer
+l'enregistrement en « DNS only » le temps de la première émission.
+
+`/_next/static/*` est servi avec un cache immuable, Cloudflare le met en cache
+sans réglage. Enfin, Next compresse déjà en gzip : le middleware `compress` de
+Traefik laisse donc passer la réponse telle quelle. Pour obtenir du Brotli, il
+faudrait passer `compress: false` dans `next.config.ts` — gain modeste sur un
+site de cette taille, non fait.
 
 ## Contenu — `content/site.config.ts`
 

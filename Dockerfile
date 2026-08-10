@@ -53,6 +53,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# next/image optimise à la demande et écrit dans .next/cache/images. Le dossier
+# est créé ici avec le bon propriétaire pour qu'un volume monté à cet endroit en
+# hérite — sans volume, le cache repart de zéro à chaque redémarrage et le
+# serveur ré-encode toutes les images.
+RUN mkdir -p .next/cache/images && chown -R nextjs:nodejs .next
+
 USER nextjs
 EXPOSE 3000
 

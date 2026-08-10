@@ -20,6 +20,10 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Alpine (musl) et pas Debian : la doc Next signale un problème d'allocateur mémoire de `sharp` sur les Linux glibc. `sharp` arrive comme dépendance de `next` (0.35.3), il n'est pas à installer à la main.
 - Testé sans Docker (non installé sur le poste) en rejouant l'étage `runner` à la main : `cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && PORT=3999 node .next/standalone/server.js`. Accueil, mentions, sitemap, assets et `/_next/image` répondent tous 200. **L'image elle-même n'a jamais été construite** — à faire à la première machine équipée.
 - Réglages Cloudflare qui cassent le site : SSL en « Flexible » (boucle de redirection), Rocket Loader (casse l'hydratation), Auto Minify. Détail dans le README.
+- **Profil `traefik`** (mise en ligne) : aucun port publié, le proxy joint le conteneur par le réseau externe `${TRAEFIK_NETWORK:-n8n-network}`. Labels calqués sur les autres sites du serveur (TLS letsencrypt, redirection www → apex, en-têtes de sécurité, rate limit).
+- **La CSP est spécifique à ce site, ne pas la recopier d'ailleurs** : `frame-src https://www.google.com` est obligatoire (iframe Maps de `#zones`, seule origine externe de la page — sans elle la carte est blanche), et il ne faut **pas** de `fonts.googleapis/gstatic` puisque `next/font` sert les polices depuis le domaine. `style-src 'unsafe-inline'` est requis par `experimental.inlineCss`. `'unsafe-eval'` est volontairement absent de `script-src` — vérifier la console au premier déploiement.
+- Le rate limit porte `sourceCriterion.requestHeaderName=CF-Connecting-IP` : derrière Cloudflare, Traefik ne verrait sinon que les IP des serveurs Cloudflare et renverrait des 429 à de vrais visiteurs.
+- Volume nommé `image-cache` sur `/app/.next/cache` : sans lui `next/image` ré-encode toutes les images à chaque redémarrage. Le dossier est créé dans le Dockerfile avec le bon propriétaire pour que le volume en hérite.
 
 ## Préview client (GitHub Pages)
 
