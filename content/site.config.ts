@@ -31,10 +31,11 @@ export const site: SiteConfig = {
        pour un Raspberry Pi derrière Traefik et Cloudflare. C'est donc
        l'exploitant de la machine qui est l'hébergeur au sens de la LCEN —
        Cloudflare n'en est pas un, ce n'est qu'un intermédiaire technique.
-       Commune sans numéro de rue : nomme un responsable identifiable sans
-       publier une adresse personnelle. */
+       Aucune adresse : choix assumé du 2026-08-10, la machine étant chez un
+       particulier. `hostAddress` vide n'affiche rien du tout — le composant
+       teste le champ avant de rendre la virgule. */
     host: "Thomas Tofil",
-    hostAddress: "Louvres (95380), France",
+    hostAddress: "",
     // ⚠️ obligatoire en B2C (art. L.612-1) : à souscrire, puis à renseigner
     mediator: "",
   },
