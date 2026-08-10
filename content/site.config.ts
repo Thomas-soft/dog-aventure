@@ -98,33 +98,6 @@ export const site: SiteConfig = {
     },
   ],
 
-  breeds: [
-    {
-      name: "Golden Retriever",
-      image: "/images/breeds/golden.jpg",
-      alt: "Golden retriever avec son harnais, pause en forêt",
-      note: "L'inépuisable compagnon de famille — 1 heure de balade, c'est son minimum.",
-    },
-    {
-      name: "Berger Australien",
-      image: "/images/breeds/berger-australien.jpg",
-      alt: "Berger australien attentif en extérieur",
-      note: "Un moteur qui ne s'arrête jamais : il a besoin de se dépenser chaque jour.",
-    },
-    {
-      name: "Staffy",
-      image: "/images/breeds/staffy.jpg",
-      alt: "Staffordshire bull terrier à l'expression joueuse",
-      note: "Un cœur tendre débordant d'énergie, qui mérite une vraie sortie.",
-    },
-    {
-      name: "Caniche",
-      image: "/images/breeds/caniche.jpg",
-      alt: "Caniche en promenade dans un parc",
-      note: "Malin et joueur, il adore son rendez-vous balade de la semaine.",
-    },
-  ],
-
   // ⚠️ AVIS DE DÉMONSTRATION — à remplacer par les vrais avis Google du client
   reviews: [
     {

@@ -27,14 +27,6 @@ export interface Step {
   desc: string;
 }
 
-export interface Breed {
-  name: string;
-  /** Chemin vers /public (ex : "/images/breeds/golden.jpg") */
-  image: string;
-  alt: string;
-  note?: string;
-}
-
 export interface Review {
   author: string;
   /** Ville du propriétaire — l'ancrage local, affiché sous l'auteur */
@@ -87,8 +79,6 @@ export interface SiteConfig {
   services: Service[];
   /** Les 3 étapes « Comment ça marche » */
   steps: Step[];
-  /** Races mises en avant — les chiens du secteur */
-  breeds: Breed[];
   reviews: Review[];
   social: { instagram?: string; facebook?: string };
   /** Crédit du réalisateur, barre du bas. Rendu en lien seulement si `url`

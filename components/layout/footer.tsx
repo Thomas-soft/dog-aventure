@@ -8,7 +8,6 @@ import { asset } from "@/lib/utils";
    « /#service » change l'URL sans défiler. */
 const NAV = [
   { label: "La promenade", href: asset("/#service") },
-  { label: "Les chiens", href: asset("/#chiens") },
   { label: "Où j'interviens", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },
   { label: "Contact", href: asset("/#contact") },
