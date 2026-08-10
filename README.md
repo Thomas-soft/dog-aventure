@@ -60,11 +60,11 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
 
 ## À faire avant mise en production
 
-- [ ] `metadataBase` dans `app/layout.tsx` → vrai domaine (placeholder
-  `https://dog-aventure.fr`).
+- [x] Domaine réel : `https://dog-aventure.com` (`content/site.config.ts`,
+  champ `url` — `metadataBase` en découle).
 - [x] Photo du hero : vraie photo client (`scripts/prepare-photos.js`).
-- [ ] Reste en photo de stock : `breeds/` (4 races) et `og.jpg` (1200 × 630,
-  la vignette des partages Facebook — à refaire depuis la photo du client).
+- [ ] Reste en photo de stock : `og.jpg` (1200 × 630, la vignette des partages
+  Facebook — à refaire depuis la photo du client).
 - [ ] Vrais avis Google à la place des avis de démonstration.
 - [x] Logo définitif du client (navbar, footer, `app/icon.svg`).
 - [ ] Liens Facebook/Instagram (`social` dans la config) — il fera de la pub

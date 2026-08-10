@@ -87,7 +87,7 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 
 ## À faire avant mise en ligne
 
-- [ ] **Domaine réel** à la place du placeholder `https://dog-aventure.fr` (`site.config.ts`, champ `url`). C'est le blocage n° 1 du référencement : tant qu'il est là, le canonical, le sitemap et le JSON-LD désignent un domaine qui ne sert pas le site. Une seule ligne à changer, tout le reste en découle.
+- [x] ~~**Domaine réel**~~ — `https://dog-aventure.com`, confirmé par le client le 2026-08-10 (`site.config.ts`, champ `url`). Attention : **le `.com`, pas le `.fr`** qui servait de placeholder. Reste à ce que le domaine serve effectivement le site — d'ici là, le canonical de la préview désigne une adresse qui ne répond pas encore, ce qui est le comportement voulu.
 - [ ] **Crédit du réalisateur** (`site.config.ts`, champ `credits`) : mettre le vrai nom d'agence, et l'`url` pour que ce soit un lien. Sans `url`, c'est rendu en texte simple — c'était un `href="#"` mort, corrigé le 2026-08-09.
 - [ ] Remplacer les avis de démonstration (`site.config.ts`, `reviews`) par de vrais avis Google — risque légal sinon
 - [ ] **Compléter `site.legal`** : `publisher` (nom et prénom), `address` (siège), `email`, `mediator` (médiateur de la consommation, obligatoire en B2C) — et remplacer `host`/`hostAddress`, aujourd'hui renseignés sur GitHub Pages, par l'hébergeur définitif

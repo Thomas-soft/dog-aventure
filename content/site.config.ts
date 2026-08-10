@@ -183,7 +183,9 @@ export const site: SiteConfig = {
     logoMark: "/images/logo-mark.svg",
   },
 
-  url: "https://dog-aventure.fr", // ← remplacer par le domaine réel du client
+  // Domaine du client, confirmé le 2026-08-10. Source unique : metadataBase,
+  // canonical, robots.txt, sitemap.xml et JSON-LD en découlent tous.
+  url: "https://dog-aventure.com",
 
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)
