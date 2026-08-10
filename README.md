@@ -85,6 +85,35 @@ visiteurs. Pour que les logs Traefik affichent aussi la vraie IP, il faut
 déclarer les plages Cloudflare en `forwardedHeaders.trustedIPs` sur
 l'entrypoint — ça se règle dans la configuration statique de Traefik, pas ici.
 
+### Modifier le site en production
+
+Le contenu est compilé dans la page au moment du build : changer
+`content/site.config.ts` demande donc une reconstruction, pas seulement un
+redémarrage. Le cycle complet :
+
+```bash
+# sur le Mac
+# … modifier content/site.config.ts …
+npm run build          # vérifier que ça compile
+git commit -am "…" && git push
+npm run deploy         # pousse en production sur le Pi
+```
+
+`npm run deploy` se connecte en SSH au Pi et y lance `scripts/deploy.sh`, qui
+récupère la branche, reconstruit l'image, **attend le healthcheck**, vérifie que
+`https://dog-aventure.com` répond 200, puis nettoie les images orphelines. Il
+sort en erreur si l'une de ces étapes échoue — pas de déploiement silencieusement
+cassé.
+
+Si l'hôte SSH n'est pas `pi` ou le chemin pas `~/server/dog-aventure` :
+
+```bash
+PI_HOST=user@192.168.1.42 PI_PATH=~/sites/dog-aventure npm run deploy
+```
+
+Le `git push` met aussi à jour la préview GitHub Pages. C'est l'ordre utile :
+on valide sur la préview, on déploie ensuite.
+
 ### Les certificats — deux, et aucun chez IONOS
 
 Il y a deux liaisons TLS distinctes, chacune avec son propre certificat, tous

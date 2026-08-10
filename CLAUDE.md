@@ -31,6 +31,7 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - **Deux certificats, aucun chez IONOS** : Cloudflare Universal SSL côté visiteur, Let's Encrypt via Traefik côté origine. IONOS n'est plus que registrar — son alerte « pas de SSL » ne concerne que son propre hébergement, vide. Ne rien y acheter.
 - Serveurs de noms délégués à Cloudflare (`dara` + `mario.ns.cloudflare.com` — Cloudflare réutilise la même paire pour toutes les zones d'un même compte, celle de voice-doc.com était donc la bonne).
 - La préview GitHub Pages reste en service et garde son intérêt : c'est le lien à envoyer au client pour valider une modification avant qu'elle ne parte en production.
+- **Mise à jour du contenu** : `npm run build` → `git push` → `npm run deploy`. Le contenu étant compilé dans la page, toute modification de `site.config.ts` impose une reconstruction de l'image, pas un simple redémarrage. `scripts/deploy.sh` tourne sur le Pi, attend le healthcheck et vérifie que le site répond 200 avant de se déclarer réussi.
 
 ## Préview client (GitHub Pages)
 

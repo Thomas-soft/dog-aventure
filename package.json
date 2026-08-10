@@ -6,7 +6,8 @@
     "dev": "next dev --port 3777",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "ssh ${PI_HOST:-pi} \"cd ${PI_PATH:-~/server/dog-aventure} && ./scripts/deploy.sh\""
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
