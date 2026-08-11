@@ -63,10 +63,13 @@ export const site: SiteConfig = {
        `priceNote` fait la démonstration tout seul. Ne pas réinverser. */
     {
       id: "balade-1h",
-      name: "La balade d'1 heure",
+      name: "La balade d’1 heure",
       duration: "1 heure",
-      price: 20,
-      priceNote: "soit 20 € l’heure",
+      price: 22.9,
+      /* Tautologique sur une offre d'1 h, et c'est exactement le but : sans ce
+         repère affiché des deux côtés, le « 44,70 € l'heure » de la petite
+         balade ressemblerait à un argument de vente au lieu d'un fait. */
+      priceNote: "soit 22,90 € l’heure",
       desc: "Une heure rien que pour lui : je viens le chercher chez vous, il se dépense vraiment, explore, renifle, boit — et je le raccompagne apaisé pour la journée. C’est la balade que prennent presque tous mes clients, et de loin la meilleure valeur.",
       features: [
         { icon: "paw-print", label: "Promenade individuelle" },
@@ -92,6 +95,30 @@ export const site: SiteConfig = {
     // Plus tard : { id: "dog-aventure-2h", name: "Dog Aventure", duration: "2 heures",
     // price: 29.9, desc: "2 heures de balade en forêt de Chantilly…", … }
   ],
+
+  /* Carnets dégressifs, demande client du 2026-08-11. La grille se lit
+     22,90 → 21,50 → 20 € la balade. Seuls `quantity` et `total` sont saisis :
+     le prix à la balade et l'économie sont calculés à l'affichage, sinon la
+     grille devient incohérente au premier changement de tarif. */
+  packs: {
+    title: "Il sort plusieurs fois par semaine ?",
+    sub: "Prenez ses balades d’1 heure par carnet : plus le carnet est grand, moins la balade coûte cher.",
+    serviceId: "balade-1h",
+    unitLabel: "À l’unité",
+    unitDesc: "Le prix d’une balade réservée seule.",
+    items: [
+      { id: "pack-10", name: "Pack 10", quantity: 10, total: 215 },
+      {
+        id: "pack-20",
+        name: "Pack 20",
+        quantity: 20,
+        total: 400,
+        badge: "Le meilleur prix",
+        highlight: true,
+      },
+    ],
+    note: "Les carnets portent sur la balade d’1 heure. Rien à régler en ligne : on en parle au téléphone.",
+  },
 
   steps: [
     {

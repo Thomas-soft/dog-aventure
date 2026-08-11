@@ -27,6 +27,42 @@ export interface Service {
   highlight?: boolean;
 }
 
+/** Carnet de balades prépayées, adossé à une offre unitaire (`Packs.serviceId`).
+ *  On ne stocke que la quantité et le total : le prix à la balade et
+ *  l'économie s'en déduisent. Les écrire en dur, c'est se garantir une grille
+ *  incohérente au premier changement de tarif. */
+export interface Pack {
+  /** Identifiant stable (kebab-case) — ex : "pack-10" */
+  id: string;
+  /** Nom affiché (ex : "Pack 10") */
+  name: string;
+  /** Nombre de balades dans le carnet */
+  quantity: number;
+  /** Prix total du carnet, en euros */
+  total: number;
+  /** Badge de mise en avant (ex : "Le meilleur prix") */
+  badge?: string;
+  /** Carnet le plus avantageux : cadre et prix en couleur. Une seule fois. */
+  highlight?: boolean;
+}
+
+/** Grille dégressive affichée sous les offres. La colonne « à l'unité » n'est
+ *  pas un `Pack` : elle est lue depuis le service `serviceId`, pour que le prix
+ *  de référence ne vive qu'à un seul endroit. */
+export interface Packs {
+  title: string;
+  sub: string;
+  /** `id` du service servant de référence — son prix ouvre la grille et sert
+   *  au calcul de l'économie de chaque carnet */
+  serviceId: string;
+  /** Libellé de la colonne de référence (ex : "À l'unité") */
+  unitLabel: string;
+  unitDesc: string;
+  items: Pack[];
+  /** Précision affichée sous la grille */
+  note: string;
+}
+
 export interface Step {
   title: string;
   desc: string;
@@ -107,6 +143,9 @@ export interface SiteConfig {
   heroChips: string[];
   /** Une entrée par offre — ajouter « Dog Aventure 2 h » ici le moment venu */
   services: Service[];
+  /** Grille dégressive, rendue sous les offres dans la section « La promenade ».
+   *  `items: []` masque le bloc entièrement. */
+  packs: Packs;
   /** Les 3 étapes « Comment ça marche » */
   steps: Step[];
   /** Arguments de confiance — section « Pourquoi me confier votre chien » */

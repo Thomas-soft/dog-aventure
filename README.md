@@ -2,7 +2,8 @@
 
 Site vitrine one-page pour un promeneur de chiens solo : balade individuelle
 avec prise en charge et retour à domicile. L'offre à vendre est **la balade
-d'1 heure à 20 €** ; la courte (20 min, 14,90 €) n'est qu'un prix d'appel et le
+d'1 heure à 22,90 €**, dégressive par carnet (21,50 € en Pack 10, 20 € en
+Pack 20) ; la courte (20 min, 14,90 €) n'est qu'un prix d'appel et le
 site l'assume comme telle. Pensé pour du trafic Facebook Ads mobile (prix + appel above
 the fold, barre d'appel fixe) et pour appuyer une fiche Google (villes
 desservies partout, JSON-LD `LocalBusiness` avec `areaServed`).
@@ -181,13 +182,19 @@ Tout le site rend depuis ce fichier typé (`content/types.ts`) :
   hero, la section `#zones`, le footer et le JSON-LD `areaServed`. C'est
   l'argument n°1 du client : le prospect doit voir sa ville.
 - **`services`** : un tableau, **dans l'ordre d'affichage des cartes** — « La
-  balade d'1 heure » (20 €, `highlight: true`) d'abord, « La petite balade »
+  balade d'1 heure » (22,90 €, `highlight: true`) d'abord, « La petite balade »
   (20 min, 14,90 €) ensuite. Le `priceNote` ramène les deux au tarif horaire
-  (20 €/h contre 44,70 €/h) : c'est lui qui vend l'heure, pas la mise en forme.
+  (22,90 €/h contre 44,70 €/h) : c'est lui qui vend l'heure, pas la mise en forme.
   Pour lancer l'offre « Dog Aventure » (2 h en forêt, 29,90 €), **ajouter une
   entrée** ici : carte, JSON-LD et prix suivent tout seuls (`formatPrice` gère
   les décimales à la française). Le hero affiche `Math.min(services)` derrière
   un « à partir de », l'ordre du tableau ne l'influence pas.
+- **`packs`** : la grille dégressive affichée sous les cartes (22,90 → 21,50 →
+  20 € la balade). **Ne saisir que `quantity` et `total`** : le prix à la
+  balade et l'économie sont calculés à l'affichage, et la colonne « à l'unité »
+  lit le service `packs.serviceId` — le tarif de référence ne vit donc qu'à un
+  seul endroit. Changer le prix de la balade d'1 h remet toute la grille
+  d'aplomb, JSON-LD compris. `items: []` masque le bloc.
 - **`siret` et `legal`** : la barre du bas du footer et la page
   `/mentions-legales`. Tout champ de `legal` laissé vide s'affiche
   `[à compléter]` sur la page — volontairement visible.

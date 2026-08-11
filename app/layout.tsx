@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Caveat, Nunito_Sans } from "next/font/google";
 import { site } from "@/content/site.config";
+import { formatPrice } from "@/lib/utils";
 import "./globals.css";
 
 /* ── REBRAND typo : remplacer ces imports next/font suffit ── */
@@ -44,6 +45,32 @@ export const metadata: Metadata = {
   },
 };
 
+/* Fourchette dérivée des offres. Elle était écrite en dur et a menti dès le
+   premier changement de tarif — ne pas y revenir. */
+const prices = site.services.map((s) => s.price);
+
+/* Les carnets sont de vraies offres : sans eux, Google ne voit qu'un tarif
+   unitaire là où la page en affiche trois. */
+const packUnit = site.services.find((s) => s.id === site.packs.serviceId);
+const packOffers = packUnit
+  ? site.packs.items.map((pack) => ({
+      "@type": "Offer",
+      name: `${pack.name} — ${pack.quantity} × ${packUnit.name}`,
+      itemOffered: {
+        "@type": "Service",
+        name: packUnit.name,
+        serviceType: "Promenade de chiens",
+      },
+      price: pack.total.toFixed(2),
+      priceCurrency: "EUR",
+      eligibleQuantity: {
+        "@type": "QuantitativeValue",
+        value: pack.quantity,
+        unitText: "balades",
+      },
+    }))
+  : [];
+
 /* Pas d'aggregateRating ni d'horaires : rien de réel à déclarer pour l'instant */
 const jsonLd = {
   "@context": "https://schema.org",
@@ -54,7 +81,7 @@ const jsonLd = {
   image: `${site.url}${site.seo.ogImage}`,
   description: site.seo.description,
   telephone: site.phoneHref.replace("tel:", ""),
-  priceRange: "14,90 € - 20 €",
+  priceRange: `${formatPrice(Math.min(...prices))} - ${formatPrice(Math.max(...prices))}`,
   // PropertyValue plutôt que taxID : le SIRET identifie l'établissement, ce
   // n'est pas un identifiant fiscal — nommer le référentiel lève l'ambiguïté
   identifier: {
@@ -77,16 +104,19 @@ const jsonLd = {
     credentialCategory: "certification",
   },
   areaServed: site.towns.map((town) => ({ "@type": "City", name: town })),
-  makesOffer: site.services.map((service) => ({
-    "@type": "Offer",
-    itemOffered: {
-      "@type": "Service",
-      name: service.name,
-      serviceType: "Promenade de chiens",
-    },
-    price: service.price.toFixed(2),
-    priceCurrency: "EUR",
-  })),
+  makesOffer: [
+    ...site.services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.name,
+        serviceType: "Promenade de chiens",
+      },
+      price: service.price.toFixed(2),
+      priceCurrency: "EUR",
+    })),
+    ...packOffers,
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

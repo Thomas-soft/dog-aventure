@@ -11,6 +11,7 @@ import {
 import { site } from "@/content/site.config";
 import type { FeatureIcon } from "@/content/types";
 import { SectionHeader } from "@/components/sections/section-header";
+import { Packs } from "@/components/sections/packs";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { cn, formatPrice } from "@/lib/utils";
@@ -193,6 +194,11 @@ export function ServiceSection() {
             </div>
           </Reveal>
         </div>
+
+        {/* Les carnets sont adossés à la balade d'1 h : ils vivent donc dans
+            cette section plutôt que dans une section à eux, qui casserait le
+            rythme crème → surface → sombre de la page. */}
+        <Packs />
       </div>
     </section>
   );
