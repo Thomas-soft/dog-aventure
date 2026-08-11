@@ -45,11 +45,25 @@ for i in $(seq 1 60); do
 done
 
 echo "▸ Vérification publique"
-code="$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$URL/")"
+# Le healthcheck vert ne dit qu'une chose : Next.js répond DANS le conteneur.
+# Traefik, lui, redécouvre le conteneur recréé via l'API Docker, et il existe
+# un battement de quelques secondes où plus aucun routeur ne correspond : le
+# proxy répond alors 404. Vérifier une seule fois faisait échouer le script
+# sur un déploiement pourtant réussi (constaté le 2026-08-11) — on réessaie.
+# `|| true` : sinon `set -e` tue le script sur un curl en échec, avant même
+# d'avoir pu afficher le code.
+for i in $(seq 1 20); do
+  code="$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$URL/" || true)"
+  [ "$code" = "200" ] && break
+  [ "$i" = 20 ] && break
+  sleep 3
+done
 if [ "$code" = "200" ]; then
-  echo "  $URL → 200"
+  echo "  $URL → 200 (après ${i} tentative(s))"
 else
-  echo "  ✗ $URL → $code"
+  echo "  ✗ $URL → $code, toujours pas 200 après 60 s"
+  echo "    le conteneur est healthy : regarder le routage Traefik, pas le site"
+  echo "    docker network inspect \"\${TRAEFIK_NETWORK:-n8n-network}\" | grep -A3 dog-aventure"
   exit 1
 fi
 

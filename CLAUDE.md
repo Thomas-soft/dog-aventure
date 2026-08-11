@@ -32,6 +32,8 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - Serveurs de noms délégués à Cloudflare (`dara` + `mario.ns.cloudflare.com` — Cloudflare réutilise la même paire pour toutes les zones d'un même compte, celle de voice-doc.com était donc la bonne).
 - La préview GitHub Pages reste en service et garde son intérêt : c'est le lien à envoyer au client pour valider une modification avant qu'elle ne parte en production.
 - **Mise à jour du contenu** : `npm run build` → `git push` → `npm run deploy`. Le contenu étant compilé dans la page, toute modification de `site.config.ts` impose une reconstruction de l'image, pas un simple redémarrage. `scripts/deploy.sh` tourne sur le Pi, attend le healthcheck et vérifie que le site répond 200 avant de se déclarer réussi.
+- **Un « ✗ → 404 » en fin de déploiement ne veut pas dire que le déploiement a échoué.** Le healthcheck ne prouve qu'une chose : Next.js répond *dans* le conteneur. Traefik, lui, redécouvre le conteneur recréé via l'API Docker, et pendant quelques secondes aucun routeur ne correspond — le proxy répond 404. C'est arrivé le 2026-08-11 sur un déploiement parfaitement réussi. La vérification publique réessaie donc jusqu'à 60 s (20 × 3 s). Si le 404 persiste au-delà, c'est le routage qu'il faut regarder (conteneur détaché du réseau `${TRAEFIK_NETWORK:-n8n-network}`), pas le site.
+- Le `curl` de vérification porte un `|| true` : sans lui, `set -e` tuait le script sur un curl en échec **avant** d'avoir affiché le code, ce qui donnait un déploiement qui s'arrêtait sans dire pourquoi.
 
 ## Réputation du domaine — refus Google Ads « Site infecté » (2026-08-11)
 
