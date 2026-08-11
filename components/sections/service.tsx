@@ -5,7 +5,7 @@ import {
   MessageCircle,
   PawPrint,
   Phone,
-  ShieldCheck,
+  Star,
   Zap,
 } from "lucide-react";
 import { site } from "@/content/site.config";
@@ -44,31 +44,57 @@ export function ServiceSection() {
           <Stagger stagger={0.12} className="flex flex-col gap-6 lg:col-span-3">
             {site.services.map((service) => (
               <StaggerItem key={service.id}>
+                {/* Toute la hiérarchie visuelle est ici : l'offre phare garde
+                    le cadre orange, le prix en couleur et le grand format ;
+                    l'autre passe en gris et d'un cran plus petit. Le
+                    `priceNote` ramène les deux au tarif horaire — c'est lui qui
+                    fait la démonstration, pas la mise en forme. */}
                 <article
                   className={cn(
-                    "flex h-full flex-col gap-6 rounded-3xl border bg-surface p-7 md:p-9",
-                    service.highlight ? "border-flame shadow-sm" : "border-line",
+                    "flex h-full flex-col gap-6 rounded-3xl border-2 bg-surface p-7 md:p-9",
+                    service.highlight
+                      ? "border-flame shadow-lg"
+                      : "border-line",
                   )}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <h3 className="font-display text-3xl uppercase tracking-tight md:text-4xl">
+                      <h3
+                        className={cn(
+                          "font-display uppercase tracking-tight",
+                          service.highlight
+                            ? "text-3xl md:text-4xl"
+                            : "text-2xl md:text-3xl",
+                        )}
+                      >
                         {service.name}
                       </h3>
                       {service.badge && (
-                        <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-flame/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-flame">
-                          <ShieldCheck className="size-3.5" aria-hidden />
+                        <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-flame px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground">
+                          <Star className="size-3.5 fill-current" aria-hidden />
                           {service.badge}
                         </p>
                       )}
                     </div>
                     <p className="flex flex-col items-end">
-                      <span className="font-display text-5xl text-flame">
+                      <span
+                        className={cn(
+                          "font-display",
+                          service.highlight
+                            ? "text-5xl text-flame"
+                            : "text-4xl text-smoke",
+                        )}
+                      >
                         {formatPrice(service.price)}
                       </span>
                       <span className="text-xs font-semibold uppercase tracking-wide text-smoke">
                         {service.duration} de promenade
                       </span>
+                      {service.priceNote && (
+                        <span className="text-xs text-smoke/70">
+                          {service.priceNote}
+                        </span>
+                      )}
                     </p>
                   </div>
 
@@ -82,7 +108,14 @@ export function ServiceSection() {
                           key={feature.label}
                           className="flex items-center gap-3 rounded-xl border border-line bg-cream px-4 py-3"
                         >
-                          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-flame text-primary-foreground">
+                          <span
+                            className={cn(
+                              "grid size-9 shrink-0 place-items-center rounded-full",
+                              service.highlight
+                                ? "bg-flame text-primary-foreground"
+                                : "bg-ink/10 text-ink/60",
+                            )}
+                          >
                             <Icon className="size-4.5" aria-hidden />
                           </span>
                           <span className="text-sm font-semibold text-ink/85">
@@ -93,14 +126,21 @@ export function ServiceSection() {
                     })}
                   </ul>
 
-                  {/* Le SMS n'est doublé que sur l'offre phare : deux cartes
-                      × deux boutons feraient quatre CTA identiques d'affilée */}
+                  {/* Un seul bouton plein sur la page « offres », celui de
+                      l'offre phare. L'autre carte reste en contour : elle est
+                      réservable, sans capter le regard. Le SMS n'est doublé que
+                      sur la phare — quatre CTA identiques d'affilée, sinon. */}
                   <div className="mt-auto flex flex-wrap gap-3 pt-2">
                     <Button
                       size="lg"
+                      variant={service.highlight ? "default" : "outline"}
                       nativeButton={false}
                       render={<a href={site.phoneHref} />}
-                      className="h-11 rounded-full px-6 text-base font-semibold"
+                      className={cn(
+                        "h-11 rounded-full px-6 text-base font-semibold",
+                        !service.highlight &&
+                          "border-ink bg-transparent hover:border-flame hover:bg-flame hover:text-primary-foreground",
+                      )}
                     >
                       <Phone data-icon="inline-start" />
                       Réserver au {site.phone}

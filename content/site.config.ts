@@ -12,7 +12,7 @@ export const site: SiteConfig = {
   subSlogan: "Simple, locale & de confiance",
   tagline: "Moins de temps pour vous, plus de bonheur pour votre chien. ♡",
   description:
-    "Je viens chercher votre chien chez vous pour une promenade individuelle — 30 minutes ou 1 heure — et je le raccompagne à votre domicile, dépensé, hydraté et heureux.",
+    "Je viens chercher votre chien chez vous pour une promenade individuelle d’1 heure — ou 20 minutes en dépannage — et je le raccompagne à votre domicile, dépensé, hydraté et heureux.",
 
   phone: "07 45 37 50 80",
   phoneHref: "tel:+33745375080",
@@ -57,34 +57,37 @@ export const site: SiteConfig = {
   ],
 
   services: [
-    /* La petite balade d'abord : c'est le prix d'appel, et il porte le
-       « à partir de 14,90 € » du hero. La balade d'1 h garde `highlight`
-       et reste la meilleure valeur (20 €/h contre 29,80 €/h ici). */
-    {
-      id: "balade-30min",
-      name: "La petite balade",
-      duration: "25 à 30 min",
-      price: 14.9,
-      desc: "La sortie qui sauve une journée serrée : je passe le prendre, il se dégourdit les pattes et fait ses besoins, puis je le raccompagne chez vous. Idéale pour les chiots, les chiens âgés ou une pause en milieu de journée.",
-      features: [
-        { icon: "paw-print", label: "Promenade individuelle" },
-        { icon: "home", label: "Aller et retour à votre domicile" },
-      ],
-    },
+    /* La balade d'1 h EN PREMIER, décision client du 2026-08-11 : c'est l'offre
+       à vendre, elle ouvre donc la liste et garde `highlight`. La petite balade
+       passe en second, assumée comme un dépannage — 44,70 €/h contre 20 €/h, le
+       `priceNote` fait la démonstration tout seul. Ne pas réinverser. */
     {
       id: "balade-1h",
       name: "La balade d'1 heure",
       duration: "1 heure",
       price: 20,
-      desc: "Je viens chercher votre chien chez vous pour une promenade individuelle d'1 heure, rien que pour lui, et je le raccompagne à votre domicile.",
+      priceNote: "soit 20 € l’heure",
+      desc: "Une heure rien que pour lui : je viens le chercher chez vous, il se dépense vraiment, explore, renifle, boit — et je le raccompagne apaisé pour la journée. C’est la balade que prennent presque tous mes clients, et de loin la meilleure valeur.",
       features: [
         { icon: "paw-print", label: "Promenade individuelle" },
         { icon: "zap", label: "Sortie & dépense physique" },
         { icon: "droplets", label: "Eau & attention tout au long de la balade" },
         { icon: "home", label: "Retour à votre domicile" },
       ],
-      badge: "Confiance & bienveillance",
+      badge: "La plus demandée",
       highlight: true,
+    },
+    {
+      id: "balade-20min",
+      name: "La petite balade",
+      duration: "20 min",
+      price: 14.9,
+      priceNote: "soit 44,70 € l’heure",
+      desc: "Le strict minimum pour un chien : le temps de sortir, de se dégourdir les pattes et de faire ses besoins. C’est un dépannage — une journée trop serrée, un chiot qui ne tient pas encore, un chien âgé qui fatigue vite. Pour un chien en forme, 20 minutes ne suffisent pas à le fatiguer : prenez plutôt l’heure.",
+      features: [
+        { icon: "paw-print", label: "Promenade individuelle" },
+        { icon: "home", label: "Aller et retour à votre domicile" },
+      ],
     },
     // Plus tard : { id: "dog-aventure-2h", name: "Dog Aventure", duration: "2 heures",
     // price: 29.9, desc: "2 heures de balade en forêt de Chantilly…", … }

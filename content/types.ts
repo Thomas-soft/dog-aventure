@@ -14,11 +14,16 @@ export interface Service {
   duration: string;
   /** Prix en euros — entier affiché sans décimales, sinon virgule française */
   price: number;
+  /** Ramené à l'heure, sous le prix (ex : "soit 44,70 € l'heure"). C'est la
+   *  comparaison qui rend la balade d'1 h évidente — la garder sur les deux
+   *  offres, sinon elle ressemble à un argument de vente plutôt qu'à un fait. */
+  priceNote?: string;
   desc: string;
   features: ServiceFeature[];
-  /** Badge de réassurance (ex : "Confiance & bienveillance") */
+  /** Badge de mise en avant, affiché sur l'offre phare (ex : "La plus demandée") */
   badge?: string;
-  /** Mettre en avant cette offre quand il y en aura plusieurs */
+  /** Offre phare : cadre orange, bouton SMS en plus, prix en couleur.
+   *  Une seule à la fois — deux offres « phares », c'est aucune. */
   highlight?: boolean;
 }
 
