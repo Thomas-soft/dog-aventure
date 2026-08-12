@@ -219,9 +219,14 @@ export const site: SiteConfig = {
     logoMark: "/images/logo-mark.svg",
   },
 
-  // Domaine du client, confirmé le 2026-08-10. Source unique : metadataBase,
-  // canonical, robots.txt, sitemap.xml et JSON-LD en découlent tous.
-  url: "https://dog-aventure.com",
+  // Domaine du client. Source unique : metadataBase, canonical, robots.txt,
+  // sitemap.xml et JSON-LD en découlent tous.
+  //
+  // Remplace dog-aventure.com le 2026-08-12. Ce dernier était un domaine
+  // expiré racheté, dont le passé de page parquée faisait refuser les
+  // campagnes Google Ads (« Site infecté ») ; doogaventure.fr est une
+  // première inscription, sans aucun historique. Détail dans CLAUDE.md.
+  url: "https://doogaventure.fr",
 
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)

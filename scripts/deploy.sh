@@ -9,7 +9,7 @@
 set -euo pipefail
 
 BRANCH="${BRANCH:-main}"
-URL="${URL:-https://dog-aventure.com}"
+URL="${URL:-https://doogaventure.fr}"
 CONTAINER="${CONTAINER:-dog-aventure}"
 
 cd "$(dirname "$0")/.."

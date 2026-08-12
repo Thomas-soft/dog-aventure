@@ -103,7 +103,7 @@ npm run deploy         # pousse en production sur le Pi
 
 `npm run deploy` se connecte en SSH au Pi et y lance `scripts/deploy.sh`, qui
 récupère la branche, reconstruit l'image, **attend le healthcheck**, vérifie que
-`https://dog-aventure.com` répond 200, puis nettoie les images orphelines. Il
+`https://doogaventure.fr` répond 200, puis nettoie les images orphelines. Il
 sort en erreur si l'une de ces étapes échoue — pas de déploiement silencieusement
 cassé.
 
@@ -139,10 +139,15 @@ inactifs, c'est normal : la zone vit chez Cloudflare.
 
 | Enregistrement | Valeur | Proxy |
 | -------------- | ------ | ----- |
-| `A` `dog-aventure.com` | IP publique du Pi | 🟠 proxifié |
-| `CNAME` `www` | `dog-aventure.com` | 🟠 proxifié |
-| `MX` × 2, `TXT` (SPF) | IONOS | ⚪ DNS only |
-| `CNAME` `autodiscover`, `_dmarc` | IONOS | ⚪ DNS only |
+| `A` `doogaventure.fr` | IP publique du Pi | 🟠 proxifié |
+| `CNAME` `www` | `doogaventure.fr` | 🟠 proxifié |
+
+**Deux enregistrements, et c'est tout.** La zone a été créée en « saisie
+manuelle » précisément pour ne rien importer de la zone de parking IONOS. Il n'y
+a donc ni `MX`, ni SPF, ni `autodiscover`, ni `_dmarc` : aucune boîte mail n'est
+ouverte sur le domaine (le client écrit depuis une adresse Outlook). Le jour où
+une adresse `@doogaventure.fr` est créée, ces enregistrements devront être
+ajoutés — et laissés en ⚪ **DNS only**.
 
 Le nuage orange ne vaut que pour les noms qui servent le site en HTTP. Sur les
 autres il ne protège rien et casse : proxifié, `_dmarc` ne renvoie plus aucun
@@ -227,8 +232,9 @@ Pas de formulaire : liens `tel:+33745375080` et `sms:+33745375080` partout
 
 ## À faire avant mise en production
 
-- [x] Domaine réel : `https://dog-aventure.com` (`content/site.config.ts`,
-  champ `url` — `metadataBase` en découle).
+- [x] Domaine réel : `https://doogaventure.fr` (`content/site.config.ts`,
+  champ `url` — `metadataBase` en découle). Remplace `dog-aventure.com` le
+  2026-08-12 ; voir « Réputation du domaine » dans `CLAUDE.md`.
 - [x] Photo du hero : vraie photo client (`scripts/prepare-photos.js`).
 - [ ] Reste en photo de stock : `og.jpg` (1200 × 630, la vignette des partages
   Facebook — à refaire depuis la photo du client).
