@@ -228,6 +228,16 @@ export const site: SiteConfig = {
   // première inscription, sans aucun historique. Détail dans CLAUDE.md.
   url: "https://doogaventure.fr",
 
+  /* Balise Google Ads du compte 165-047-3837. Sans elle, la campagne reste
+     « Éligible (mauvaise configuration) » et Google Ads optimise à l'aveugle,
+     faute de la moindre remontée depuis le site.
+
+     C'est la SEULE origine tierce de la page avec l'iframe Maps : la vider
+     suffit à retirer entièrement gtag.js et les cookies publicitaires, sans
+     toucher au reste du code. La CSP correspondante vit dans
+     docker-compose.yml — les deux se modifient ensemble. */
+  googleAdsId: "AW-18383414023",
+
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)
     title: "Promeneur de chien à Louvres & alentours | Dog Aventure",

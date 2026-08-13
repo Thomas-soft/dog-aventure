@@ -166,5 +166,8 @@ export interface SiteConfig {
   };
   /** URL du site en production, sans slash final — metadataBase, canonical, sitemap, robots et JSON-LD */
   url: string;
+  /** Identifiant de la balise Google Ads (« AW-… »). Vide ou absent = aucun
+   *  script tiers n'est chargé, le site reste sans cookie. */
+  googleAdsId?: string;
   seo: { title: string; description: string; ogImage: string };
 }

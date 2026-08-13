@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Anton, Caveat, Nunito_Sans } from "next/font/google";
+import Script from "next/script";
 import { site } from "@/content/site.config";
 import { formatPrice } from "@/lib/utils";
 import "./globals.css";
@@ -119,6 +120,12 @@ const jsonLd = {
   ],
 };
 
+/* La préview GitHub Pages ne doit jamais alimenter le compte Ads : ses visites
+   sont les nôtres et celles du client, pas des prospects. Le même `site.config`
+   sert aux deux builds, c'est donc ici que la préview se distingue. */
+const adsId =
+  process.env.GITHUB_PAGES === "true" ? undefined : site.googleAdsId;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -131,6 +138,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Balise Google Ads. `afterInteractive` et pas `beforeInteractive` :
+            l'image du hero est l'élément LCP, rien de tiers ne doit passer
+            devant elle. Le suivi publicitaire tolère très bien ce retard. */}
+        {adsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${adsId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${adsId}');`,
+              }}
+            />
+          </>
+        )}
       </body>
     </html>
   );

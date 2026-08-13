@@ -68,8 +68,17 @@ TRAEFIK_NETWORK=mon-reseau docker compose --profile traefik up -d --build
 dans le HTML produit — ne pas la recopier d'un autre projet :
 
 - `frame-src https://www.google.com` — l'iframe Maps de la section « Où
-  j'interviens ». C'est la **seule** origine externe de toute la page ; sans
-  cette directive, la carte reste blanche.
+  j'interviens ». Sans cette directive, la carte reste blanche.
+- **Les origines `googletagmanager` / `googleadservices` / `doubleclick` /
+  `google.fr` sont la balise Google Ads** (`site.googleAdsId`, ajoutée le
+  2026-08-13). Elles reviennent à l'identique dans `script-src`, `img-src` et
+  `connect-src` : `gtag.js` vient de `googletagmanager`, charge ensuite
+  `googleadservices`, et envoie ses conversions à `doubleclick` et à
+  `google.com`/`google.fr` — tantôt en `<img>`, tantôt en `fetch`, selon le
+  navigateur. Supprimer une seule des trois directives donne un suivi qui
+  marche « parfois », ce qui est pire que pas de suivi du tout.
+  **Vider `googleAdsId` retire la balise et ses cookies**, sans autre
+  modification de code ; remettre alors la CSP dans son état d'origine.
 - **Pas de `fonts.googleapis.com` ni `fonts.gstatic.com`** : `next/font`
   télécharge les polices au build et les sert depuis le domaine.
 - `style-src 'unsafe-inline'` est obligatoire — le CSS est inliné dans le HTML

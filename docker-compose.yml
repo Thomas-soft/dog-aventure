@@ -104,11 +104,21 @@ services:
       - "traefik.http.middlewares.dogaventure-security.headers.customFrameOptionsValue=SAMEORIGIN"
       # CSP taillée pour CE site, vérifiée sur le HTML produit :
       #   frame-src www.google.com → l'iframe Maps de la section « Où j'interviens ».
-      #     C'est la seule origine externe de toute la page ; sans elle, carte blanche.
       #   pas de fonts.googleapis/gstatic → next/font sert les polices depuis le domaine.
       #   style-src 'unsafe-inline' → obligatoire, le CSS est inliné (experimental.inlineCss).
       #   script-src sans 'unsafe-eval' → volontaire ; voir le README avant de l'ajouter.
-      - "traefik.http.middlewares.dogaventure-security.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+      #
+      # Le reste est la balise Google Ads (site.googleAdsId), ajoutée le
+      # 2026-08-13. Elle ne tient pas en une origine : gtag.js vient de
+      # googletagmanager, puis charge lui-même googleadservices, et envoie ses
+      # conversions à doubleclick et à google.com/.fr — d'où la même liste
+      # répétée en script-src, img-src et connect-src. Les pings partent tantôt
+      # en <img>, tantôt en fetch, selon le navigateur : les deux directives
+      # sont nécessaires, en retirer une donne un suivi qui marche « parfois ».
+      # google.fr en plus de google.com : le ping de conversion part sur le
+      # domaine Google du pays du visiteur.
+      # Si la balise est retirée de site.config.ts, remettre la CSP d'origine.
+      - "traefik.http.middlewares.dogaventure-security.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.fr; font-src 'self'; frame-src https://www.google.com https://td.doubleclick.net; connect-src 'self' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.fr; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
 
       # Limitation de débit. sourceCriterion est indispensable derrière
       # Cloudflare : sans lui Traefik ne voit que les IP des serveurs
