@@ -32,7 +32,8 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 ## Conversion Ads : au clic, jamais au chargement (2026-08-13)
 
 - Google livre l'action « Contact » en **« Chargement de page »**, avec un extrait à coller dans le `<head>`. **Ne pas le faire.** Le site est une page unique, sans formulaire ni page de confirmation : posé ainsi, il compterait une conversion à chaque visite — 100 % de taux de conversion, et une campagne qui optimise sur du bruit. C'est activement nuisible, pas seulement inutile.
-- L'événement est donc déclenché au **clic sur un lien `tel:` ou `sms:`** (`components/layout/conversion-tracker.tsx`), seule intention mesurable ici. Régler l'action sur « Clic » dans Ads pour que les deux versions concordent.
+- L'événement est donc déclenché au **clic sur un lien `tel:` ou `sms:`** (`components/layout/conversion-tracker.tsx`), seule intention mesurable ici.
+- Le choix « Chargement de page / Clic » de l'assistant Ads **ne change que les instructions affichées** (coller dans le `<head>` ou accrocher à un `onclick`) : l'extrait livré est le même et rien n'est stocké côté compte. Il n'y a donc rien à modifier là. Le réglage qui compte vraiment est **« Comptabilisation »** : le mettre sur **« Une seule »** — un maître qui appelle deux fois reste un seul prospect.
 - **Un seul écouteur délégué sur `document`**, en phase de capture, plutôt qu'un `onClick` par bouton : les liens d'appel vivent dans six composants (hero, navbar, barre d'appel fixe, contact, footer, mentions légales) et il s'en ajoutera. Ne pas « simplifier » en écouteurs individuels, c'est la garantie de rater le prochain lien ajouté.
 - Garde anti-double-clic de 2 s par `href`. Le vrai dédoublonnage reste le réglage « Comptabilisation » de l'action côté Ads.
 - L'événement part **quel que soit le consentement** : le mode Consentement décide ensuite entre conversion identifiée et conversion modélisée. Le filtrer soi-même ferait perdre les deux.

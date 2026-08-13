@@ -253,7 +253,10 @@ export const site: SiteConfig = {
 
      Elle est donc déclenchée au CLIC sur un lien `tel:` ou `sms:` — la seule
      intention réellement mesurable sur ce site. Voir components/layout/
-     conversion-tracker.tsx. Penser à régler l'action sur « Clic » dans Ads. */
+     conversion-tracker.tsx.
+
+     Un libellé erroné échoue en silence : ni erreur, ni log, juste zéro
+     conversion. À vérifier dans Ads sous 24 h après toute modification. */
   googleAdsConversionLabel: "M9shCIS00d8cEIfG8r1E",
 
   /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
