@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site.config";
+import { ConsentLink } from "@/components/layout/consent-banner";
 import { Separator } from "@/components/ui/separator";
 import { asset } from "@/lib/utils";
 
@@ -107,12 +108,18 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {site.name} — SIRET {site.siret}
         </p>
-        <Link
-          href="/mentions-legales"
-          className="underline underline-offset-4 transition-colors hover:text-ink"
-        >
-          Mentions légales
-        </Link>
+        <span className="flex items-center gap-4">
+          <Link
+            href="/mentions-legales"
+            className="underline underline-offset-4 transition-colors hover:text-ink"
+          >
+            Mentions légales
+          </Link>
+          {/* Retirer son consentement doit être aussi accessible que le donner :
+              ce lien rouvre le bandeau depuis n'importe quelle page. Il ne
+              s'affiche pas s'il n'y a pas de balise, donc pas de cookie. */}
+          {site.googleAdsId && <ConsentLink />}
+        </span>
         <p>
           Site réalisé par{" "}
           {site.credits.url ? (

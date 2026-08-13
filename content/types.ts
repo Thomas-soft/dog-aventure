@@ -91,9 +91,30 @@ export interface Trust {
     title: string;
     desc: string;
   };
+  /** Garantie professionnelle, affichée juste sous la qualification.
+   *  Sa place est là et pas en cinquième carte : comme l'ACACED, c'est un fait
+   *  opposable et non un engagement — et la grille des `points` est en
+   *  `lg:grid-cols-4`, une carte de plus la casserait. */
+  insurance?: { title: string; desc: string };
   points: TrustPoint[];
   /** Phrase de conclusion, rendue en manuscrit */
   signature: string;
+}
+
+/** Textes du bandeau de consentement aux cookies publicitaires. Le bandeau
+ *  n'existe que si `googleAdsId` est renseigné : sans balise, aucun cookie,
+ *  donc rien à demander. */
+export interface Consent {
+  title: string;
+  desc: string;
+  /** Libellés des deux boutons. Ils sont rendus à la même taille, volontairement :
+   *  la CNIL exige que refuser soit aussi simple qu'accepter. */
+  accept: string;
+  refuse: string;
+  /** Lien vers les mentions légales, à la suite du texte */
+  more: string;
+  /** Lien de la barre du bas, qui rouvre le bandeau pour changer d'avis */
+  reopen: string;
 }
 
 export interface Review {
@@ -167,7 +188,9 @@ export interface SiteConfig {
   /** URL du site en production, sans slash final — metadataBase, canonical, sitemap, robots et JSON-LD */
   url: string;
   /** Identifiant de la balise Google Ads (« AW-… »). Vide ou absent = aucun
-   *  script tiers n'est chargé, le site reste sans cookie. */
+   *  script tiers n'est chargé, le site reste sans cookie — et le bandeau de
+   *  consentement disparaît avec lui, n'ayant plus rien à demander. */
   googleAdsId?: string;
+  consent: Consent;
   seo: { title: string; description: string; ogImage: string };
 }

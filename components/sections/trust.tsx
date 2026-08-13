@@ -4,6 +4,7 @@ import {
   ClipboardCheck,
   Dog,
   GraduationCap,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import { site } from "@/content/site.config";
@@ -19,7 +20,7 @@ const ICONS: Record<TrustIcon, LucideIcon> = {
 };
 
 export function TrustSection() {
-  const { credential, points, signature } = site.trust;
+  const { credential, insurance, points, signature } = site.trust;
 
   return (
     <section
@@ -63,6 +64,31 @@ export function TrustSection() {
             </div>
           </div>
         </Reveal>
+
+        {/* La garantie professionnelle reste dans le bandeau de la
+            qualification : ce sont les deux seuls faits opposables de la page.
+            Volontairement plus discrète que l'ACACED — une assurance rassure,
+            elle ne vend pas. */}
+        {insurance && (
+          <Reveal delay={0.05}>
+            <div className="mt-4 flex items-start gap-4 rounded-2xl border border-line bg-cream p-5 md:items-center md:gap-5 md:p-6">
+              <span
+                className="grid size-10 shrink-0 place-items-center rounded-full bg-ink text-cream"
+                aria-hidden
+              >
+                <ShieldCheck className="size-5" />
+              </span>
+              <div className="flex flex-col gap-1">
+                <h3 className="font-display text-lg uppercase tracking-tight md:text-xl">
+                  {insurance.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-smoke">
+                  {insurance.desc}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        )}
 
         <Stagger
           stagger={0.1}

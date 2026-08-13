@@ -98,16 +98,12 @@ export default function MentionsLegales() {
             </p>
           </Section>
 
-          <Section title="Données personnelles et cookies">
+          <Section title="Données personnelles">
             <p>
               Ce site ne comporte <strong className="font-semibold text-ink">aucun
               formulaire</strong>&nbsp;: la réservation se fait uniquement par
-              téléphone ou par SMS. Aucune donnée personnelle n&rsquo;est collectée
-              ni stockée lors de votre visite.
-            </p>
-            <p>
-              Aucun cookie n&rsquo;est déposé sur votre appareil, et aucun outil de
-              mesure d&rsquo;audience ou de suivi publicitaire n&rsquo;est installé.
+              téléphone ou par SMS. Aucun compte, aucune inscription, aucune
+              donnée n&rsquo;est demandée pour consulter ces pages.
             </p>
             <p>
               Les informations que vous communiquez lors d&rsquo;un appel ou d&rsquo;un
@@ -116,6 +112,46 @@ export default function MentionsLegales() {
               l&rsquo;accès, la rectification ou la suppression au {site.phone}.
             </p>
           </Section>
+
+          {/* Section rendue seulement s'il y a réellement une balise : sans
+              elle, le site ne dépose rien et cette page n'a pas à parler de
+              cookies. Elle a affirmé le contraire pendant une journée, le temps
+              que la balise soit posée sans que le texte suive — d'où le lien
+              direct entre les deux, pour que ça ne se reproduise pas. */}
+          {site.googleAdsId && (
+            <Section title="Cookies">
+              <p>
+                Ce site utilise la balise Google Ads (
+                <span className="font-mono text-sm">{site.googleAdsId}</span>)
+                dans un seul but&nbsp;: savoir si les annonces diffusées sur
+                Google amènent effectivement des visiteurs jusqu&rsquo;ici. Aucune
+                autre mesure d&rsquo;audience n&rsquo;est installée, et aucun profil
+                publicitaire n&rsquo;est constitué pour le compte de{" "}
+                {site.name}.
+              </p>
+              <p>
+                <strong className="font-semibold text-ink">
+                  Aucun cookie publicitaire n&rsquo;est déposé tant que vous
+                  n&rsquo;avez pas accepté.
+                </strong>{" "}
+                Le mode Consentement de Google est réglé sur «&nbsp;refusé&nbsp;»
+                par défaut&nbsp;: tant que vous n&rsquo;avez pas répondu au bandeau,
+                ou si vous refusez, la balise fonctionne sans écrire quoi que ce
+                soit sur votre appareil et sans identifiant.
+              </p>
+              <p>
+                Si vous acceptez, un cookie <span className="font-mono text-sm">_gcl_au</span>{" "}
+                est déposé par Google pour une durée de 90&nbsp;jours. Vous pouvez
+                revenir sur votre choix à tout moment&nbsp;: le lien{" "}
+                <strong className="font-semibold text-ink">
+                  «&nbsp;{site.consent.reopen}&nbsp;»
+                </strong>{" "}
+                en bas de chaque page rouvre le bandeau. Refuser est aussi simple
+                qu&rsquo;accepter, et le site fonctionne à l&rsquo;identique dans les
+                deux cas.
+              </p>
+            </Section>
+          )}
         </div>
       </main>
       <Footer />

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Anton, Caveat, Nunito_Sans } from "next/font/google";
 import Script from "next/script";
 import { site } from "@/content/site.config";
+import { ConsentBanner } from "@/components/layout/consent-banner";
+import { consentBootstrap } from "@/lib/consent";
 import { formatPrice } from "@/lib/utils";
 import "./globals.css";
 
@@ -133,6 +135,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${body.variable} ${script.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Refus par défaut des cookies publicitaires, AVANT tout le reste.
+            <script> en clair et non next/script : celui-ci s'exécute pendant
+            l'analyse du HTML, donc forcément avant gtag.js qui est chargé en
+            « afterInteractive ». Cet ordre est ce qui garantit qu'aucun cookie
+            n'est écrit tant que le visiteur n'a pas accepté — l'inverser rend
+            tout le dispositif décoratif. */}
+        {adsId && (
+          <script dangerouslySetInnerHTML={{ __html: consentBootstrap() }} />
+        )}
         {children}
         <script
           type="application/ld+json"
@@ -154,6 +165,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${adsId}');`,
               }}
             />
+            <ConsentBanner />
           </>
         )}
       </body>

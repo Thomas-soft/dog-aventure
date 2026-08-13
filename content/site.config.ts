@@ -146,6 +146,13 @@ export const site: SiteConfig = {
       title: "Formé en éducation canine",
       desc: "Je suis titulaire de l’ACACED, l’attestation officielle exigée en France pour exercer auprès des animaux de compagnie. Concrètement : je sais lire le comportement d’un chien et m’adapter au vôtre — et j’en profite pour entretenir ses bonnes habitudes en balade, marche en laisse, calme au croisement et rappel selon son niveau.",
     },
+    /* Demande client du 2026-08-13, texte fourni par lui. Deuxième fait
+       opposable de la page après l'ACACED, d'où sa place sous la
+       qualification et non parmi les `points`, qui sont des engagements. */
+    insurance: {
+      title: "Activité professionnelle assurée — RC Pro",
+      desc: "Votre chien est pris en charge dans le cadre d’une activité professionnelle couverte par une Responsabilité Civile Professionnelle.",
+    },
     points: [
       {
         icon: "camera",
@@ -237,6 +244,18 @@ export const site: SiteConfig = {
      toucher au reste du code. La CSP correspondante vit dans
      docker-compose.yml — les deux se modifient ensemble. */
   googleAdsId: "AW-18383414023",
+
+  /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
+     c'est le seul traceur du site, et il ne mesure effectivement rien d'autre
+     que l'origine publicitaire des visites. */
+  consent: {
+    title: "Cookies de mesure publicitaire",
+    desc: "Je diffuse des annonces Google pour faire connaître mon activité, et un cookie me dit si elles amènent bien des visiteurs jusqu’ici. C’est tout ce qui est mesuré, et le site fonctionne exactement pareil si vous refusez.",
+    accept: "Accepter",
+    refuse: "Refuser",
+    more: "En savoir plus",
+    reopen: "Cookies",
+  },
 
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)
