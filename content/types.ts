@@ -191,6 +191,11 @@ export interface SiteConfig {
    *  script tiers n'est chargé, le site reste sans cookie — et le bandeau de
    *  consentement disparaît avec lui, n'ayant plus rien à demander. */
   googleAdsId?: string;
+  /** Libellé de l'action de conversion Ads, SANS le préfixe « AW-… » : Google
+   *  livre `send_to: "AW-<id>/<libellé>"`, on ne stocke que la seconde moitié
+   *  pour que l'identifiant du compte ne vive qu'à un seul endroit.
+   *  Absent = les clics ne sont pas remontés, la balise reste posée. */
+  googleAdsConversionLabel?: string;
   consent: Consent;
   seo: { title: string; description: string; ogImage: string };
 }

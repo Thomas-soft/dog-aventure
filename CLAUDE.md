@@ -29,6 +29,16 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
   - **La préview GitHub Pages est exclue** (`process.env.GITHUB_PAGES === "true"` dans `layout.tsx`) : ses visites sont les nôtres, elles n'ont rien à faire dans les stats Ads. La chaîne `AW-…` reste présente dans le bundle client de la préview — c'est l'objet `site` complet qui y est embarqué, aucun script n'est chargé pour autant, vérifié par `grep googletagmanager out/`.
   - **Vider `googleAdsId` suffit à tout retirer** : balise, cookies, bandeau de consentement et section « Cookies » des mentions légales disparaissent ensemble, tous conditionnés à ce seul champ.
 
+## Conversion Ads : au clic, jamais au chargement (2026-08-13)
+
+- Google livre l'action « Contact » en **« Chargement de page »**, avec un extrait à coller dans le `<head>`. **Ne pas le faire.** Le site est une page unique, sans formulaire ni page de confirmation : posé ainsi, il compterait une conversion à chaque visite — 100 % de taux de conversion, et une campagne qui optimise sur du bruit. C'est activement nuisible, pas seulement inutile.
+- L'événement est donc déclenché au **clic sur un lien `tel:` ou `sms:`** (`components/layout/conversion-tracker.tsx`), seule intention mesurable ici. Régler l'action sur « Clic » dans Ads pour que les deux versions concordent.
+- **Un seul écouteur délégué sur `document`**, en phase de capture, plutôt qu'un `onClick` par bouton : les liens d'appel vivent dans six composants (hero, navbar, barre d'appel fixe, contact, footer, mentions légales) et il s'en ajoutera. Ne pas « simplifier » en écouteurs individuels, c'est la garantie de rater le prochain lien ajouté.
+- Garde anti-double-clic de 2 s par `href`. Le vrai dédoublonnage reste le réglage « Comptabilisation » de l'action côté Ads.
+- L'événement part **quel que soit le consentement** : le mode Consentement décide ensuite entre conversion identifiée et conversion modélisée. Le filtrer soi-même ferait perdre les deux.
+- `googleAdsConversionLabel` ne stocke **que la seconde moitié** du `send_to` : le `AW-…` vient de `googleAdsId`, pour qu'il ne soit pas écrit deux fois. Le `send_to` complet est assemblé dans `app/layout.tsx`.
+- **Un libellé erroné échoue en silence** — pas d'erreur, pas de log, juste zéro conversion. Après toute modification, vérifier dans Ads sous 24 h que l'action passe à « Enregistrement des conversions ».
+
 ## Consentement aux cookies (2026-08-13)
 
 - `lib/consent.ts` + `components/layout/consent-banner.tsx`. Mode Consentement v2 de Google, **`denied` par défaut** : gtag.js se charge quand même — Google Ads doit constater que la balise est posée, sinon la campagne repasse « Éligible (mauvaise configuration) » — mais n'écrit ni cookie ni identifiant avant acceptation.

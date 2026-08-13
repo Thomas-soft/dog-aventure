@@ -245,6 +245,17 @@ export const site: SiteConfig = {
      docker-compose.yml — les deux se modifient ensemble. */
   googleAdsId: "AW-18383414023",
 
+  /* Action de conversion « Contact » (2026-08-13). Google la livre en
+     « Chargement de page » — inapplicable ici : le site est une page unique,
+     sans formulaire ni page de confirmation. Posée dans le <head> comme Google
+     le propose, elle compterait une conversion par visite, soit 100 % de taux
+     de conversion, et la campagne optimiserait sur du bruit.
+
+     Elle est donc déclenchée au CLIC sur un lien `tel:` ou `sms:` — la seule
+     intention réellement mesurable sur ce site. Voir components/layout/
+     conversion-tracker.tsx. Penser à régler l'action sur « Clic » dans Ads. */
+  googleAdsConversionLabel: "M9shCIS00d8cEIfG8r1E",
+
   /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
      c'est le seul traceur du site, et il ne mesure effectivement rien d'autre
      que l'origine publicitaire des visites. */
