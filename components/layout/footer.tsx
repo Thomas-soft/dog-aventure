@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/content/site.config";
 import { ConsentLink } from "@/components/layout/consent-banner";
 import { Separator } from "@/components/ui/separator";
+import { adsId } from "@/lib/analytics";
 import { asset } from "@/lib/utils";
 
 /* Ancres absolues via asset() — même raison que dans la barre de navigation :
@@ -116,9 +117,10 @@ export function Footer() {
             Mentions légales
           </Link>
           {/* Retirer son consentement doit être aussi accessible que le donner :
-              ce lien rouvre le bandeau depuis n'importe quelle page. Il ne
-              s'affiche pas s'il n'y a pas de balise, donc pas de cookie. */}
-          {site.googleAdsId && <ConsentLink />}
+              ce lien rouvre le bandeau depuis n'importe quelle page. `adsId` et
+              non `site.googleAdsId` — sur la préview il n'y a pas de bandeau à
+              rouvrir, le lien y serait mort. */}
+          {adsId && <ConsentLink />}
         </span>
         <p>
           Site réalisé par{" "}

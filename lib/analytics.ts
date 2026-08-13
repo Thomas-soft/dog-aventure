@@ -1,0 +1,21 @@
+import { site } from "@/content/site.config";
+
+/** Identifiant Google Ads **effectif**, à utiliser partout plutôt que
+ *  `site.googleAdsId` directement.
+ *
+ *  La différence n'est pas cosmétique : la préview GitHub Pages partage le même
+ *  `site.config.ts` que la production mais ne doit charger aucune balise — ses
+ *  visites sont les nôtres, pas des prospects. Tester `site.googleAdsId` au
+ *  lieu de ceci fait apparaître, sur la préview, un lien « Cookies » qui
+ *  n'ouvre rien et une section « Cookies » des mentions légales qui décrit des
+ *  traceurs absents. C'est arrivé le 2026-08-13, d'où ce fichier. */
+export const adsId =
+  process.env.GITHUB_PAGES === "true" ? undefined : site.googleAdsId;
+
+/** `send_to` de l'action de conversion, ou `null` si elle n'est pas
+ *  configurée. Les deux moitiés vivent séparément dans `site.config.ts` pour
+ *  que l'identifiant du compte ne soit pas écrit deux fois. */
+export const conversionSendTo =
+  adsId && site.googleAdsConversionLabel
+    ? `${adsId}/${site.googleAdsConversionLabel}`
+    : null;

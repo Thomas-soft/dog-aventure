@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { StickyCallBar } from "@/components/layout/sticky-call-bar";
 import { site } from "@/content/site.config";
+import { adsId } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: `Mentions légales | ${site.name}`,
@@ -118,11 +119,11 @@ export default function MentionsLegales() {
               cookies. Elle a affirmé le contraire pendant une journée, le temps
               que la balise soit posée sans que le texte suive — d'où le lien
               direct entre les deux, pour que ça ne se reproduise pas. */}
-          {site.googleAdsId && (
+          {adsId && (
             <Section title="Cookies">
               <p>
                 Ce site utilise la balise Google Ads (
-                <span className="font-mono text-sm">{site.googleAdsId}</span>)
+                <span className="font-mono text-sm">{adsId}</span>)
                 dans un seul but&nbsp;: savoir si les annonces diffusées sur
                 Google amènent effectivement des visiteurs jusqu&rsquo;ici. Aucune
                 autre mesure d&rsquo;audience n&rsquo;est installée, et aucun profil

@@ -4,6 +4,7 @@ import Script from "next/script";
 import { site } from "@/content/site.config";
 import { ConsentBanner } from "@/components/layout/consent-banner";
 import { ConversionTracker } from "@/components/layout/conversion-tracker";
+import { adsId, conversionSendTo } from "@/lib/analytics";
 import { consentBootstrap } from "@/lib/consent";
 import { formatPrice } from "@/lib/utils";
 import "./globals.css";
@@ -122,21 +123,6 @@ const jsonLd = {
     ...packOffers,
   ],
 };
-
-/* La préview GitHub Pages ne doit jamais alimenter le compte Ads : ses visites
-   sont les nôtres et celles du client, pas des prospects. Le même `site.config`
-   sert aux deux builds, c'est donc ici que la préview se distingue. */
-const adsId =
-  process.env.GITHUB_PAGES === "true" ? undefined : site.googleAdsId;
-
-/* `send_to` de l'action de conversion, assemblé ici : les deux moitiés vivent
-   séparément dans site.config.ts pour que l'identifiant du compte ne soit pas
-   écrit deux fois. Null tant que le libellé n'est pas renseigné — la balise
-   reste alors posée, seuls les clics ne remontent pas. */
-const conversionSendTo =
-  adsId && site.googleAdsConversionLabel
-    ? `${adsId}/${site.googleAdsConversionLabel}`
-    : null;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
