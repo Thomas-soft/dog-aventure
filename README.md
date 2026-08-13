@@ -77,6 +77,17 @@ dans le HTML produit — ne pas la recopier d'un autre projet :
   `google.com`/`google.fr` — tantôt en `<img>`, tantôt en `fetch`, selon le
   navigateur. Supprimer une seule des trois directives donne un suivi qui
   marche « parfois », ce qui est pire que pas de suivi du tout.
+  **`pagead2.googlesyndication.com` est le piège de cette liste** : c'est
+  l'adresse du ping *sans cookie*, celui qu'envoie la balise tant que le
+  consentement est refusé — donc celui de la majorité des visiteurs. Son
+  absence est invisible à l'œil nu (la page s'affiche, la balise se charge) ;
+  seule la console la révèle. **Pour vérifier une CSP, ne pas se fier à
+  l'affichage** : poser un écouteur et déclencher les requêtes.
+  ```js
+  const v = []; document.addEventListener("securitypolicyviolation",
+    e => v.push([e.violatedDirective, e.blockedURI]));
+  // …recharger, naviguer, puis lire v
+  ```
   **Vider `googleAdsId` retire la balise et ses cookies**, sans autre
   modification de code ; remettre alors la CSP dans son état d'origine.
 - **Pas de `fonts.googleapis.com` ni `fonts.gstatic.com`** : `next/font`
