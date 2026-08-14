@@ -43,6 +43,7 @@ services:
       NODE_ENV: production
       PORT: "3000"
       HOSTNAME: "0.0.0.0"
+      CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
     volumes:
       - image-cache:/app/.next/cache
     # Le HEALTHCHECK est défini dans le Dockerfile
@@ -66,6 +67,13 @@ services:
       NODE_ENV: production
       PORT: "3000"
       HOSTNAME: "0.0.0.0"
+      # Webhook n8n qui reçoit le formulaire de contact (app/api/contact).
+      # Passé par l'environnement et jamais écrit en dur : une URL de webhook
+      # n8n est un point d'entrée public, elle n'a rien à faire dans le dépôt.
+      # À renseigner dans le fichier .env posé à côté de ce docker-compose,
+      # sur le Pi. Absente, la route répond 503 et le formulaire renvoie vers
+      # le téléphone — jamais un faux « message envoyé ».
+      CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
     volumes:
       # Sans ce volume, next/image ré-encode toutes les images à chaque
       # redémarrage — coûteux sur une petite machine.

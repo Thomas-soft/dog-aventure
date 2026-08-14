@@ -127,6 +127,46 @@ export interface Review {
   text: string;
 }
 
+/** Formulaire de contact — l'alternative à l'appel, pas son remplacement.
+ *
+ *  TROIS champs, et pas quatre. La littérature sur les formulaires de
+ *  génération de leads est constante : passer de 4 à 3 champs améliore le taux
+ *  de complétion d'environ la moitié, chaque champ ajouté en coûte. Ne pas y
+ *  glisser « ville », « race du chien » ou « créneau souhaité » : ce sont des
+ *  questions qui se posent naturellement dans la réponse, pas des barrières à
+ *  poser avant le premier contact.
+ *
+ *  Le champ du milieu accepte INDIFFÉREMMENT un e-mail ou un téléphone, et
+ *  c'est le cœur du dispositif. Les études qui déconseillent le champ
+ *  téléphone (≈5 % de soumissions en moins, jusqu'à 37 % d'abandon) mesurent
+ *  des formulaires B2B où être rappelé EST la crainte. Ici, le formulaire
+ *  existe précisément parce que certains visiteurs n'osent pas appeler :
+ *  exiger un numéro reproduirait le blocage qu'on cherche à lever, exiger un
+ *  e-mail écarterait ceux qui préfèrent être rappelés. Laisser choisir le
+ *  canal supprime les deux, sans ajouter de champ. */
+export interface ContactForm {
+  /** Petite accroche au-dessus du formulaire */
+  eyebrow: string;
+  title: string;
+  intro: string;
+  namePlaceholder: string;
+  nameLabel: string;
+  contactLabel: string;
+  contactPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  submit: string;
+  sending: string;
+  successTitle: string;
+  successDesc: string;
+  /** Panne d'envoi : renvoie vers le téléphone, qui lui marche toujours */
+  error: string;
+  /** Mention RGPD affichée sous le bouton, obligatoire dès la collecte */
+  privacy: string;
+  /** L'aperçu GitHub Pages n'a pas de serveur : l'endpoint n'y existe pas */
+  previewNotice: string;
+}
+
 export interface SiteConfig {
   name: string;
   /** Sous-titre du logo texte (ex : "Promenades canines") */
@@ -196,6 +236,12 @@ export interface SiteConfig {
    *  pour que l'identifiant du compte ne vive qu'à un seul endroit.
    *  Absent = les clics ne sont pas remontés, la balise reste posée. */
   googleAdsConversionLabel?: string;
+  /** Libellé de l'action de conversion du FORMULAIRE, distinct du précédent.
+   *  Deux actions principales ne se marchent pas dessus tant qu'elles mesurent
+   *  des événements différents — un appel et un formulaire en sont deux. Le
+   *  double comptage à fuir, c'est deux libellés sur un même clic. */
+  googleAdsFormConversionLabel?: string;
   consent: Consent;
+  contactForm: ContactForm;
   seo: { title: string; description: string; ogImage: string };
 }

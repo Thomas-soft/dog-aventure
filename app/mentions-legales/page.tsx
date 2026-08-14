@@ -101,16 +101,36 @@ export default function MentionsLegales() {
 
           <Section title="Données personnelles">
             <p>
-              Ce site ne comporte <strong className="font-semibold text-ink">aucun
-              formulaire</strong>&nbsp;: la réservation se fait uniquement par
-              téléphone ou par SMS. Aucun compte, aucune inscription, aucune
-              donnée n&rsquo;est demandée pour consulter ces pages.
+              Consulter ces pages ne demande <strong className="font-semibold text-ink">
+              aucune donnée</strong>&nbsp;: ni compte, ni inscription.
             </p>
             <p>
-              Les informations que vous communiquez lors d&rsquo;un appel ou d&rsquo;un
-              SMS (nom, coordonnées, informations sur votre chien) servent
-              uniquement à organiser la prestation. Vous pouvez en demander
-              l&rsquo;accès, la rectification ou la suppression au {site.phone}.
+              Le formulaire de contact recueille trois informations&nbsp;: votre{" "}
+              <strong className="font-semibold text-ink">prénom</strong>, votre{" "}
+              <strong className="font-semibold text-ink">email ou votre
+              téléphone</strong> (au choix) et votre{" "}
+              <strong className="font-semibold text-ink">message</strong>. Elles
+              servent uniquement à vous répondre et à organiser la promenade. Elles
+              ne sont ni revendues, ni cédées, ni utilisées pour vous adresser de
+              la publicité.
+            </p>
+            <p>
+              Le message est transmis à {legal.publisher || "l’éditeur du site"},
+              seul destinataire. Il ne transite que par le serveur qui héberge ce
+              site&nbsp;: <strong className="font-semibold text-ink">aucun
+              prestataire tiers</strong> n&rsquo;intervient dans cette
+              transmission. Les messages sont conservés le temps de traiter la
+              demande, puis un an au plus.
+            </p>
+            <p>
+              Les informations communiquées lors d&rsquo;un appel ou d&rsquo;un SMS
+              (nom, coordonnées, informations sur votre chien) suivent les mêmes
+              règles.
+            </p>
+            <p>
+              Vous pouvez à tout moment demander l&rsquo;accès à ces données, leur
+              rectification ou leur suppression, au {site.phone}
+              {legal.email ? ` ou à ${legal.email}` : ""}.
             </p>
           </Section>
 

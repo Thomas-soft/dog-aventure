@@ -19,3 +19,17 @@ export const conversionSendTo =
   adsId && site.googleAdsConversionLabel
     ? `${adsId}/${site.googleAdsConversionLabel}`
     : null;
+
+/** `send_to` de la conversion du formulaire. Volontairement distinct de
+ *  `conversionSendTo` : un appel et un formulaire sont deux événements, ils
+ *  méritent deux actions Ads. Ce n'est pas le double comptage qu'on fuit —
+ *  celui-là, c'est deux libellés sur un même clic. */
+export const formConversionSendTo =
+  adsId && site.googleAdsFormConversionLabel
+    ? `${adsId}/${site.googleAdsFormConversionLabel}`
+    : null;
+
+/** L'aperçu GitHub Pages est un export statique : il n'a pas de serveur, donc
+ *  pas de `/api/contact`. Le formulaire doit le savoir et le dire, plutôt que
+ *  de partir en 404 sous le nez du client venu valider la maquette. */
+export const isStaticPreview = process.env.GITHUB_PAGES === "true";

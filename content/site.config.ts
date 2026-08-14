@@ -288,6 +288,40 @@ export const site: SiteConfig = {
     reopen: "Cookies",
   },
 
+  /* Idée du client (2026-08-14) : tout le monde n'ose pas appeler un inconnu.
+     Le formulaire est l'issue de secours pour ceux-là — il ne remplace pas le
+     téléphone, qui reste le premier bouton de la section. Garder cette
+     hiérarchie : l'appel convertit mieux, le formulaire rattrape les timides.
+
+     Le tutoiement est proscrit ici comme partout : c'est Martin qui parle,
+     à la première personne, en vouvoyant. */
+  contactForm: {
+    eyebrow: "Pas très téléphone ?",
+    title: "Écrivez-moi",
+    intro:
+      "Trois champs, trente secondes. Je réponds dans la journée, et c’est moi qui vous rappelle si vous préférez.",
+    nameLabel: "Votre prénom",
+    namePlaceholder: "Julie",
+    contactLabel: "Votre email ou votre téléphone",
+    contactPlaceholder: "julie@exemple.fr ou 06 12 34 56 78",
+    messageLabel: "Votre message",
+    messagePlaceholder:
+      "Bonjour, j’ai un berger australien de 3 ans plutôt énergique, je cherche une balade en semaine…",
+    submit: "Envoyer",
+    sending: "Envoi…",
+    successTitle: "C’est envoyé !",
+    successDesc:
+      "Je vous réponds dans la journée. À très vite, et une caresse à votre chien de ma part.",
+    /* Un échec d'envoi ne doit jamais être un cul-de-sac : le téléphone, lui,
+       ne dépend d'aucun serveur. */
+    error:
+      "L’envoi a échoué. Réessayez dans un instant, ou appelez-moi directement :",
+    privacy:
+      "Vos coordonnées me servent uniquement à vous répondre. Elles ne sont ni revendues, ni utilisées pour de la publicité.",
+    previewNotice:
+      "Aperçu client : le formulaire n’envoie rien ici. Il fonctionne sur le site en ligne.",
+  },
+
   seo: {
     // 56 caractères — mot-clé en tête, non tronqué par Google (~60 max)
     title: "Promeneur de chien à Louvres & alentours | Dog Aventure",
