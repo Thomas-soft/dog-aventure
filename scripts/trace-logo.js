@@ -13,6 +13,7 @@
      public/images/logo-mark.svg  marque seule, sans le trait de sol (barre
                                   de navigation)
      app/icon.svg                 favicon (la marque sur fond crème)
+     app/favicon.ico              le même, rasterisé, pour les robots
    ───────────────────────────────────────────────────────────────────────── */
 const sharp = require("sharp");
 const potrace = require("potrace");
@@ -278,6 +279,54 @@ const write = (rel, content) => {
   console.log(`  ${rel} — ${(content.length / 1024).toFixed(1)} Ko`);
 };
 
+/* Le .ico n'existe que pour les robots : les navigateurs prennent le SVG de
+   icon.svg, qui est déclaré avant lui et ne pixellise à aucune taille. Google
+   recommande « plus grand que 48 px » — d'où le 64, au-delà des trois tailles
+   habituelles.
+
+   Format écrit à la main plutôt qu'avec une dépendance de plus : un ICO n'est
+   qu'un en-tête, une entrée de 16 octets par taille, puis les PNG bout à bout
+   (le conteneur accepte du PNG tel quel depuis Vista, pas besoin de BMP).
+
+   Rasterisé depuis la CHAÎNE svg passée en argument, jamais en relisant
+   app/icon.svg : les deux fichiers ne peuvent donc pas diverger. La densité
+   élevée rend un bitmap bien plus grand que la cible, que le resize réduit —
+   sans elle, sharp rendrait le SVG à 64 px puis l'agrandirait pour la variante
+   64, ce qui revient à recopier des pixels. */
+const ICO_SIZES = [16, 32, 48, 64];
+
+async function ico(svg) {
+  const pngs = await Promise.all(
+    ICO_SIZES.map((px) =>
+      sharp(Buffer.from(svg), { density: 600 })
+        .resize(px, px)
+        .png({ compressionLevel: 9 })
+        .toBuffer(),
+    ),
+  );
+
+  const dir = Buffer.alloc(6 + 16 * pngs.length);
+  dir.writeUInt16LE(0, 0); // réservé
+  dir.writeUInt16LE(1, 2); // type : icône (2 = curseur)
+  dir.writeUInt16LE(pngs.length, 4);
+
+  let offset = dir.length;
+  pngs.forEach((png, i) => {
+    const e = 6 + 16 * i;
+    dir.writeUInt8(ICO_SIZES[i] % 256, e); // 256 s'écrirait 0
+    dir.writeUInt8(ICO_SIZES[i] % 256, e + 1);
+    dir.writeUInt8(0, e + 2); // couleurs de palette : aucune
+    dir.writeUInt8(0, e + 3); // réservé
+    dir.writeUInt16LE(1, e + 4); // plans de couleur
+    dir.writeUInt16LE(32, e + 6); // bits par pixel (RVBA)
+    dir.writeUInt32LE(png.length, e + 8);
+    dir.writeUInt32LE(offset, e + 12);
+    offset += png.length;
+  });
+
+  return Buffer.concat([dir, ...pngs]);
+}
+
 (async () => {
   const full = await mask();
   const logo = await toPath("logo", full);
@@ -305,16 +354,15 @@ const write = (rel, content) => {
   // 54/64 et non 48 : à 32 px, le dessin doit occuper tout ce qu'il peut.
   const [, , iw, ih] = icon.vb.split(" ").map(Number);
   const s = 54 / Math.max(iw, ih);
-  write(
-    "app/icon.svg",
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
 <rect width="64" height="64" rx="14" fill="#f4efe4"/>
 <g transform="translate(${((64 - iw * s) / 2).toFixed(2)} ${((64 - ih * s) / 2).toFixed(2)}) scale(${s.toFixed(4)})">
 <path fill="${GREEN}" fill-rule="evenodd" d="${icon.d}"/>
 </g>
 </svg>
-`,
-  );
+`;
+  write("app/icon.svg", iconSvg);
+  write("app/favicon.ico", await ico(iconSvg));
 
   const [, , lw, lh] = logo.vb.split(" ").map(Number);
   const [, , mw, mh] = mark.vb.split(" ").map(Number);

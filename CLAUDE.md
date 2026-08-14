@@ -141,8 +141,8 @@ Une campagne Google Ads (« Promeneur Chien à Saint-Witz ») a vu son groupe de
 
 ## Logo (2026-08-09, source remplacée le même jour)
 
-- Trois assets, tous générés par `scripts/trace-logo.js` — **ne jamais les éditer à la main** :
-  `public/images/logo.svg` (complet, footer), `public/images/logo-mark.svg` (marque seule, barre de navigation), `app/icon.svg` (favicon).
+- Quatre assets, tous générés par `scripts/trace-logo.js` — **ne jamais les éditer à la main** :
+  `public/images/logo.svg` (complet, footer), `public/images/logo-mark.svg` (marque seule, barre de navigation), `app/icon.svg` (favicon) et `app/favicon.ico` (le même, rasterisé — cf. « Favicon » ci-dessous).
 - Source : `scripts/logo-source.jpg`, **1254×1254 px**, le dessin y occupe 1024×881 px **d'un seul vert `#327E1C`**. Elle remplace la première capture d'écran où le logo ne faisait que 160×149 px et mêlait deux verts ; toute la machinerie de séparation colorimétrique (profondeur au fond, germes, BFS) a disparu du script avec elle — un seuil de couverture suffit désormais.
 - Relancer : `npm i --no-save potrace && node scripts/trace-logo.js`. Le script cadre tout seul sur le dessin (`contentBox`) — pas de constante de crop à ajuster si la source change.
 - Deux tris purement géométriques dans le script : `RING_R` (340 px source) sépare les onze lettres, dont le centre est à r ≥ 387, des morceaux du personnage, tous à r ≤ 307 ; `removeGroundLine()` retire le trait de sol de la **marque seule** (avec lui, la marque fait 1,24 de ratio et à 40 px le bandeau mange toute la largeur).
@@ -151,6 +151,18 @@ Une campagne Google Ads (« Promeneur Chien à Saint-Witz ») a vu son groupe de
 - Marque seule dans la barre de navigation, logo complet dans le footer : à 40 px, le texte en arc n'est qu'un anneau de taches.
 - Servis en `<img>` (via `asset()`), pas en SVG inline ni en `next/image` : l'optimiseur Next refuse les SVG, et un SVG inline dans la barre — composant client — pèserait deux fois, dans le HTML **et** dans le bundle JS. Mesuré : +5,9 Ko en fichier contre +12,5 Ko en inline.
 - Le fichier vectoriel d'origine (SVG/AI/PDF) reste préférable, mais ce n'est plus un problème pour le web : à 1024 px de source, le tracé est propre. C'est pour l'impression (flyer, marquage véhicule) qu'il faudra le demander.
+
+## Favicon dans les résultats Google (2026-08-14)
+
+- **Le globe gris dans les résultats n'est pas une panne, c'est un délai.** Constaté le 2026-08-14 sur `doogaventure.fr`, deux jours après la bascule. Tout ce que Google exige était déjà satisfait — vérifié point par point, pas supposé : carré (`viewBox="0 0 64 64"`, le non-carré est le motif de rejet n°1), balise `<link rel="icon">` présente dans le `<head>` de l'accueil, `robots.txt` en `Allow: /`, et surtout les deux robots concernés testés à la main (`Googlebot` sur l'accueil → 200, **`Googlebot-Image` sur `/icon.svg` → 200**).
+- **Ce sont deux explorations distinctes, c'est là que se joue l'écart** : la page est indexée par `Googlebot`, le favicon est récupéré séparément et plus tard par `Googlebot-Image`. Voir un résultat s'afficher ne prouve donc rien sur le favicon. Google annonce « several days to several weeks » pour cette seconde étape. Le seul levier documenté pour l'accélérer : Search Console → Inspection de l'URL sur l'accueil → « Demander une indexation ».
+- **Le favicon est stocké par nom d'hôte** : `doogaventure.fr` repart de zéro, il n'hérite de rien de `dog-aventure.com`. À reprévoir à chaque changement de domaine.
+- `app/favicon.ico` a été ajouté le 2026-08-14 en **repli, pas en correctif** — la balise `<link>` suffit d'après la doc Google, mais `/favicon.ico` à la racine reste l'emplacement historique que sondent les robots, et il répondait 404. Ne pas le présenter comme la cause du globe gris.
+- Généré par `trace-logo.js`, **rasterisé depuis la chaîne SVG en mémoire et jamais en relisant `app/icon.svg`** : les deux fichiers ne peuvent pas diverger. Quatre tailles (16/32/48/64) — le 64 parce que Google recommande « plus grand que 48 px ».
+- Le conteneur ICO est écrit à la main (~25 lignes) plutôt qu'avec une dépendance : en-tête de 6 octets, une entrée de 16 par taille, puis les PNG bout à bout — le format accepte du PNG tel quel depuis Vista, pas de BMP à produire. Contrôle après génération : `file app/favicon.ico` doit annoncer « MS Windows icon resource - 4 icons », et l'offset + la longueur de la dernière entrée doivent tomber pile sur la taille du fichier.
+- **Next émet les deux balises en production, mais pas en export statique** : le build normal sort `<link rel="icon" … type="image/x-icon" sizes="64x64">` **et** celle du SVG ; avec `GITHUB_PAGES=true`, `out/favicon.ico` est bien écrit mais seule la balise du SVG figure dans le HTML. Sans conséquence — la préview n'a pas à être indexée — mais ne pas s'en servir pour vérifier le comportement réel.
+- Le `href` porte un hash (`/favicon.ico?favicon.<hash>.ico`). **Vérifier le chemin nu en plus** : `/favicon.ico` sans query doit répondre 200 en `image/x-icon`, c'est celui-là que sondent les robots.
+- Reste côté Google, hors code : la fiche Business Profile pointe encore sur `http://dog-aventure.com/` (cf. « À faire avant mise en ligne »).
 
 ## Mentions légales (2026-08-09)
 
