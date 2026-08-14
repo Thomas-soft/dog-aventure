@@ -5,6 +5,7 @@ import { MessageCircle, PawPrint, Phone } from "lucide-react";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { CircularSticker } from "@/components/fx/circular-sticker";
 import { Button } from "@/components/ui/button";
+import { WhatsappIcon } from "@/components/ui/whatsapp-icon";
 import { site } from "@/content/site.config";
 import { formatPrice } from "@/lib/utils";
 
@@ -75,6 +76,27 @@ export function Hero() {
             >
               <MessageCircle data-icon="inline-start" />
               Réserver par SMS
+            </Button>
+            {/* Troisième canal (2026-08-14). `target="_blank"` : wa.me
+                redirige vers l'application ou vers web.whatsapp.com — sans
+                lui, un visiteur qui revient en arrière depuis WhatsApp perd
+                la page. `rel` obligatoire avec `_blank` (accès à
+                `window.opener` sinon). */}
+            <Button
+              size="lg"
+              variant="outline"
+              nativeButton={false}
+              render={
+                <a
+                  href={site.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+              className="h-12 rounded-full border-ink bg-transparent px-6 text-base hover:border-flame hover:bg-flame hover:text-primary-foreground"
+            >
+              <WhatsappIcon data-icon="inline-start" />
+              WhatsApp
             </Button>
           </StaggerItem>
 

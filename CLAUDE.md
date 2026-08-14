@@ -45,6 +45,15 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - **Ne pas envoyer de `value`.** L'extrait de Google porte `value: 1.0, currency: 'EUR'`, mais l'action est réglée sur « si aucune valeur n'est définie, utiliser 1 € » : l'envoyer ne fait que réécrire ce défaut, et un montant inventé donne une fausse précision aux rapports de valeur.
 - **Un libellé erroné échoue en silence** — pas d'erreur, pas de log, juste zéro conversion. Après toute modification, vérifier dans Ads sous 24 h que l'action passe à « Enregistrement des conversions ».
 
+## WhatsApp (2026-08-14)
+
+- `site.whatsappHref` = `https://wa.me/33745375080`. **wa.me veut le numéro international sans `+` ni séparateur.** Confirmé avec le client que ce numéro a bien un compte : sans compte, le lien affiche «&nbsp;ce numéro n'est pas sur WhatsApp&nbsp;» — un cul-de-sac pour un prospect, pire que pas de bouton.
+- Bouton posé dans **le hero et la section `#reserver`** seulement, pas dans les CTA secondaires (`service`, `zones`) ni dans la barre d'appel fixe, où une troisième colonne serrerait trop sur mobile. Les deux rangées sont en `flex-wrap`, les boutons passent à la ligne sans déborder.
+- `target="_blank"` + `rel="noopener noreferrer"` : wa.me redirige vers l'application ou vers `web.whatsapp.com`, et sans `_blank` le visiteur qui revient en arrière perd la page.
+- **Icône dédiée (`components/ui/whatsapp-icon.tsx`)** : lucide-react ne fournit plus d'icônes de marque, et réutiliser la bulle `MessageCircle` du bouton SMS rendrait les deux boutons indiscernables. Le composant étale ses props (`React.SVGProps`) — sans ça, le `data-icon="inline-start"` n'atteindrait pas le SVG et le bouton perdrait son espacement. Ne pas y forcer de `size-*` : le bouton applique déjà `[&_svg:not([class*='size-'])]:size-4`.
+- **Suivi : troisième action de conversion, `googleAdsWhatsappConversionLabel`, encore VIDE.** L'action n'est pas créée côté Ads, donc aucun événement n'est émis au clic WhatsApp — le bouton marche, il n'est pas compté. **Ne jamais le faire retomber sur le libellé de l'appel** : compter un clic WhatsApp comme un appel gonflerait la seule métrique sur laquelle la campagne optimise aujourd'hui. Le tracker (`conversion-tracker.tsx`) écoute désormais `tel:`, `sms:` **et** `https://wa.me/`, et route chaque canal vers son propre `send_to`.
+- Pas de modification de CSP : un lien externe est une navigation, que la CSP du site ne contraint pas (`navigate-to` n'y figure pas).
+
 ## Le formulaire est en HAUT de page (2026-08-14)
 
 Demande client, après une conversation entre Martin et ChatGPT : «&nbsp;il veut pas qu'on scroll beaucoup&nbsp;».

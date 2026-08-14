@@ -29,6 +29,16 @@ export const formConversionSendTo =
     ? `${adsId}/${site.googleAdsFormConversionLabel}`
     : null;
 
+/** `send_to` de la conversion du clic WhatsApp, encore une action à part.
+ *  `null` tant que le libellé est vide côté config — le tracker n'émet alors
+ *  rien pour WhatsApp, et surtout ne se rabat PAS sur `conversionSendTo` :
+ *  compter un clic WhatsApp comme un appel fausserait la seule métrique sur
+ *  laquelle la campagne optimise aujourd'hui. */
+export const whatsappConversionSendTo =
+  adsId && site.googleAdsWhatsappConversionLabel
+    ? `${adsId}/${site.googleAdsWhatsappConversionLabel}`
+    : null;
+
 /** L'aperçu GitHub Pages est un export statique : il n'a pas de serveur, donc
  *  pas de `/api/contact`. Le formulaire doit le savoir et le dire, plutôt que
  *  de partir en 404 sous le nez du client venu valider la maquette. */

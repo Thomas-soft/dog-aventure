@@ -2,6 +2,7 @@ import { MessageCircle, PawPrint, Phone } from "lucide-react";
 import { site } from "@/content/site.config";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import { WhatsappIcon } from "@/components/ui/whatsapp-icon";
 
 /* L'ancre `#contact` a suivi le formulaire vers le haut de page : la barre de
    navigation, le menu mobile et le pied de page y mènent tous. Cette section
@@ -59,6 +60,23 @@ export function ContactSection() {
                 >
                   <MessageCircle data-icon="inline-start" />
                   Réserver par SMS
+                </Button>
+                {/* Voir hero.tsx pour le pourquoi de `target`/`rel`. */}
+                <Button
+                  size="lg"
+                  variant="outline"
+                  nativeButton={false}
+                  render={
+                    <a
+                      href={site.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                  className="h-12 rounded-full border-cream/50 bg-transparent px-6 text-base text-cream hover:bg-cream/10 hover:text-cream"
+                >
+                  <WhatsappIcon data-icon="inline-start" />
+                  WhatsApp
                 </Button>
               </div>
               {/* Le formulaire vivait ici, sous un filet de séparation. Il a

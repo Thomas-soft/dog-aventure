@@ -4,7 +4,11 @@ import Script from "next/script";
 import { site } from "@/content/site.config";
 import { ConsentBanner } from "@/components/layout/consent-banner";
 import { ConversionTracker } from "@/components/layout/conversion-tracker";
-import { adsId, conversionSendTo } from "@/lib/analytics";
+import {
+  adsId,
+  conversionSendTo,
+  whatsappConversionSendTo,
+} from "@/lib/analytics";
 import { consentBootstrap } from "@/lib/consent";
 import { formatPrice } from "@/lib/utils";
 import "./globals.css";
@@ -163,7 +167,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             />
             <ConsentBanner />
             {conversionSendTo && (
-              <ConversionTracker sendTo={conversionSendTo} />
+              <ConversionTracker
+                sendTo={conversionSendTo}
+                whatsappSendTo={whatsappConversionSendTo}
+              />
             )}
           </>
         )}

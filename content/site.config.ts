@@ -17,6 +17,11 @@ export const site: SiteConfig = {
   phone: "07 45 37 50 80",
   phoneHref: "tel:+33745375080",
   smsHref: "sms:+33745375080",
+  /* wa.me veut le numéro au format international SANS « + » ni séparateur.
+     Confirmé le 2026-08-14 que ce numéro a bien un compte WhatsApp : sans
+     compte, le lien affiche « ce numéro n'est pas sur WhatsApp » — un
+     cul-de-sac pour un prospect, pire que pas de bouton du tout. */
+  whatsappHref: "https://wa.me/33745375080",
 
   base: { city: "Louvres", zip: "95380", region: "Val-d'Oise" },
 
@@ -293,6 +298,14 @@ export const site: SiteConfig = {
      prestataire tiers n'intervient. Ne pas le réactiver sans réécrire cette
      page. */
   googleAdsFormConversionLabel: "rRrXCN-_1uEcEIfG8r1E",
+
+  /* Troisième action : le clic WhatsApp (ajouté le 2026-08-14). Encore vide —
+     l'action n'est pas créée côté Ads. **Vide = aucun événement n'est émis au
+     clic WhatsApp** : le bouton fonctionne, il n'est simplement pas compté.
+     C'est le bon défaut, l'inverse (retomber sur le libellé de l'appel)
+     gonflerait les conversions téléphoniques avec des événements qui n'en
+     sont pas, et ferait optimiser la campagne sur un compte faux. */
+  googleAdsWhatsappConversionLabel: "",
 
   /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
      c'est le seul traceur du site, et il ne mesure effectivement rien d'autre

@@ -179,6 +179,7 @@ export interface SiteConfig {
   phone: string;
   phoneHref: string;
   smsHref: string;
+  whatsappHref: string;
   /** Ville d'attache — affichée « Basé à … » et utilisée dans le JSON-LD */
   base: { city: string; zip: string; region: string };
   /** SIRET, groupé 3-3-3-5 — pied de page, mentions légales et JSON-LD */
@@ -241,6 +242,10 @@ export interface SiteConfig {
    *  des événements différents — un appel et un formulaire en sont deux. Le
    *  double comptage à fuir, c'est deux libellés sur un même clic. */
   googleAdsFormConversionLabel?: string;
+  /** Libellé de l'action de conversion du clic WhatsApp, encore distinct.
+   *  Vide tant que l'action n'existe pas côté Ads : le bouton marche, il n'est
+   *  pas compté. Ne jamais le faire retomber sur le libellé de l'appel. */
+  googleAdsWhatsappConversionLabel?: string;
   consent: Consent;
   contactForm: ContactForm;
   seo: { title: string; description: string; ogImage: string };
