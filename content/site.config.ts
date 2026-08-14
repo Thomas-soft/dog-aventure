@@ -245,19 +245,36 @@ export const site: SiteConfig = {
      docker-compose.yml — les deux se modifient ensemble. */
   googleAdsId: "AW-18383414023",
 
-  /* Action de conversion « Contact » (2026-08-13). Google la livre en
-     « Chargement de page » — inapplicable ici : le site est une page unique,
-     sans formulaire ni page de confirmation. Posée dans le <head> comme Google
-     le propose, elle compterait une conversion par visite, soit 100 % de taux
-     de conversion, et la campagne optimiserait sur du bruit.
+  /* Action de conversion « Annonce Appel Direct » (2026-08-14). Remplace
+     « Contact » (libellé M9shCIS00d8cEIfG8r1E), qui était de type « Site Web »
+     générique et n'avait enregistré aucune conversion.
 
+     Pourquoi celle-ci : sa source est « Clics sur des numéros de téléphone »,
+     non modifiable, et elle est rattachée à l'objectif « Leads par téléphone ».
+     C'est exactement ce que mesure conversion-tracker.tsx — l'ancienne action
+     décrivait le même clic sous une étiquette plus vague.
+
+     UNE SEULE action doit être branchée à la fois. Les deux sont « principales »
+     et alimentent donc les enchères : en émettre deux sur le même clic
+     doublerait le nombre de conversions et ferait optimiser la campagne sur un
+     compte faux. Ne pas « ajouter » un libellé ici, le remplacer.
+
+     Google la livre en « Chargement de page » — inapplicable ici : le site est
+     une page unique, sans formulaire ni page de confirmation. Posée dans le
+     <head> comme Google le propose, elle compterait une conversion par visite,
+     soit 100 % de taux de conversion, et la campagne optimiserait sur du bruit.
      Elle est donc déclenchée au CLIC sur un lien `tel:` ou `sms:` — la seule
      intention réellement mesurable sur ce site. Voir components/layout/
      conversion-tracker.tsx.
 
+     Aucune `value` n'est envoyée : l'action est réglée sur « si aucune valeur
+     n'est définie, utiliser 1 € », donc l'extrait de Google (`value: 1.0`) ne
+     ferait que réécrire ce défaut. Un montant inventé donnerait une fausse
+     précision dans les rapports de valeur.
+
      Un libellé erroné échoue en silence : ni erreur, ni log, juste zéro
      conversion. À vérifier dans Ads sous 24 h après toute modification. */
-  googleAdsConversionLabel: "M9shCIS00d8cEIfG8r1E",
+  googleAdsConversionLabel: "VzR7CN_-s-EcEIfG8r1E",
 
   /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
      c'est le seul traceur du site, et il ne mesure effectivement rien d'autre
