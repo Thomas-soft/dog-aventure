@@ -92,6 +92,25 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Raccourci vers le formulaire, volontairement en retrait : le
+              téléphone garde le bouton plein, c'est lui qui convertit le mieux
+              et celui que Martin préfère. Ne pas inverser les deux styles.
+
+              `bg-transparent` explicite : la variante outline porte
+              `bg-background`, qui ferait un bloc opaque sur une barre encore
+              transparente au-dessus du hero.
+
+              Masqué sous md — le menu déroulant mobile porte déjà son propre
+              lien « Contact », et la barre y tient déjà le logo, l'appel et le
+              bouton du menu. */}
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={<a href={asset("/#contact")} />}
+            className="hidden rounded-full border-ink/25 bg-transparent px-4 font-semibold text-ink hover:bg-ink/5 md:inline-flex"
+          >
+            Contact
+          </Button>
           <Button
             nativeButton={false}
             render={<a href={site.phoneHref} aria-label={`Appeler le ${site.phone}`} />}

@@ -306,18 +306,24 @@ export const site: SiteConfig = {
     reopen: "Cookies",
   },
 
-  /* Idée du client (2026-08-14) : tout le monde n'ose pas appeler un inconnu.
-     Le formulaire est l'issue de secours pour ceux-là — il ne remplace pas le
-     téléphone, qui reste le premier bouton de la section. Garder cette
-     hiérarchie : l'appel convertit mieux, le formulaire rattrape les timides.
+  /* Idée du client (2026-08-14) : tout le monde n'appelle pas un inconnu du
+     premier coup. Le formulaire couvre ces visiteurs-là — il ne remplace pas
+     le téléphone, qui reste le premier bouton de la section. Garder cette
+     hiérarchie : l'appel convertit mieux.
+
+     ⚠️ Cette raison d'être ne doit JAMAIS transparaître dans le texte affiché
+     (demande client du 2026-08-14). L'accroche disait « Pas très téléphone ? » :
+     nommer la réticence du visiteur la lui rappelle, et ça sonne amateur sur un
+     site commercial. Le formulaire se présente comme un second canal, offert et
+     normal — jamais comme un refuge pour qui n'ose pas décrocher.
 
      Le tutoiement est proscrit ici comme partout : c'est Martin qui parle,
      à la première personne, en vouvoyant. */
   contactForm: {
-    eyebrow: "Pas très téléphone ?",
+    eyebrow: "Par écrit",
     title: "Écrivez-moi",
     intro:
-      "Trois champs, trente secondes. Je réponds dans la journée, et c’est moi qui vous rappelle si vous préférez.",
+      "Décrivez-moi votre besoin en quelques mots. Je réponds dans la journée, par email ou par téléphone, comme vous préférez.",
     nameLabel: "Votre prénom",
     namePlaceholder: "Julie",
     contactLabel: "Votre email ou votre téléphone",

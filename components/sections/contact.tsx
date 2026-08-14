@@ -20,8 +20,11 @@ export function ContactSection() {
             />
 
             <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
+              {/* « Réservation » seul, et plus « par téléphone ou SMS » : cette
+                  accroche coiffe toute la carte, qui porte désormais aussi le
+                  formulaire — elle en annonçait deux canaux sur trois. */}
               <span className="text-xs font-bold uppercase tracking-[0.28em] text-leaf">
-                Réservation par téléphone ou SMS
+                Réservation
               </span>
               <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
                 On cale sa{" "}
@@ -58,8 +61,12 @@ export function ContactSection() {
               {/* Le formulaire vient APRÈS les boutons, et visuellement en
                   retrait : l'appel reste l'action principale — c'est lui qui
                   convertit le mieux et c'est lui que Martin préfère. Le
-                  formulaire ne le remplace pas, il rattrape ceux qui n'osent
-                  pas décrocher. Ne pas inverser cette hiérarchie. */}
+                  formulaire est un second canal, pas un remplaçant. Ne pas
+                  inverser cette hiérarchie.
+
+                  La hiérarchie se joue dans la mise en page, jamais dans le
+                  texte : le visible ne doit pas expliquer POURQUOI on propose
+                  d'écrire (cf. le commentaire de site.contactForm). */}
               <div className="mt-10 w-full border-t border-cream/15 pt-10">
                 <span className="text-xs font-bold uppercase tracking-[0.28em] text-leaf">
                   {site.contactForm.eyebrow}

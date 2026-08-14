@@ -7,7 +7,7 @@ import { formConversionSendTo, isStaticPreview } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-/** Formulaire de contact — l'alternative à l'appel pour qui n'ose pas appeler.
+/** Formulaire de contact — le second canal, à côté de l'appel et du SMS.
  *
  *  La validation ci-dessous DOUBLE celle de app/api/contact/route.ts, elle ne
  *  la remplace pas : ici c'est du confort (dire tout de suite ce qui cloche,
