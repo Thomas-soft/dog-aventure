@@ -146,7 +146,17 @@ export async function POST(request: NextRequest) {
   try {
     const response = await fetch(webhook, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        /* En-tête explicite, pour deux raisons. D'abord l'appel est
+           identifiable dans les journaux n8n. Ensuite et surtout : l'option
+           « Ignore Bots » du nœud Webhook classe les agents inconnus comme
+           robots et répond 403 « Authorization data is wrong! » — un message
+           qui ne dit pas son vrai motif et qu'on a mis un moment à
+           diagnostiquer. L'option est désactivée côté n8n, ceci est la
+           ceinture en plus des bretelles. */
+        "User-Agent": "doogaventure.fr (formulaire de contact)",
+      },
       body: JSON.stringify({
         ...result,
         receivedAt: new Date().toISOString(),

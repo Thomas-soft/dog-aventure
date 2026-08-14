@@ -61,6 +61,21 @@ Idée du client : tout le monde n'ose pas appeler un inconnu. Le formulaire est 
 - **La conversion Ads part APRÈS la réponse du serveur**, jamais au clic : un envoi raté n'est pas un prospect. Elle utilise `googleAdsFormConversionLabel`, **distinct** de celui de l'appel — deux actions principales ne se gênent pas tant qu'elles mesurent des événements différents.
 - **Ne jamais toucher au formulaire sans relire `app/mentions-legales/page.tsx`.** Cette page affirmait « ce site ne comporte aucun formulaire » ; c'était la deuxième fois qu'elle allait mentir sur la collecte de données (cf. l'épisode des cookies). La section « Données personnelles » énumère désormais les trois champs, le destinataire unique et l'absence de sous-traitant.
 
+### Le workflow n8n (2026-08-14)
+
+- **`Dog Aventure — formulaire de contact`**, id `ycMc39scH0HFhziB` sur `n8n.thomastofil.fr`. Deux nœuds : Webhook POST `/webhook/dogaventure-contact` → Telegram `sendMessage`. Construit par le serveur MCP n8n, pas à la main dans l'interface — celle-ci demande une connexion, et le MCP est authentifié de son côté.
+- **Réponse en mode `lastNode`, délibérément, et pas `onReceived`.** `onReceived` répondrait 200 avant d'exécuter Telegram : si Telegram tombe, le visiteur lirait « c'est envoyé » alors que le message serait perdu. En `lastNode`, un échec Telegram remonte en 500 → la route du site renvoie 502 → le formulaire affiche « l'envoi a échoué » avec le numéro. Le coût est une latence de quelques centaines de ms, largement dans les 10 s de délai d'attente du relais.
+- **⚠️ Ne PAS activer l'option « Ignore Bots » du nœud Webhook.** Elle a été essayée : n8n classe `curl` — et potentiellement n'importe quel appel serveur — comme robot, et répond **403 « Authorization data is wrong! »**. Le message évoque un problème d'authentification alors qu'il n'y en a aucune de configurée, ce qui envoie le diagnostic dans le décor. Le relais envoie désormais un `User-Agent: doogaventure.fr` explicite, en ceinture et bretelles.
+- Le message Telegram **échappe `&`, `<` et `>`** dans les trois champs saisis. Sans cela, un visiteur écrivant « chien < 10 kg » ferait échouer l'envoi en `parse_mode: HTML` — et le prospect serait perdu.
+- `appendAttribution: false` : sans lui, Telegram ajoute « envoyé automatiquement avec n8n » à chaque notification de prospect.
+- L'identifiant Telegram est celui qui existait déjà sur l'instance (`TomsAgent_bot`), rattaché automatiquement par n8n. Seul le **chat ID** est à renseigner.
+
+### Suivi avancé des conversions : refusé (2026-08-14)
+
+- À la création de l'action « Formulaire du site », Google coche **par défaut** « Activer le suivi avancé des conversions ». Cette option autorise la balise à **récupérer d'elle-même les données saisies dans les formulaires de la page** — l'e-mail en premier lieu — et à les envoyer à Google.
+- **Décoché**, parce qu'il contredirait frontalement les mentions légales, qui promettent que le message ne transite par aucun prestataire tiers. Repère utile : quand la case est cochée, le bouton final s'intitule « Accepter et terminer » ; décochée, il redevient « Terminer ». C'est le consentement aux conditions de traitement de Google qui disparaît avec elle.
+- À ne pas réactiver sans réécrire la section « Données personnelles » — et sans en reparler au client, puisque ce sont les données de ses prospects.
+
 ## Consentement aux cookies (2026-08-13)
 
 - `lib/consent.ts` + `components/layout/consent-banner.tsx`. Mode Consentement v2 de Google, **`denied` par défaut** : gtag.js se charge quand même — Google Ads doit constater que la balise est posée, sinon la campagne repasse « Éligible (mauvaise configuration) » — mais n'écrit ni cookie ni identifiant avant acceptation.

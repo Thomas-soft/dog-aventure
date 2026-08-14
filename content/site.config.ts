@@ -276,6 +276,24 @@ export const site: SiteConfig = {
      conversion. À vérifier dans Ads sous 24 h après toute modification. */
   googleAdsConversionLabel: "VzR7CN_-s-EcEIfG8r1E",
 
+  /* Action « Formulaire du site » (2026-08-14), catégorie « Envoi de
+     formulaire de lead », source Site Web, événement manuel, comptabilisation
+     « Une », fenêtre après clic 30 jours — alignée sur celle de l'appel pour
+     que les deux chiffres soient comparables.
+
+     Distincte de `googleAdsConversionLabel` À DESSEIN : un appel et un
+     formulaire sont deux événements différents, deux actions principales ne se
+     marchent donc pas dessus. Le double comptage à fuir, c'est deux libellés
+     sur un même clic — pas deux actions sur deux gestes distincts.
+
+     Le suivi avancé des conversions a été REFUSÉ à la création. Coché par
+     défaut, il autorise la balise à récupérer d'elle-même les données saisies
+     dans les formulaires — l'e-mail en tête — pour les envoyer à Google. Cela
+     contredirait frontalement les mentions légales, qui promettent qu'aucun
+     prestataire tiers n'intervient. Ne pas le réactiver sans réécrire cette
+     page. */
+  googleAdsFormConversionLabel: "rRrXCN-_1uEcEIfG8r1E",
+
   /* Bandeau de consentement. Ne rien y promettre que la balise ne tienne :
      c'est le seul traceur du site, et il ne mesure effectivement rien d'autre
      que l'origine publicitaire des visites. */
