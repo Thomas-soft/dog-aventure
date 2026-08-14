@@ -1,12 +1,15 @@
 import { MessageCircle, PawPrint, Phone } from "lucide-react";
 import { site } from "@/content/site.config";
 import { Reveal } from "@/components/motion/reveal";
-import { ContactForm } from "@/components/sections/contact-form";
 import { Button } from "@/components/ui/button";
 
+/* L'ancre `#contact` a suivi le formulaire vers le haut de page : la barre de
+   navigation, le menu mobile et le pied de page y mènent tous. Cette section
+   porte donc `#reserver`. Ne pas lui rendre `#contact` sans déplacer les trois
+   liens en même temps — ils atterriraient de nouveau tout en bas. */
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 md:py-32">
+    <section id="reserver" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.5rem] bg-ink px-6 py-16 text-center text-cream md:py-24">
@@ -58,29 +61,16 @@ export function ContactSection() {
                   Réserver par SMS
                 </Button>
               </div>
-              {/* Le formulaire vient APRÈS les boutons, et visuellement en
-                  retrait : l'appel reste l'action principale — c'est lui qui
-                  convertit le mieux et c'est lui que Martin préfère. Le
-                  formulaire est un second canal, pas un remplaçant. Ne pas
-                  inverser cette hiérarchie.
-
-                  La hiérarchie se joue dans la mise en page, jamais dans le
-                  texte : le visible ne doit pas expliquer POURQUOI on propose
-                  d'écrire (cf. le commentaire de site.contactForm). */}
-              <div className="mt-10 w-full border-t border-cream/15 pt-10">
-                <span className="text-xs font-bold uppercase tracking-[0.28em] text-leaf">
-                  {site.contactForm.eyebrow}
-                </span>
-                <h3 className="mt-3 font-display text-2xl uppercase tracking-tight sm:text-3xl">
-                  {site.contactForm.title}
-                </h3>
-                <p className="mx-auto mt-3 mb-8 max-w-md leading-relaxed text-cream/70">
-                  {site.contactForm.intro}
-                </p>
-                <ContactForm />
-              </div>
-
-              <p className="mt-4 font-script text-2xl text-cream/85 md:text-3xl">
+              {/* Le formulaire vivait ici, sous un filet de séparation. Il a
+                  été remonté juste sous le hero le 2026-08-14 (demande
+                  client : ne pas faire défiler la page pour écrire) — voir
+                  `contact-form-section.tsx`. Cette section conclut désormais
+                  sur l'appel et le SMS seuls, ce qui reste la hiérarchie
+                  voulue : l'appel convertit le mieux et c'est celui que Martin
+                  préfère. Ne pas y réintroduire un second formulaire — deux
+                  formulaires identiques sur une page unique brouillent la
+                  lecture autant que les statistiques. */}
+              <p className="mt-8 font-script text-2xl text-cream/85 md:text-3xl">
                 {site.tagline}
               </p>
             </div>

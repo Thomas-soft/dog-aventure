@@ -45,6 +45,16 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - **Ne pas envoyer de `value`.** L'extrait de Google porte `value: 1.0, currency: 'EUR'`, mais l'action est réglée sur « si aucune valeur n'est définie, utiliser 1 € » : l'envoyer ne fait que réécrire ce défaut, et un montant inventé donne une fausse précision aux rapports de valeur.
 - **Un libellé erroné échoue en silence** — pas d'erreur, pas de log, juste zéro conversion. Après toute modification, vérifier dans Ads sous 24 h que l'action passe à « Enregistrement des conversions ».
 
+## Le formulaire est en HAUT de page (2026-08-14)
+
+Demande client, après une conversation entre Martin et ChatGPT : «&nbsp;il veut pas qu'on scroll beaucoup&nbsp;».
+
+- `components/sections/contact-form-section.tsx`, placé **juste sous le hero** dans `app/page.tsx`, avant «&nbsp;La promenade&nbsp;». Le premier champ passe de ~7 000 px à ~1 400 px du haut.
+- **L'ancre `#contact` a suivi le formulaire.** Les trois liens qui l'utilisent (bouton de la barre, menu mobile, pied de page) arrivent donc en haut. La section de bas de page porte désormais **`#reserver`** et garde l'appel + le SMS : elle conclut. Ne pas lui rendre `#contact` sans déplacer les trois liens en même temps.
+- **Un seul formulaire, pas deux.** Ne pas en réintroduire un en bas : deux formulaires identiques sur une page unique brouillent la lecture autant que les statistiques.
+- **La carte est sombre (`bg-ink`) par obligation, pas par goût** : le formulaire est stylé pour un fond sombre (`bg-cream/5`, `text-cream`, `placeholder:text-cream/35`). Sur fond clair les champs deviennent illisibles — c'est le composant qu'il faudrait reprendre, pas seulement la carte.
+- **Les trois repères de réassurance sous le formulaire ne sont pas décoratifs.** À cette hauteur le visiteur n'a lu ni les tarifs ni la section Confiance : on lui demande d'écrire sans lui avoir donné une raison de faire confiance. Ils sont repris **mot pour mot** de `site.trust` (`credential.badge`, `insurance.title`, `points[0].title`) — jamais réécrits, jamais dupliqués en dur, donc ils ne peuvent pas diverger de la section Confiance. Les retirer vide la section de son contrepoids.
+
 ## Formulaire de contact (2026-08-14)
 
 Idée du client : tout le monde n'ose pas appeler un inconnu. Le formulaire est l'issue de secours pour ceux-là.
