@@ -119,53 +119,38 @@ export interface Consent {
 
 /** Un avis affiché dans la section `#avis`.
  *
- *  ⚠️ Depuis le 2026-08-16, ce type n'est plus alimenté par `site.config.ts` :
- *  les avis viennent en direct de la fiche Google, via `/api/reviews`. Il n'y a
- *  plus d'avis écrits à la main dans le dépôt, et il ne faut pas en réintroduire
- *  — les quatre qui s'y trouvaient étaient inventés (cf. `lib/google-reviews.ts`).
+ *  ⚠️ CE SONT DE VRAIS AVIS, RECOPIÉS DE LA FICHE GOOGLE — jamais des avis
+ *  écrits pour le site. Les quatre avis inventés (noms, villes, chiens) qui
+ *  vivaient ici jusqu'au 2026-08-16 ont été supprimés : diffuser de faux avis
+ *  de consommateurs est une pratique commerciale trompeuse, et le site est
+ *  commercial et alimenté par de la publicité payante. N'ajouter ici que ce
+ *  qui existe vraiment sur la fiche, **mot pour mot**, fautes de frappe
+ *  comprises — corriger l'orthographe d'un client, c'est déjà réécrire son avis.
  *
- *  `town` et `dog` restent dans le type mais **l'API Google ne les fournit
- *  pas** : elle ne renvoie ni la ville du client ni le nom de son chien. Ils
- *  sont donc toujours `undefined` en pratique. Conservés pour le jour où un
- *  avis serait saisi autrement, pas parce qu'ils servent aujourd'hui. */
+ *  `town` et `dog` ne sont plus renseignés : Google ne fournit ni la ville du
+ *  client ni le nom de son chien, et les inventer reviendrait à fabriquer du
+ *  détail crédible autour d'un avis réel. Champs conservés au cas où un client
+ *  fournirait lui-même l'information, pas pour être remplis d'office. */
 export interface Review {
   author: string;
-  /** Ville du propriétaire — jamais fournie par l'API Google */
+  /** Ville du propriétaire — non fournie par Google, ne pas inventer */
   town?: string;
-  /** Le chien concerné (ex : "Maya · Golden Retriever") — idem */
+  /** Le chien concerné — non fourni par Google, ne pas inventer */
   dog?: string;
   rating: 1 | 2 | 3 | 4 | 5;
   text: string;
-  /** Attribution d'un avis Google. **Obligatoire dès qu'il est affiché** :
-   *  les règles de la Places API imposent de créditer l'auteur et de laisser
-   *  l'internaute accéder à l'avis d'origine sur Maps. Ne pas rendre ces
-   *  champs facultatifs à l'affichage. */
+  /** Provenance de l'avis. **À renseigner dès que l'avis vient de Google** :
+   *  la mention de la date de visite et le lien vers la source sont ce qui
+   *  permet à un visiteur de vérifier, et ce que les mentions légales
+   *  promettent. Un avis sans `source` est un avis invérifiable. */
   source?: ReviewSource;
 }
 
 export interface ReviewSource {
-  /** Photo de profil de l'auteur, en **`data:` URI** — l'image est récupérée
-   *  par le serveur et inlinée dans la réponse de `/api/reviews`.
-   *
-   *  ⚠️ Ne pas la remplacer par l'URL Google d'origine. Elle obligerait à
-   *  rouvrir `img-src` dans la CSP et ferait charger l'image par le navigateur
-   *  du visiteur, livrant son IP à Google. Un relais `/api/reviews/avatar?u=…`
-   *  ne marche pas non plus : c'est un Route Handler qui lit la requête, donc
-   *  incompatible avec `output: export` — il fait échouer le build de l'aperçu
-   *  GitHub Pages. La CSP porte déjà `img-src 'self' data:`, le `data:` ne
-   *  demande rien. `undefined` si la récupération échoue : le composant
-   *  retombe alors sur les initiales. */
-  avatarUrl?: string;
-  /** Profil Google de l'auteur */
-  authorUrl?: string;
-  /** L'avis sur Google Maps — l'accès à la source, exigé par les règles */
+  /** L'avis sur Google Maps, ou à défaut la fiche — le chemin vers la source */
   reviewUrl?: string;
-  /** « août 2026 ». **Obligatoire pour un établissement français** : les
-   *  règles de la Places API imposent d'afficher le mois et l'année de la
-   *  visite pour les avis de lieux situés en France. */
+  /** « août 2026 », tel qu'affiché par Google sous l'avis */
   visitDate?: string;
-  /** « il y a 2 jours » — recommandé par Google, augmente la confiance */
-  relativeTime?: string;
 }
 
 /** Formulaire de contact — l'alternative à l'appel, pas son remplacement.
@@ -253,11 +238,11 @@ export interface SiteConfig {
   steps: Step[];
   /** Arguments de confiance — section « Pourquoi me confier votre chien » */
   trust: Trust;
-  /** Identifiant Places de la fiche Google (« ChIJ… »), source des avis
-   *  affichés dans `#avis`. Vide ou absent = la section ne s'affiche pas du
-   *  tout — c'est délibéré, il n'existe aucun avis de repli dans le dépôt.
-   *  Le récupérer avec `node scripts/find-place-id.js` (une seule fois). */
-  googlePlaceId?: string;
+  /** Avis affichés dans `#avis`. Tableau vide = section masquée. */
+  reviews: Review[];
+  /** La fiche Google, pour le lien « voir les avis sur Google » sous la
+   *  section. C'est la source que les mentions légales annoncent. */
+  googleProfileUrl?: string;
   social: { instagram?: string; facebook?: string };
   /** Crédit du réalisateur, barre du bas. Rendu en lien seulement si `url`
    *  est renseignée — sinon en texte simple, pour éviter un href="#" mort. */

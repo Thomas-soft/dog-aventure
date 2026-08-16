@@ -183,30 +183,52 @@ export const site: SiteConfig = {
     signature: "Je m’occupe de chaque chien comme s’il était le mien.",
   },
 
-  /* Avis : plus aucun ici, ils viennent en direct de la fiche Google.
-     Identifiant Places de « DogAventure », Louvres — lu par `/api/reviews`.
+  /* Les DEUX avis réels de la fiche Google « DogAventure », relevés le
+     2026-08-16 (5,0 ★, 2 avis). Recopiés **mot pour mot**, fautes de frappe et
+     ponctuation comprises : corriger l'orthographe d'un client, c'est déjà
+     réécrire son avis.
 
-     ⚠️ NE PAS réintroduire de tableau `reviews` dans ce fichier. Les quatre
-     avis qui s'y trouvaient jusqu'au 2026-08-16 étaient inventés — noms,
-     villes et chiens compris. Diffuser de faux avis de consommateurs est une
-     pratique commerciale trompeuse, et le site est commercial et alimenté par
-     de la publicité payante. Ils ont été supprimés en branchant la vraie
-     source ; les remettre « en attendant » ou « en repli » les ferait
-     réapparaître en silence les jours où l'API tombe.
+     ⚠️ Ce ne sont PAS des textes à retoucher, ni à compléter. Les quatre avis
+     qui vivaient ici jusqu'à ce jour étaient inventés — noms, villes, chiens —
+     et ont été supprimés : diffuser de faux avis de consommateurs est une
+     pratique commerciale trompeuse, et le site est commercial et poussé par de
+     la publicité payante. Pour ajouter un avis, il faut qu'il existe d'abord
+     sur la fiche.
 
-     Pas de fiche configurée, ou clé absente côté serveur : la section « avis »
-     ne s'affiche simplement pas. C'est le comportement voulu.
+     Instantané assumé : ce tableau ne se met pas à jour tout seul. La version
+     branchée en direct sur la Places API existe et fonctionne — voir le commit
+     795fe06 — elle a été retirée faute de compte de facturation Google Cloud
+     actif. Détail dans CLAUDE.md, section « Avis ».
 
-     Fiche « DogAventure », 29 Rue Branly, 95380 Louvres. Obtenu le 2026-08-16
-     par le Place ID Finder de Google (qui tourne sur la clé de démonstration
-     de Google, donc sans consommer notre quota), puis **vérifié en le
-     décodant** : un identifiant « ChIJ… » est un protobuf base64url qui
-     contient le CID de la fiche, et on y retrouve bien
-     `0x286ba2e7f1bc662d:0xd495278875ec2a64`, celui de l'URL Maps. Ce contrôle
-     vaut mieux qu'une relecture à l'œil — `l`, `I` et `1` sont indiscernables
-     dans la police de l'infobulle.
-     Pour une autre fiche : `GOOGLE_PLACES_API_KEY=… node scripts/find-place-id.js` */
-  googlePlaceId: "ChIJLWa88eeiaygRZCrsdYgnldQ",
+     Ni `town` ni `dog` : Google ne les fournit pas, et les inventer
+     fabriquerait du détail crédible autour d'un avis réel. */
+  reviews: [
+    {
+      author: "Thomas Tofil",
+      rating: 5,
+      text: "Mon petit chien Bao a profité des balades avec Martin et je recommande à 100%.\nDe confiance, très pro et de bons conseils !\nLui confier mon chiot a été un tres bon choix pour lui comme pour moi.\nMerci !",
+      source: {
+        visitDate: "août 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+    {
+      author: "audrey carlier",
+      rating: 5,
+      text: "Tellement pratique pour les jours où on a pas trop le temps\nIl vient chercher votre loulou à domicile et le ramène franchement mon chien était super content de voir plein d’autres copain\nJe referais appel à ses services",
+      source: {
+        visitDate: "août 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+  ],
+
+  /* La fiche, pour le lien « voir les avis sur Google » sous la section — le
+     chemin vers la source que les mentions légales annoncent. La forme
+     `?q=place_id:` est l'URL canonique d'une fiche, stable dans le temps,
+     contrairement aux URL /maps/place/... qui embarquent des coordonnées. */
+  googleProfileUrl:
+    "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
 
   social: {},
 

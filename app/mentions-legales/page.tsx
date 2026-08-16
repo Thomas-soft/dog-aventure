@@ -102,28 +102,38 @@ export default function MentionsLegales() {
           {/* Obligation d'information sur les avis en ligne (art. L111-7-2 du
               code de la consommation, issu de la directive Omnibus) : dès qu'un
               professionnel affiche des avis de consommateurs, il doit indiquer
-              s'ils font l'objet d'un contrôle et, si oui, lequel. Ce n'est pas
-              une formalité de confort — cette section est apparue le
-              2026-08-16 avec le branchement des avis Google en direct, et elle
-              doit disparaître si la section « avis » disparaît. */}
+              s'ils font l'objet d'un contrôle, et depuis quand ils datent.
+
+              ⚠️ Ce texte a été réécrit le 2026-08-16 : il annonçait des avis
+              « récupérés en temps réel », ce qui a cessé d'être vrai quand la
+              lecture directe de la Places API a été retirée. Il décrit
+              maintenant ce que fait réellement le site — une reprise manuelle,
+              donc datée. **Ne pas toucher à `site.reviews` sans relire ce
+              paragraphe**, et mettre le mois à jour à chaque ajout d'avis. */}
           <Section title="Avis des clients">
             <p>
-              Les avis affichés sur ce site proviennent{" "}
+              Les avis affichés sur ce site sont{" "}
               <strong className="font-semibold text-ink">
-                directement de la fiche Google
+                repris de la fiche Google
               </strong>{" "}
-              de l&rsquo;établissement et sont récupérés en temps réel&nbsp;: ils
-              ne sont ni saisis, ni sélectionnés, ni modifiés par l&rsquo;éditeur
-              du site. Le nombre d&rsquo;avis affichés est limité par Google.
+              de l&rsquo;établissement et reproduits{" "}
+              <strong className="font-semibold text-ink">
+                mot pour mot
+              </strong>, sans correction ni sélection. Chaque avis renvoie vers
+              sa source, où il peut être consulté, comparé et signalé.
             </p>
             <p>
-              Ils <strong className="font-semibold text-ink">ne font
+              Il s&rsquo;agit d&rsquo;une reprise manuelle, mise à jour au{" "}
+              <strong className="font-semibold text-ink">mois d&rsquo;août
+              2026</strong>&nbsp;: la fiche Google peut donc comporter des avis
+              plus récents que ceux affichés ici. Elle fait foi.
+            </p>
+            <p>
+              Ces avis <strong className="font-semibold text-ink">ne font
               l&rsquo;objet d&rsquo;aucun contrôle</strong> de la part de
-              l&rsquo;éditeur, qui n&rsquo;est pas en mesure de vérifier que leurs
-              auteurs ont effectivement eu recours au service. Aucune
-              contrepartie n&rsquo;est offerte en échange d&rsquo;un avis. Chaque
-              avis affiché renvoie vers sa source sur Google, où il peut être
-              consulté et signalé.
+              l&rsquo;éditeur, qui n&rsquo;est pas en mesure de vérifier que
+              leurs auteurs ont eu recours au service. Aucune contrepartie
+              n&rsquo;est offerte en échange d&rsquo;un avis.
             </p>
           </Section>
 

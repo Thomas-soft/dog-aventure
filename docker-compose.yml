@@ -44,17 +44,6 @@ services:
       PORT: "3000"
       HOSTNAME: "0.0.0.0"
       CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
-      # Clé de la Google Places API, lue par app/api/reviews pour aller
-      # chercher les avis de la fiche en direct. Jamais exposée au navigateur :
-      # une clé Places posée côté client est lisible par tous et facturée à son
-      # propriétaire. Absente, la section « avis » ne s'affiche simplement pas.
-      # La restreindre côté Google Cloud à la seule Places API.
-      GOOGLE_PLACES_API_KEY: ${GOOGLE_PLACES_API_KEY:-}
-      # Plafond d'appels Places par jour (garde-fou de dépense, pas un cache).
-      # Chaque appel est facturé au-delà de 1 000/mois offerts : 25 $ les 1 000.
-      # Au-delà du plafond la section « avis » disparaît au lieu de coûter.
-      # Défaut 400/jour si absent — cf. app/api/reviews/route.ts.
-      REVIEWS_DAILY_MAX: ${REVIEWS_DAILY_MAX:-}
     volumes:
       - image-cache:/app/.next/cache
     # Le HEALTHCHECK est défini dans le Dockerfile
@@ -85,17 +74,6 @@ services:
       # sur le Pi. Absente, la route répond 503 et le formulaire renvoie vers
       # le téléphone — jamais un faux « message envoyé ».
       CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
-      # Clé de la Google Places API, lue par app/api/reviews pour aller
-      # chercher les avis de la fiche en direct. Jamais exposée au navigateur :
-      # une clé Places posée côté client est lisible par tous et facturée à son
-      # propriétaire. Absente, la section « avis » ne s'affiche simplement pas.
-      # La restreindre côté Google Cloud à la seule Places API.
-      GOOGLE_PLACES_API_KEY: ${GOOGLE_PLACES_API_KEY:-}
-      # Plafond d'appels Places par jour (garde-fou de dépense, pas un cache).
-      # Chaque appel est facturé au-delà de 1 000/mois offerts : 25 $ les 1 000.
-      # Au-delà du plafond la section « avis » disparaît au lieu de coûter.
-      # Défaut 400/jour si absent — cf. app/api/reviews/route.ts.
-      REVIEWS_DAILY_MAX: ${REVIEWS_DAILY_MAX:-}
     volumes:
       # Sans ce volume, next/image ré-encode toutes les images à chaque
       # redémarrage — coûteux sur une petite machine.
