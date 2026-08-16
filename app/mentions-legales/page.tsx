@@ -99,6 +99,34 @@ export default function MentionsLegales() {
             </p>
           </Section>
 
+          {/* Obligation d'information sur les avis en ligne (art. L111-7-2 du
+              code de la consommation, issu de la directive Omnibus) : dès qu'un
+              professionnel affiche des avis de consommateurs, il doit indiquer
+              s'ils font l'objet d'un contrôle et, si oui, lequel. Ce n'est pas
+              une formalité de confort — cette section est apparue le
+              2026-08-16 avec le branchement des avis Google en direct, et elle
+              doit disparaître si la section « avis » disparaît. */}
+          <Section title="Avis des clients">
+            <p>
+              Les avis affichés sur ce site proviennent{" "}
+              <strong className="font-semibold text-ink">
+                directement de la fiche Google
+              </strong>{" "}
+              de l&rsquo;établissement et sont récupérés en temps réel&nbsp;: ils
+              ne sont ni saisis, ni sélectionnés, ni modifiés par l&rsquo;éditeur
+              du site. Le nombre d&rsquo;avis affichés est limité par Google.
+            </p>
+            <p>
+              Ils <strong className="font-semibold text-ink">ne font
+              l&rsquo;objet d&rsquo;aucun contrôle</strong> de la part de
+              l&rsquo;éditeur, qui n&rsquo;est pas en mesure de vérifier que leurs
+              auteurs ont effectivement eu recours au service. Aucune
+              contrepartie n&rsquo;est offerte en échange d&rsquo;un avis. Chaque
+              avis affiché renvoie vers sa source sur Google, où il peut être
+              consulté et signalé.
+            </p>
+          </Section>
+
           <Section title="Données personnelles">
             <p>
               Consulter ces pages ne demande <strong className="font-semibold text-ink">

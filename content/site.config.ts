@@ -183,37 +183,30 @@ export const site: SiteConfig = {
     signature: "Je m’occupe de chaque chien comme s’il était le mien.",
   },
 
-  // ⚠️ AVIS DE DÉMONSTRATION — à remplacer par les vrais avis Google du client
-  reviews: [
-    {
-      author: "Julie M.",
-      town: "Louvres",
-      dog: "Nala · Berger Australien",
-      rating: 5,
-      text: "Il vient chercher Nala à la maison, elle revient dépensée et heureuse. On sent tout de suite que c'est quelqu'un qui aime vraiment les chiens.",
-    },
-    {
-      author: "Sophie L.",
-      town: "Saint-Witz",
-      dog: "Maya · Golden Retriever",
-      rating: 5,
-      text: "Depuis que Maya a sa balade dans la semaine, elle est beaucoup plus calme le soir. Ponctuel, sérieux, et un petit message avec photo pendant la sortie.",
-    },
-    {
-      author: "Karim B.",
-      town: "Vémars",
-      dog: "Rocco · Staffy",
-      rating: 5,
-      text: "Rocco tire beaucoup en laisse et je n'osais plus le sortir longtemps. En promenade individuelle, il est pris en main sérieusement — je recommande.",
-    },
-    {
-      author: "Monique D.",
-      town: "Luzarches",
-      dog: "Prune · Caniche",
-      rating: 5,
-      text: "Très gentil avec Prune, toujours à l'heure, et elle l'attend devant la porte maintenant. Le retour à domicile, c'est vraiment pratique.",
-    },
-  ],
+  /* Avis : plus aucun ici, ils viennent en direct de la fiche Google.
+     Identifiant Places de « DogAventure », Louvres — lu par `/api/reviews`.
+
+     ⚠️ NE PAS réintroduire de tableau `reviews` dans ce fichier. Les quatre
+     avis qui s'y trouvaient jusqu'au 2026-08-16 étaient inventés — noms,
+     villes et chiens compris. Diffuser de faux avis de consommateurs est une
+     pratique commerciale trompeuse, et le site est commercial et alimenté par
+     de la publicité payante. Ils ont été supprimés en branchant la vraie
+     source ; les remettre « en attendant » ou « en repli » les ferait
+     réapparaître en silence les jours où l'API tombe.
+
+     Pas de fiche configurée, ou clé absente côté serveur : la section « avis »
+     ne s'affiche simplement pas. C'est le comportement voulu.
+
+     Fiche « DogAventure », 29 Rue Branly, 95380 Louvres. Obtenu le 2026-08-16
+     par le Place ID Finder de Google (qui tourne sur la clé de démonstration
+     de Google, donc sans consommer notre quota), puis **vérifié en le
+     décodant** : un identifiant « ChIJ… » est un protobuf base64url qui
+     contient le CID de la fiche, et on y retrouve bien
+     `0x286ba2e7f1bc662d:0xd495278875ec2a64`, celui de l'URL Maps. Ce contrôle
+     vaut mieux qu'une relecture à l'œil — `l`, `I` et `1` sont indiscernables
+     dans la police de l'infobulle.
+     Pour une autre fiche : `GOOGLE_PLACES_API_KEY=… node scripts/find-place-id.js` */
+  googlePlaceId: "ChIJLWa88eeiaygRZCrsdYgnldQ",
 
   social: {},
 

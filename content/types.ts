@@ -117,14 +117,55 @@ export interface Consent {
   reopen: string;
 }
 
+/** Un avis affiché dans la section `#avis`.
+ *
+ *  ⚠️ Depuis le 2026-08-16, ce type n'est plus alimenté par `site.config.ts` :
+ *  les avis viennent en direct de la fiche Google, via `/api/reviews`. Il n'y a
+ *  plus d'avis écrits à la main dans le dépôt, et il ne faut pas en réintroduire
+ *  — les quatre qui s'y trouvaient étaient inventés (cf. `lib/google-reviews.ts`).
+ *
+ *  `town` et `dog` restent dans le type mais **l'API Google ne les fournit
+ *  pas** : elle ne renvoie ni la ville du client ni le nom de son chien. Ils
+ *  sont donc toujours `undefined` en pratique. Conservés pour le jour où un
+ *  avis serait saisi autrement, pas parce qu'ils servent aujourd'hui. */
 export interface Review {
   author: string;
-  /** Ville du propriétaire — l'ancrage local, affiché sous l'auteur */
+  /** Ville du propriétaire — jamais fournie par l'API Google */
   town?: string;
-  /** Le chien concerné (ex : "Maya · Golden Retriever") */
+  /** Le chien concerné (ex : "Maya · Golden Retriever") — idem */
   dog?: string;
   rating: 1 | 2 | 3 | 4 | 5;
   text: string;
+  /** Attribution d'un avis Google. **Obligatoire dès qu'il est affiché** :
+   *  les règles de la Places API imposent de créditer l'auteur et de laisser
+   *  l'internaute accéder à l'avis d'origine sur Maps. Ne pas rendre ces
+   *  champs facultatifs à l'affichage. */
+  source?: ReviewSource;
+}
+
+export interface ReviewSource {
+  /** Photo de profil de l'auteur, en **`data:` URI** — l'image est récupérée
+   *  par le serveur et inlinée dans la réponse de `/api/reviews`.
+   *
+   *  ⚠️ Ne pas la remplacer par l'URL Google d'origine. Elle obligerait à
+   *  rouvrir `img-src` dans la CSP et ferait charger l'image par le navigateur
+   *  du visiteur, livrant son IP à Google. Un relais `/api/reviews/avatar?u=…`
+   *  ne marche pas non plus : c'est un Route Handler qui lit la requête, donc
+   *  incompatible avec `output: export` — il fait échouer le build de l'aperçu
+   *  GitHub Pages. La CSP porte déjà `img-src 'self' data:`, le `data:` ne
+   *  demande rien. `undefined` si la récupération échoue : le composant
+   *  retombe alors sur les initiales. */
+  avatarUrl?: string;
+  /** Profil Google de l'auteur */
+  authorUrl?: string;
+  /** L'avis sur Google Maps — l'accès à la source, exigé par les règles */
+  reviewUrl?: string;
+  /** « août 2026 ». **Obligatoire pour un établissement français** : les
+   *  règles de la Places API imposent d'afficher le mois et l'année de la
+   *  visite pour les avis de lieux situés en France. */
+  visitDate?: string;
+  /** « il y a 2 jours » — recommandé par Google, augmente la confiance */
+  relativeTime?: string;
 }
 
 /** Formulaire de contact — l'alternative à l'appel, pas son remplacement.
@@ -212,7 +253,11 @@ export interface SiteConfig {
   steps: Step[];
   /** Arguments de confiance — section « Pourquoi me confier votre chien » */
   trust: Trust;
-  reviews: Review[];
+  /** Identifiant Places de la fiche Google (« ChIJ… »), source des avis
+   *  affichés dans `#avis`. Vide ou absent = la section ne s'affiche pas du
+   *  tout — c'est délibéré, il n'existe aucun avis de repli dans le dépôt.
+   *  Le récupérer avec `node scripts/find-place-id.js` (une seule fois). */
+  googlePlaceId?: string;
   social: { instagram?: string; facebook?: string };
   /** Crédit du réalisateur, barre du bas. Rendu en lien seulement si `url`
    *  est renseignée — sinon en texte simple, pour éviter un href="#" mort. */
