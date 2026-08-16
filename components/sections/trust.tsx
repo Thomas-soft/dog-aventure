@@ -23,13 +23,16 @@ export function TrustSection() {
   const { credential, insurance, points, signature } = site.trust;
 
   return (
+    // `border-b` et non `border-y` : depuis le 2026-08-16 la section suit
+    // directement le bandeau des villes, qui est déjà en `border-y bg-surface`.
+    // Les deux traits se cumuleraient en une ligne de 2 px.
     <section
       id="confiance"
-      className="border-y border-line bg-surface py-24 md:py-32"
+      className="border-b border-line bg-surface py-24 md:py-32"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
-          overline="Pourquoi me confier votre chien"
+          overline={<>Pourquoi me confier votre chien&nbsp;?</>}
           title={
             <>
               Il est entre de{" "}

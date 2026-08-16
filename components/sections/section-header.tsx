@@ -9,7 +9,10 @@ export function SectionHeader({
   align = "left",
   className,
 }: {
-  overline: string;
+  /** `ReactNode` et non `string` : sans ça une insécable devrait s'écrire en
+   *  U+00A0 littéral dans la chaîne — invisible dans l'éditeur et perdu à la
+   *  première réécriture. En `ReactNode`, `&nbsp;` s'écrit normalement. */
+  overline: ReactNode;
   title: ReactNode;
   sub?: string;
   align?: "center" | "left";

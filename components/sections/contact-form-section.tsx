@@ -2,20 +2,23 @@ import { site } from "@/content/site.config";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/sections/contact-form";
 
-/** Le formulaire, remonté juste sous le hero (demande client du 2026-08-14).
+/** Le formulaire, quatrième bloc de la page (ordre demandé le 2026-08-16).
  *
- *  Martin ne veut pas que le visiteur ait à faire défiler la page pour
- *  écrire. C'est cette section qui porte désormais l'ancre `#contact` — donc
- *  le bouton de la barre de navigation, le lien du menu mobile et celui du
- *  pied de page arrivent tous ici. La section de bas de page (`#reserver`)
- *  garde l'appel et le SMS : elle conclut, celle-ci capte l'intention
- *  immédiate.
+ *  Il vient APRÈS « Il est entre de bonnes mains » et après les deux offres :
+ *  Martin veut qu'on rassure et qu'on annonce le prix avant de demander
+ *  d'écrire. Cet ordre remplace celui du 2026-08-14, qui remontait le
+ *  formulaire juste sous le hero pour éviter de faire défiler la page.
  *
- *  ⚠️ Contrepartie assumée, et c'est exactement le rôle des repères de
- *  réassurance ci-dessous : à cette hauteur, le visiteur n'a encore lu ni les
- *  tarifs, ni la section Confiance. Lui demander d'écrire sans lui avoir donné
- *  une seule raison de faire confiance serait un formulaire vide. Les retirer
- *  vide la section de son contrepoids.
+ *  C'est cette section qui porte l'ancre `#contact` — donc le bouton de la
+ *  barre de navigation, le lien du menu mobile et celui du pied de page
+ *  arrivent tous ici. La section de bas de page (`#reserver`) garde l'appel et
+ *  le SMS : elle conclut, celle-ci capte l'intention en milieu de page.
+ *
+ *  Les trois repères de réassurance sous le formulaire ont été posés le
+ *  2026-08-14 parce que le visiteur, à l'époque, n'avait encore rien lu à cet
+ *  endroit. Ils gardent leur intérêt dans le nouvel ordre — un rappel au point
+ *  d'action, là où on demande un effort — mais ce n'est plus un contrepoids
+ *  indispensable : les retirer serait désormais discutable, plus fautif.
  *
  *  Les trois repères sont repris MOT POUR MOT de `site.trust` — aucune
  *  formulation n'est inventée ici (consigne client : ne pas réécrire les
@@ -37,7 +40,14 @@ export function ContactFormSection() {
   ].filter((v): v is string => Boolean(v));
 
   return (
-    <section id="contact" className="px-4 pb-4 pt-16 sm:px-6 md:pb-8 md:pt-24">
+    // ⚠️ Marges asymétriques, et c'est voulu. Au-dessus, les offres apportent
+    // déjà leur `pb-24 md:pb-32` de crème : un `pt` court suffit. En dessous en
+    // revanche, `#zones` commence par un aplat SOMBRE — son propre `py` est
+    // rempli de sombre et n'écarte rien. Le `pb` de cette section est donc la
+    // seule crème entre la carte sombre et le bandeau sombre ; à 4/8 (la valeur
+    // d'avant le 2026-08-16, quand un bandeau de villes très fin précédait la
+    // section) les deux blocs se touchaient presque.
+    <section id="contact" className="px-4 pt-4 pb-24 sm:px-6 md:pt-8 md:pb-32">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="rounded-[2.5rem] bg-ink px-6 py-12 text-center text-cream md:py-16">

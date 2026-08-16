@@ -17,12 +17,15 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <TownsMarquee />
-        {/* Le formulaire juste sous le hero : demande client du 2026-08-14,
-            « pas beaucoup scroller ». La section de réservation (appel + SMS)
-            reste en fin de page pour conclure. */}
-        <ContactFormSection />
-        <ServiceSection />
+        {/* Ordre demandé par Martin le 2026-08-16 : d'abord la confiance
+            (« Il est entre de bonnes mains »), ensuite les deux offres, et le
+            formulaire seulement après — on rassure et on affiche le prix avant
+            de demander d'écrire. Il remplace la remontée du 2026-08-14 qui
+            plaçait le formulaire juste sous le hero. La section de réservation
+            (appel + SMS) reste en fin de page pour conclure. */}
         <TrustSection />
+        <ServiceSection />
+        <ContactFormSection />
         <ZonesSection />
         <ReviewsSection />
         <ContactSection />

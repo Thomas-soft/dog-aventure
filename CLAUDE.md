@@ -54,15 +54,28 @@ Projet client : le contenu final (domaine, avis, photos) arrive au fil de l'eau.
 - **Suivi : troisième action de conversion, `googleAdsWhatsappConversionLabel`, encore VIDE.** L'action n'est pas créée côté Ads, donc aucun événement n'est émis au clic WhatsApp — le bouton marche, il n'est pas compté. **Ne jamais le faire retomber sur le libellé de l'appel** : compter un clic WhatsApp comme un appel gonflerait la seule métrique sur laquelle la campagne optimise aujourd'hui. Le tracker (`conversion-tracker.tsx`) écoute désormais `tel:`, `sms:` **et** `https://wa.me/`, et route chaque canal vers son propre `send_to`.
 - Pas de modification de CSP : un lien externe est une navigation, que la CSP du site ne contraint pas (`navigate-to` n'y figure pas).
 
-## Le formulaire est en HAUT de page (2026-08-14)
+## Ordre des sections de l'accueil (2026-08-16)
 
-Demande client, après une conversation entre Martin et ChatGPT : «&nbsp;il veut pas qu'on scroll beaucoup&nbsp;».
+Demande client, qui **remplace** la remontée du formulaire du 2026-08-14 («&nbsp;il veut pas qu'on scroll beaucoup&nbsp;», après une conversation entre Martin et ChatGPT). Martin veut désormais qu'on rassure et qu'on annonce le prix **avant** de demander d'écrire :
 
-- `components/sections/contact-form-section.tsx`, placé **juste sous le hero** dans `app/page.tsx`, avant «&nbsp;La promenade&nbsp;». Le premier champ passe de ~7 000 px à ~1 400 px du haut.
-- **L'ancre `#contact` a suivi le formulaire.** Les trois liens qui l'utilisent (bouton de la barre, menu mobile, pied de page) arrivent donc en haut. La section de bas de page porte désormais **`#reserver`** et garde l'appel + le SMS : elle conclut. Ne pas lui rendre `#contact` sans déplacer les trois liens en même temps.
+1. hero
+2. `#confiance` — «&nbsp;Il est entre de bonnes mains&nbsp;»
+3. `#service` — les deux offres de balade
+4. `#contact` — «&nbsp;Écrivez-moi&nbsp;»
+
+puis `#zones`, `#avis`, `#reserver`, inchangés. **Le formulaire n'est donc plus sous le hero** : le premier champ retombe vers ~6 000 px du haut. Si la question du défilement revient, c'est un arbitrage à reprendre **avec Martin**, pas à retrancher — les deux ordres viennent de lui.
+
+Deux réglages de mise en page découlent de cet ordre, à ne pas défaire sans les relire ensemble :
+
+- **`#confiance` est passée de `border-y` à `border-b`** (`trust.tsx`). Elle suit maintenant directement le bandeau des villes, qui est déjà `border-y bg-surface` : les deux traits se cumuleraient en une ligne de 2 px. Les deux blocs partagent le même `bg-surface` et se lisent comme un seul aplat, séparés par un filet — c'est voulu.
+- **Les marges de `#contact` sont asymétriques** (`pt-4 pb-24 md:pt-8 md:pb-32`). Au-dessus, les offres apportent déjà leur `pb-24 md:pb-32` de crème. En dessous, `#zones` **commence par un aplat sombre** : son propre `py` est rempli de sombre et n'écarte rien, donc le `pb` de `#contact` est la seule crème entre la carte sombre du formulaire et le bandeau sombre. Aux anciennes valeurs (`pb-4 md:pb-8`, calibrées sur le bandeau de villes très fin qui précédait alors la section) les deux blocs se touchaient presque — vérifié à l'écran, pas déduit.
+
+Le reste des décisions du formulaire tient toujours :
+
+- **L'ancre `#contact` reste sur le formulaire.** Les trois liens qui l'utilisent (bouton de la barre, menu mobile, pied de page) y arrivent. La section de bas de page porte **`#reserver`** et garde l'appel + le SMS : elle conclut. Ne pas lui rendre `#contact` sans déplacer les trois liens en même temps.
 - **Un seul formulaire, pas deux.** Ne pas en réintroduire un en bas : deux formulaires identiques sur une page unique brouillent la lecture autant que les statistiques.
 - **La carte est sombre (`bg-ink`) par obligation, pas par goût** : le formulaire est stylé pour un fond sombre (`bg-cream/5`, `text-cream`, `placeholder:text-cream/35`). Sur fond clair les champs deviennent illisibles — c'est le composant qu'il faudrait reprendre, pas seulement la carte.
-- **Les trois repères de réassurance sous le formulaire ne sont pas décoratifs.** À cette hauteur le visiteur n'a lu ni les tarifs ni la section Confiance : on lui demande d'écrire sans lui avoir donné une raison de faire confiance. Ils sont repris **mot pour mot** de `site.trust` (`credential.badge`, `insurance.title`, `points[0].title`) — jamais réécrits, jamais dupliqués en dur, donc ils ne peuvent pas diverger de la section Confiance. Les retirer vide la section de son contrepoids.
+- **Les trois repères de réassurance sous le formulaire** (repris **mot pour mot** de `site.trust` : `credential.badge`, `insurance.title`, `points[0].title` — jamais réécrits, jamais dupliqués en dur, donc ils ne peuvent pas diverger de la section Confiance). Ils avaient été posés le 2026-08-14 parce qu'à cette hauteur le visiteur n'avait alors lu ni les tarifs ni la section Confiance. **Ce n'est plus le cas dans l'ordre du 2026-08-16** : ils gardent leur intérêt comme rappel au point d'action, mais ils ne sont plus le contrepoids indispensable qu'ils étaient — les retirer serait désormais discutable, plus fautif.
 
 ## Formulaire de contact (2026-08-14)
 
@@ -161,7 +174,8 @@ Une campagne Google Ads (« Promeneur Chien à Saint-Witz ») a vu son groupe de
 
 ## Section confiance (2026-08-10)
 
-- `components/sections/trust.tsx` (ancre `#confiance`), entre « La promenade » et « Où j'interviens » — la place laissée par la section des races supprimée le même jour, et elle en reprend le bandeau `border-y bg-surface` qui tient le rythme crème → surface → sombre.
+- `components/sections/trust.tsx` (ancre `#confiance`). Créée le 2026-08-10 à la place de la section des races supprimée le même jour, dont elle a repris le bandeau `bg-surface` qui tient le rythme crème → surface → sombre. **Elle ouvre la page depuis le 2026-08-16** (cf. « Ordre des sections de l'accueil ») — et c'est pour ça qu'elle est en `border-b` et non `border-y`.
+- Son sur-titre est **« Pourquoi me confier votre chien&nbsp;? »** (point d'interrogation ajouté le 2026-08-16, demande client). La prop `overline` de `SectionHeader` est passée de `string` à **`ReactNode`** le même jour, pour ça : en `string`, l'insécable devait s'écrire en **U+00A0 littéral**, invisible dans l'éditeur et perdu à la première réécriture de la ligne (`&nbsp;` dans une chaîne s'afficherait tel quel). En `ReactNode`, `&nbsp;` s'écrit comme partout ailleurs dans le JSX. Les autres appels passent toujours une chaîne simple, rien à changer chez eux.
 - Contenu dans `site.trust` : `credential` (la qualification, seule en bandeau au-dessus), `points` (4 cartes) et `signature` (la phrase manuscrite de fin).
 - **L'ACACED est mis en avant seul**, au-dessus des quatre autres arguments : c'est la seule preuve *vérifiable* de la page, tout le reste n'est qu'un engagement. Repris en `hasCredential` dans le JSON-LD (`app/layout.tsx`).
 - Quatre points, pas cinq : la grille est en `lg:grid-cols-4`. Le renforcement des bonnes habitudes (laisse, calme, rappel) est fondu dans le bloc ACACED — il découle de la formation, il n'a pas besoin de sa carte.
