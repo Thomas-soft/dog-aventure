@@ -68,6 +68,22 @@ export interface Step {
   desc: string;
 }
 
+/** La rencontre à domicile offerte, rendue en bandeau au bas de « La promenade ».
+ *
+ *  ⚠️ Ce n'est PAS la « visite à domicile » écartée du site le 2026-08-10 :
+ *  celle-là était une prestation payante que le client n'avait ni tarifée ni
+ *  décrite, celle-ci est un préalable gratuit à la première balade. Ne pas les
+ *  confondre en relisant la règle « le site ne vend que des balades ».
+ *
+ *  `paragraphs` plutôt qu'un seul champ : le texte vient du client en trois
+ *  blocs, et les recoller en un pavé rendrait le bandeau illisible. */
+export interface FirstMeeting {
+  title: string;
+  paragraphs: string[];
+  /** La phrase qui lève l'objection — mise en avant, séparée du corps */
+  note: string;
+}
+
 /** Icônes des arguments de confiance — résolues en composants lucide dans la section */
 export type TrustIcon =
   | "camera"
@@ -139,6 +155,22 @@ export interface Review {
   dog?: string;
   rating: 1 | 2 | 3 | 4 | 5;
   text: string;
+  /** Photo de profil de l'auteur, **en lien direct vers `lh3.googleusercontent.com`**.
+   *
+   *  Volontairement pas de copie dans `public/` : réhéberger la photo d'une
+   *  cliente en ferait un exemplaire qui survivrait à la suppression de son
+   *  compte. En lien direct, si elle change ou retire sa photo, le site suit.
+   *  Contrepartie assumée : l'URL peut donc mourir — les initiales sont
+   *  dessinées dessous et réapparaissent seules si l'image ne charge pas.
+   *
+   *  Sert en `<img>` nu, jamais en `next/image` : l'optimiseur en mettrait une
+   *  copie en cache sur le serveur, ce qui reviendrait à la réhéberger.
+   *  Demande `img-src https://lh3.googleusercontent.com` dans la CSP. */
+  avatarUrl?: string;
+  /** Badge « Local Guide » de Google. C'est un statut, pas un compteur : il ne
+   *  bouge quasiment jamais, contrairement au « 27 avis · 28 photos » affiché
+   *  à côté sur Maps, qui serait périmé dès la copie. */
+  localGuide?: boolean;
   /** Provenance de l'avis. **À renseigner dès que l'avis vient de Google** :
    *  la mention de la date de visite et le lien vers la source sont ce qui
    *  permet à un visiteur de vérifier, et ce que les mentions légales
@@ -236,6 +268,8 @@ export interface SiteConfig {
   packs: Packs;
   /** Les 3 étapes « Comment ça marche » */
   steps: Step[];
+  /** La rencontre à domicile offerte, en bas de « La promenade » */
+  firstMeeting: FirstMeeting;
   /** Arguments de confiance — section « Pourquoi me confier votre chien » */
   trust: Trust;
   /** Avis affichés dans `#avis`. Tableau vide = section masquée. */

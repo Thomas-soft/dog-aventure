@@ -140,6 +140,23 @@ export const site: SiteConfig = {
     },
   ],
 
+  /* Texte fourni par le client le 2026-08-18, repris **tel quel**. Rendu en
+     bandeau au bas de « La promenade », donc juste après les tarifs et juste
+     avant le formulaire : c'est là qu'il travaille, en levant l'objection du
+     prix au moment précis où elle se pose.
+
+     ⚠️ À ne pas confondre avec la « visite à domicile » écartée du site le
+     2026-08-10 : celle-là était une prestation payante jamais tarifée, celle-ci
+     est un préalable gratuit à la première balade. */
+  firstMeeting: {
+    title: "Première rencontre offerte",
+    paragraphs: [
+      "Avant la première promenade, je viens directement à votre domicile pour rencontrer votre chien et faire connaissance avec vous.",
+      "Ce premier échange me permet de découvrir ses habitudes, son caractère et vos consignes afin que tout soit prêt pour sa première balade.",
+    ],
+    note: "La rencontre est gratuite et sans engagement.",
+  },
+
   /* Réécrit depuis le texte du client (août 2026). Tout ce qui relevait de sa
      biographie — passionné depuis l’enfance, chiens de sa vie — a été retiré :
      ça n’aide pas un maître à décider. Ne restent que les preuves qui le
@@ -209,6 +226,8 @@ export const site: SiteConfig = {
   reviews: [
     {
       author: "Lestage Juliette",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a-/ALV-UjV94jxOJB3bV9FuS57neyEZEGeg_k6su7alro2qlGswxhl3hG51=w72-h72-p-rp-mo-br100",
       rating: 5,
       text: "Merci à Martin ! Il s’est super bien occupé de mon petit chien :)",
       source: {
@@ -220,6 +239,12 @@ export const site: SiteConfig = {
       /* Apostrophes droites et « hésiter! » sans espace : c'est ce qu'il a
          tapé. Ne pas typographier — cf. l'en-tête de ce bloc. */
       author: "nicolas",
+      /* « -ba12- » retiré du suffixe : c'est la pastille « Local Guide »
+         incrustée par Google dans l'image, qui se retrouvait rognée au bord
+         du cercle — et le badge est déjà écrit en toutes lettres sous le nom. */
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a/ACg8ocIbZRA8EX7vvvblwkKw3BKKJYsgfgcqUqcSzeeWilo8CQdmGw=w72-h72-p-rp-mo-br100",
+      localGuide: true,
       rating: 5,
       text: "Très content de Martin, sérieux, attentionné et à l'écoute de Sam, tout s'est très bien passé, on recommande sans hésiter!",
       source: {
@@ -229,6 +254,8 @@ export const site: SiteConfig = {
     },
     {
       author: "Thomas Tofil",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a-/ALV-UjUUI1Kyx8H0gkqt-DFg9ST6OZDUvwhPhVusNwRsTIxApbHBKCdo=w72-h72-p-rp-mo-br100",
       rating: 5,
       text: "Mon petit chien Bao a profité des balades avec Martin et je recommande à 100%.\nDe confiance, très pro et de bons conseils !\nLui confier mon chiot a été un tres bon choix pour lui comme pour moi.\nMerci !",
       source: {
@@ -238,6 +265,8 @@ export const site: SiteConfig = {
     },
     {
       author: "audrey carlier",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a/ACg8ocJd6RG2AipN1ad3mODpdpQdvtv8xwVzLDwT6Phj0IPHuoxQSA=w72-h72-p-rp-mo-br100",
       rating: 5,
       text: "Tellement pratique pour les jours où on a pas trop le temps\nIl vient chercher votre loulou à domicile et le ramène franchement mon chien était super content de voir plein d’autres copain\nJe referais appel à ses services",
       source: {

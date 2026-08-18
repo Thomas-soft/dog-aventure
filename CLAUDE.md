@@ -98,6 +98,16 @@ Le reste des décisions du formulaire tient toujours :
 - **La carte est sombre (`bg-ink`) par obligation, pas par goût** : le formulaire est stylé pour un fond sombre (`bg-cream/5`, `text-cream`, `placeholder:text-cream/35`). Sur fond clair les champs deviennent illisibles — c'est le composant qu'il faudrait reprendre, pas seulement la carte.
 - **Les trois repères de réassurance sous le formulaire** (repris **mot pour mot** de `site.trust` : `credential.badge`, `insurance.title`, `points[0].title` — jamais réécrits, jamais dupliqués en dur, donc ils ne peuvent pas diverger de la section Confiance). Ils avaient été posés le 2026-08-14 parce qu'à cette hauteur le visiteur n'avait alors lu ni les tarifs ni la section Confiance. **Ce n'est plus le cas dans l'ordre du 2026-08-16** : ils gardent leur intérêt comme rappel au point d'action, mais ils ne sont plus le contrepoids indispensable qu'ils étaient — les retirer serait désormais discutable, plus fautif.
 
+## Première rencontre offerte (2026-08-18)
+
+Texte fourni par le client, repris **tel quel** dans `site.firstMeeting` et rendu par `components/sections/first-meeting.tsx`.
+
+- **Ce n'est PAS la « visite à domicile » écartée du site le 2026-08-10.** Celle-là était une prestation payante que Martin n'avait ni tarifée ni décrite ; celle-ci est un préalable gratuit à la première balade. La règle « le site ne vend que des balades » tient toujours — ne pas supprimer le bandeau en la relisant.
+- **Placé en dernier dans `#service`, après les carnets**, donc après tous les prix de la page et juste avant le formulaire. « Gratuite et sans engagement » ne lève une objection que si l'objection vient d'être posée : remonté au-dessus des offres, ce ne serait qu'une information de plus. Chronologiquement la rencontre précède la balade, et c'est assumé — c'est un argument, pas une frise.
+- **Fond `bg-ink`**, seul bloc sombre de la section : il la ferme sur un contraste et se distingue des carnets qui le précèdent immédiatement. En carte claire, il s'y fondrait.
+- `paragraphs` est un tableau, pas un champ unique : le texte vient du client en blocs, les recoller en un pavé rendrait le bandeau illisible. `note` est sorti du corps pour rester lisible sans lire le reste.
+- **Léger doublon assumé avec `steps[0]`** (« Un appel ou un SMS — On fait connaissance »), qui décrit la prise de rendez-vous et non la rencontre. Ni faux ni contradictoire, mais si Martin veut une frise en quatre temps, c'est là qu'il faudra intervenir — et ce sera une réécriture de SON texte, donc à valider avec lui.
+
 ## Formulaire de contact (2026-08-14)
 
 Idée du client : tout le monde n'ose pas appeler un inconnu. Le formulaire est l'issue de secours pour ceux-là.
@@ -166,7 +176,18 @@ document.querySelectorAll('[data-review-id]')  // .d4r55 = auteur, .wiI7pd = tex
 - La moyenne et le compte sont **calculés depuis le tableau**, jamais écrits en dur. La grille s'adapte au nombre de cartes (1 → `max-w-md`, 2 → `max-w-3xl` sur 2 colonnes, 3 → 3 colonnes, **4 → 2 colonnes** pour un carré plein, 5+ → 3 colonnes) : les classes sont écrites en entier, Tailwind ne voit pas les noms assemblés à l'exécution. Tableau vide = section absente, sans texte de remplissage.
   - **Le cas 4 n'est pas une coquetterie** : sur `lg:grid-cols-3` la quatrième carte se retrouvait seule sur sa ligne, à gauche, avec deux tiers de vide à droite — sous un en-tête centré, ça se voit. Ajouté le 2026-08-18 en même temps que les deux nouveaux avis.
 - **L'ordre du tableau est celui de la fiche au moment du relevé**, et il n'est pas neutre : il place les avis de tiers avant celui de **Thomas Tofil**, qui est en conflit d'intérêts (cf. « État de la fiche » plus bas). Le client a choisi de le garder ; le remonter en tête serait un choix, pas un défaut d'ordre.
-- **⚠️ Ne jamais toucher à `site.reviews` sans relire `app/mentions-legales/page.tsx`.** La section « Avis des clients » y est obligatoire (art. L111-7-2 du code de la consommation) et **annonce un mois de mise à jour** : il est à corriger à chaque ajout d'avis. Elle a déjà dû être réécrite une fois, quand elle promettait du « temps réel » qui n'existait plus.
+
+### Mise en forme « Google Maps » (2026-08-18)
+
+Demande client : « je veux un style google maps pour les avis », photos de profil comprises. Le rendu reprend l'ordre de lecture de Maps — photo et nom en tête, étoiles et date en dessous, puis le texte **sans guillemets** — et ajoute le récapitulatif de Maps : note géante, étoiles, total et **histogramme des notes de 5 à 1**, tout calculé depuis `site.reviews`. Un histogramme écrit en dur serait un faux au sens propre.
+
+- **Les photos sont en LIEN DIRECT vers `lh3.googleusercontent.com`, jamais recopiées dans `public/`.** C'est le point à ne pas « optimiser » : une copie survivrait à la suppression du compte de la personne, alors qu'en lien direct sa photo disparaît d'ici le jour où elle la retire. Même raison pour le `<img>` nu plutôt que `next/image` — l'optimiseur en mettrait une copie en cache **sur notre serveur**, ce qui revient à la réhéberger. `referrerPolicy="no-referrer"` pour ne pas annoncer à Google quelle page la regarde.
+- **La CSP a dû suivre** : `img-src https://lh3.googleusercontent.com` dans `docker-compose.yml`. Sans elle, les quatre avatars sont bloqués **en production seulement** — en dev il n'y a pas de Traefik, donc pas de CSP : le rendu local ne prouve rien ici.
+- **Repli sans JavaScript** : les initiales sont toujours rendues et l'image vient se poser par-dessus, en absolu. Si l'URL meurt — ce qui arrive dès que la personne change de photo — l'`alt=""` ne laisse aucune icône de fichier cassé et les initiales réapparaissent seules. Le composant reste donc rendu côté serveur.
+- **Retirer `-ba12-` du suffixe d'URL** : c'est la pastille « Local Guide » incrustée par Google dans l'image, qui se retrouve rognée au bord du cercle. Le badge est déjà écrit en toutes lettres sous le nom.
+- **`localGuide` oui, « 27 avis · 28 photos » non.** Maps affiche les deux ; le premier est un statut qui ne bouge quasiment jamais, les seconds sont des compteurs, périmés dès la copie. Même logique que pour la date : la carte porte « Visité en août 2026 » et pas le « il y a un jour » de Maps, qui serait faux dès le lendemain.
+- **Les étoiles sont à l'ambre de Google (`#fbbc04`), pas à `flame`.** Piège du nom : `--flame` est le **vert** de la charte (`#55771e`), pas un orange — des étoiles vertes ne se lisent pas comme une note. C'est, avec le « G » de `components/ui/google-icon.tsx`, la seule couleur de marque en dur du site : elle est là pour être reconnue, elle n'a pas à suivre la palette.
+- **⚠️ Ne jamais toucher à `site.reviews` sans relire `app/mentions-legales/page.tsx`.** La section « Avis des clients » y est obligatoire (art. L111-7-2 du code de la consommation) et **annonce un mois de mise à jour** : il est à corriger à chaque ajout d'avis. Elle a déjà dû être réécrite une fois, quand elle promettait du « temps réel » qui n'existait plus. Un paragraphe y a été ajouté le 2026-08-18 sur les photos de profil, servies depuis Google et non recopiées — c'est aussi la seule requête tierce que la page déclenche en dehors de la balise Ads.
 
 ### Le direct sur la Places API : fait, puis retiré (commit 795fe06)
 

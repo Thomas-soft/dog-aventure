@@ -123,6 +123,15 @@ export default function MentionsLegales() {
               sa source, où il peut être consulté, comparé et signalé.
             </p>
             <p>
+              La photo de profil de chaque auteur est affichée{" "}
+              <strong className="font-semibold text-ink">
+                directement depuis les serveurs de Google
+              </strong>
+              &nbsp;: elle n&rsquo;est pas recopiée sur ce site et disparaît
+              d&rsquo;ici dès que son auteur la retire de son compte. Afficher la
+              page demande donc une requête à Google pour chaque photo.
+            </p>
+            <p>
               Il s&rsquo;agit d&rsquo;une reprise manuelle, mise à jour au{" "}
               <strong className="font-semibold text-ink">mois d&rsquo;août
               2026</strong>&nbsp;: la fiche Google peut donc comporter des avis

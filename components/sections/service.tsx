@@ -12,6 +12,7 @@ import { site } from "@/content/site.config";
 import type { FeatureIcon } from "@/content/types";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Packs } from "@/components/sections/packs";
+import { FirstMeeting } from "@/components/sections/first-meeting";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { cn, formatPrice } from "@/lib/utils";
@@ -199,6 +200,11 @@ export function ServiceSection() {
             cette section plutôt que dans une section à eux, qui casserait le
             rythme crème → surface → sombre de la page. */}
         <Packs />
+
+        {/* En dernier, après tous les prix de la page : « gratuite et sans
+            engagement » ne répond à une objection que si l'objection vient
+            d'être posée. Cf. le commentaire du composant. */}
+        <FirstMeeting />
       </div>
     </section>
   );
