@@ -111,8 +111,9 @@ export function ReviewsSection() {
   const reviews = site.reviews;
   if (reviews.length === 0) return null;
 
-  /* Moyenne calculée, jamais écrite en dur : avec deux avis à 5 étoiles elle
-     vaut 5,0, mais elle doit suivre le tableau au premier avis à 4. */
+  /* Moyenne calculée, jamais écrite en dur : les avis relevés sont tous à 5
+     étoiles, elle vaut donc 5,0 — mais elle doit suivre le tableau au premier
+     avis à 4. Le compte affiché sous les étoiles vient de la même source. */
   const average =
     reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
@@ -147,17 +148,21 @@ export function ReviewsSection() {
           </p>
         </Reveal>
 
-        {/* La largeur suit le nombre de cartes : deux avis sur une grille de
-            trois colonnes se tasseraient à gauche avec un vide à droite. Les
-            classes sont écrites en entier — Tailwind ne voit pas les noms
-            assemblés à l'exécution et ne générerait pas le CSS. */}
+        {/* La largeur ET le nombre de colonnes suivent le nombre de cartes :
+            deux avis sur une grille de trois colonnes se tasseraient à gauche
+            avec un vide à droite, et quatre y laisseraient une carte seule sur
+            la dernière ligne — d'où les deux colonnes à 4, qui donnent un carré
+            plein. Les classes sont écrites en entier : Tailwind ne voit pas les
+            noms assemblés à l'exécution et ne générerait pas le CSS. */}
         <Stagger
           stagger={0.1}
           className={cn(
             "mx-auto grid gap-5",
             reviews.length === 1 && "max-w-md",
             reviews.length === 2 && "max-w-3xl sm:grid-cols-2",
-            reviews.length >= 3 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-3",
+            reviews.length === 3 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-3",
+            reviews.length === 4 && "max-w-4xl sm:grid-cols-2",
+            reviews.length >= 5 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-3",
           )}
         >
           {reviews.map((review, i) => (

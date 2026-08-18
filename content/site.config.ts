@@ -183,10 +183,14 @@ export const site: SiteConfig = {
     signature: "Je m’occupe de chaque chien comme s’il était le mien.",
   },
 
-  /* Les DEUX avis réels de la fiche Google « DogAventure », relevés le
-     2026-08-16 (5,0 ★, 2 avis). Recopiés **mot pour mot**, fautes de frappe et
-     ponctuation comprises : corriger l'orthographe d'un client, c'est déjà
-     réécrire son avis.
+  /* Les QUATRE avis réels de la fiche Google « DogAventure », relevés le
+     2026-08-18 (5,0 ★, 4 avis — les deux premiers sont arrivés la veille).
+     Recopiés **mot pour mot**, fautes de frappe et ponctuation comprises :
+     corriger l'orthographe d'un client, c'est déjà réécrire son avis.
+
+     Ordre = celui de la fiche au moment du relevé. Il place les avis de tiers
+     avant celui de Thomas Tofil, qui est en conflit d'intérêts (cf. CLAUDE.md)
+     — le garder en tête de section n'aurait aucune raison d'être.
 
      ⚠️ Ce ne sont PAS des textes à retoucher, ni à compléter. Les quatre avis
      qui vivaient ici jusqu'à ce jour étaient inventés — noms, villes, chiens —
@@ -203,6 +207,26 @@ export const site: SiteConfig = {
      Ni `town` ni `dog` : Google ne les fournit pas, et les inventer
      fabriquerait du détail crédible autour d'un avis réel. */
   reviews: [
+    {
+      author: "Lestage Juliette",
+      rating: 5,
+      text: "Merci à Martin ! Il s’est super bien occupé de mon petit chien :)",
+      source: {
+        visitDate: "août 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+    {
+      /* Apostrophes droites et « hésiter! » sans espace : c'est ce qu'il a
+         tapé. Ne pas typographier — cf. l'en-tête de ce bloc. */
+      author: "nicolas",
+      rating: 5,
+      text: "Très content de Martin, sérieux, attentionné et à l'écoute de Sam, tout s'est très bien passé, on recommande sans hésiter!",
+      source: {
+        visitDate: "août 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
     {
       author: "Thomas Tofil",
       rating: 5,
