@@ -21,7 +21,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
 function contactError(value: string): string | null {
   const v = value.trim();
-  if (!v) return "Indiquez un email ou un téléphone, pour que je puisse vous répondre.";
+  if (!v) return "Indiquez un email ou un téléphone, pour qu’on puisse vous répondre.";
   if (v.includes("@")) {
     return EMAIL.test(v) ? null : "Cette adresse email semble incomplète.";
   }
@@ -49,7 +49,7 @@ export function ContactForm() {
     const message = String(data.get("message") ?? "").trim();
 
     const next: Record<string, string> = {};
-    if (!name) next.name = "Votre prénom, pour que je sache à qui je réponds.";
+    if (!name) next.name = "Votre prénom, pour qu’on sache à qui on répond.";
     const contactIssue = contactError(contact);
     if (contactIssue) next.contact = contactIssue;
     if (message.length < 5) next.message = "Dites-m’en un mot sur votre chien.";

@@ -17,7 +17,7 @@ import { asset, cn } from "@/lib/utils";
 const NAV = [
   { label: "La promenade", href: asset("/#service") },
   { label: "Confiance", href: asset("/#confiance") },
-  { label: "Où j'interviens", href: asset("/#zones") },
+  { label: "Où on intervient", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },
 ];
 

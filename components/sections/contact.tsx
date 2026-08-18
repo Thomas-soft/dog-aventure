@@ -39,7 +39,7 @@ export function ContactSection() {
               </h2>
               <p className="max-w-lg leading-relaxed text-cream/70 md:text-lg">
                 Un appel ou un SMS suffit : on parle de votre chien, on cale un
-                créneau, et je viens le chercher chez vous.
+                créneau, et on vient le chercher chez vous.
               </p>
               <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
                 <Button

@@ -236,7 +236,7 @@ export function ReviewsSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           align="center"
-          overline="Ils me font confiance"
+          overline="Ils nous font confiance"
           title={
             <>
               Les maîtres{" "}

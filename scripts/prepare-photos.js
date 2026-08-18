@@ -43,6 +43,25 @@ const PHOTOS = [
     reference: [878, 62],
     variants: { 640: [640, 58], 828: [700, 52], 1080: [878, 52], 1200: [878, 52] },
   },
+  {
+    /* Le binôme en t-shirt « Promeneur de chiens », posé dans la section
+       « Il est entre de bonnes mains » (2026-08-18). C'est la photo qui montre
+       QUI est ce « on » employé partout dans les textes depuis le même jour —
+       sans elle, le pluriel n'est qu'une tournure.
+
+       Cadrage 5/4 serré : au-dessus de y=250 il n'y a que du thuya, et il faut
+       descendre jusqu'à 1412 pour que le logo imprimé sur le t-shirt de gauche
+       tienne entier dans le cadre — c'est lui qui fait le lien avec la marque,
+       le rogner serait perdre l'essentiel du bas de l'image. */
+    name: "equipe",
+    src: "equipe.jpg",
+    crop: { left: 0, top: 250, width: 1452, height: 1162 },
+    reference: [1452, 62],
+    /* Affichée au plus large dans un conteneur de 768 px CSS : le slot 1200
+       (servi aux écrans 2×) est plafonné à 1100 px, au-delà on paie du poids
+       que personne ne voit. */
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [1080, 55], 1200: [1100, 55] },
+  },
   /* scripts/photos/balade-chemin.jpg (le promeneur de dos sur un chemin) a
      servi à un médaillon dans le coin du hero, retiré : deux photos de la
      même personne, même tenue, même décor, l'une collée sur l'autre, ça

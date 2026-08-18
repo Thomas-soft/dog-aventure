@@ -270,7 +270,7 @@ export interface SiteConfig {
   steps: Step[];
   /** La rencontre à domicile offerte, en bas de « La promenade » */
   firstMeeting: FirstMeeting;
-  /** Arguments de confiance — section « Pourquoi me confier votre chien » */
+  /** Arguments de confiance — section « Pourquoi nous confier votre chien » */
   trust: Trust;
   /** Avis affichés dans `#avis`. Tableau vide = section masquée. */
   reviews: Review[];
@@ -284,6 +284,10 @@ export interface SiteConfig {
   images: {
     hero: string;
     heroAlt: string;
+    /** Le binôme, section « Il est entre de bonnes mains ». Vide ou absent =
+     *  la section se rend sans photo, sans trou dans la mise en page. */
+    team?: string;
+    teamAlt?: string;
     /** Logo complet, texte en arc compris — footer */
     logo: string;
     logoAlt: string;

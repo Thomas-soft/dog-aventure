@@ -11,7 +11,7 @@ export function ZonesSection() {
         <Reveal className="mb-12 flex max-w-2xl flex-col gap-4 md:mb-16">
           <span className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.28em] text-leaf">
             <span className="h-px w-8 bg-leaf" aria-hidden />
-            Où j&rsquo;interviens
+            Où on intervient
           </span>
           {/* Le seul titre porteur du mot-clé, et c'est sa place : la section
               parle précisément du secteur couvert. Les autres titres gardent
@@ -23,7 +23,7 @@ export function ZonesSection() {
             </span>
           </h2>
           <p className="leading-relaxed text-cream/60 md:text-lg">
-            Basé à {site.base.city} ({site.base.zip}), j&rsquo;interviens dans
+            Basés à {site.base.city} ({site.base.zip}), on intervient dans
             tout le secteur — {site.base.region} et sud de l&rsquo;Oise.
           </p>
         </Reveal>
@@ -45,7 +45,7 @@ export function ZonesSection() {
                 <span className="font-script text-xl text-leaf">
                   {site.townsSuffix} ♡
                 </span>
-                {" — "}votre ville n&rsquo;est pas sur la liste&nbsp;? Appelez-moi,
+                {" — "}votre ville n&rsquo;est pas sur la liste&nbsp;? Appelez-nous,
                 on trouve une solution.
               </p>
             </div>
@@ -57,7 +57,7 @@ export function ZonesSection() {
                 Réservation
               </h3>
               <p className="text-sm leading-relaxed text-cream/60">
-                Par téléphone ou SMS, en deux minutes. Je viens chercher votre
+                Par téléphone ou SMS, en deux minutes. On vient chercher votre
                 chien directement chez vous.
               </p>
               <div className="mt-auto flex flex-col gap-3">

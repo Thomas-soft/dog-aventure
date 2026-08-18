@@ -8,11 +8,11 @@ import type { SiteConfig } from "./types";
 export const site: SiteConfig = {
   name: "Dog Aventure",
   activity: "Promenades canines",
-  slogan: "Je le promène, vous profitez du reste !",
+  slogan: "On le promène, vous profitez du reste !",
   subSlogan: "Simple, locale & de confiance",
   tagline: "Moins de temps pour vous, plus de bonheur pour votre chien. ♡",
   description:
-    "Je viens chercher votre chien chez vous pour une promenade individuelle d’1 heure — ou 20 minutes en dépannage — et je le raccompagne à votre domicile, dépensé, hydraté et heureux.",
+    "On vient chercher votre chien chez vous pour une promenade individuelle d’1 heure — ou 20 minutes en dépannage — et on le raccompagne à votre domicile, dépensé, hydraté et heureux.",
 
   phone: "07 45 37 50 80",
   phoneHref: "tel:+33745375080",
@@ -75,7 +75,7 @@ export const site: SiteConfig = {
          repère affiché des deux côtés, le « 44,70 € l'heure » de la petite
          balade ressemblerait à un argument de vente au lieu d'un fait. */
       priceNote: "soit 22,90 € l’heure",
-      desc: "Une heure rien que pour lui : je viens le chercher chez vous, il se dépense vraiment, explore, renifle, boit — et je le raccompagne apaisé pour la journée. C’est la balade que prennent presque tous mes clients, et de loin la meilleure valeur.",
+      desc: "Une heure rien que pour lui : on vient le chercher chez vous, il se dépense vraiment, explore, renifle, boit — et on le raccompagne apaisé pour la journée. C’est la balade que prennent presque tous nos clients, et de loin la meilleure valeur.",
       features: [
         { icon: "paw-print", label: "Promenade individuelle" },
         { icon: "zap", label: "Sortie & dépense physique" },
@@ -128,15 +128,15 @@ export const site: SiteConfig = {
   steps: [
     {
       title: "Un appel ou un SMS",
-      desc: "On fait connaissance, vous me parlez de votre chien et on cale un créneau qui vous arrange.",
+      desc: "On fait connaissance, vous nous parlez de votre chien et on cale un créneau qui vous arrange.",
     },
     {
-      title: "Je viens le chercher",
+      title: "On vient le chercher",
       desc: "Prise en charge directement chez vous, à l'heure convenue — vous n'avez rien à organiser.",
     },
     {
       title: "La balade, puis le retour",
-      desc: "Il se dépense, boit, profite — et je le raccompagne à la maison, heureux.",
+      desc: "Il se dépense, boit, profite — et on le raccompagne à la maison, heureux.",
     },
   ],
 
@@ -151,8 +151,8 @@ export const site: SiteConfig = {
   firstMeeting: {
     title: "Première rencontre offerte",
     paragraphs: [
-      "Avant la première promenade, je viens directement à votre domicile pour rencontrer votre chien et faire connaissance avec vous.",
-      "Ce premier échange me permet de découvrir ses habitudes, son caractère et vos consignes afin que tout soit prêt pour sa première balade.",
+      "Avant la première promenade, on vient directement à votre domicile pour rencontrer votre chien et faire connaissance avec vous.",
+      "Ce premier échange nous permet de découvrir ses habitudes, son caractère et vos consignes afin que tout soit prêt pour sa première balade.",
     ],
     note: "La rencontre est gratuite et sans engagement.",
   },
@@ -166,7 +166,7 @@ export const site: SiteConfig = {
     credential: {
       badge: "ACACED",
       title: "Formé en éducation canine",
-      desc: "Je suis titulaire de l’ACACED, l’attestation officielle exigée en France pour exercer auprès des animaux de compagnie. Concrètement : je sais lire le comportement d’un chien et m’adapter au vôtre — et j’en profite pour entretenir ses bonnes habitudes en balade, marche en laisse, calme au croisement et rappel selon son niveau.",
+      desc: "On est titulaire de l’ACACED, l’attestation officielle exigée en France pour exercer auprès des animaux de compagnie. Concrètement : on sait lire le comportement d’un chien et s’adapter au vôtre — et on en profite pour entretenir ses bonnes habitudes en balade, marche en laisse, calme au croisement et rappel selon son niveau.",
     },
     /* Demande client du 2026-08-13, texte fourni par lui. Deuxième fait
        opposable de la page après l'ACACED, d'où sa place sous la
@@ -179,12 +179,12 @@ export const site: SiteConfig = {
       {
         icon: "camera",
         title: "Des nouvelles pendant la balade",
-        desc: "Je vous envoie des photos et des vidéos pendant la sortie. Vous voyez où il est et comment il va, sans avoir à demander.",
+        desc: "On vous envoie des photos et des vidéos pendant la sortie. Vous voyez où il est et comment il va, sans avoir à demander.",
       },
       {
         icon: "clipboard-check",
         title: "Vos consignes, à la lettre",
-        desc: "Ses habitudes, son harnais, ce qu’il a le droit de faire ou non : vous me le dites une fois, je m’y tiens à chaque balade.",
+        desc: "Ses habitudes, son harnais, ce qu’il a le droit de faire ou non : vous nous le dites une fois, on s’y tient à chaque balade.",
       },
       {
         icon: "dog",
@@ -194,10 +194,10 @@ export const site: SiteConfig = {
       {
         icon: "calendar-check",
         title: "En semaine comme le week-end",
-        desc: "Je cale la balade sur vos horaires, et je réponds rapidement à vos demandes.",
+        desc: "On cale la balade sur vos horaires, et on répond rapidement à vos demandes.",
       },
     ],
-    signature: "Je m’occupe de chaque chien comme s’il était le mien.",
+    signature: "On s’occupe de chaque chien comme s’il était le nôtre.",
   },
 
   /* Les QUATRE avis réels de la fiche Google « DogAventure », relevés le
@@ -293,6 +293,12 @@ export const site: SiteConfig = {
     hero: "/images/hero.webp",
     heroAlt:
       "Le promeneur de Dog Aventure accroupi aux côtés d’un grand chien noir, pendant une balade",
+    /* Photo du binôme (2026-08-18), section « Il est entre de bonnes mains ».
+       Elle est ce qui rend le « on » des textes crédible : le visiteur voit
+       les deux personnes à qui il confie son chien, en tenue Dog Aventure. */
+    team: "/images/equipe.webp",
+    teamAlt:
+      "Les deux promeneurs de Dog Aventure en t-shirt « Promeneur de chiens », devant une haie",
     // Générés par scripts/trace-logo.js — ne pas éditer à la main
     logo: "/images/logo.svg",
     logoAlt: "Dog Aventure — promeneur avec ses deux chiens en laisse",
@@ -380,7 +386,7 @@ export const site: SiteConfig = {
      que l'origine publicitaire des visites. */
   consent: {
     title: "Cookies de mesure publicitaire",
-    desc: "Je diffuse des annonces Google pour faire connaître mon activité, et un cookie me dit si elles amènent bien des visiteurs jusqu’ici. C’est tout ce qui est mesuré, et le site fonctionne exactement pareil si vous refusez.",
+    desc: "On diffuse des annonces Google pour faire connaître notre activité, et un cookie nous dit si elles amènent bien des visiteurs jusqu’ici. C’est tout ce qui est mesuré, et le site fonctionne exactement pareil si vous refusez.",
     accept: "Accepter",
     refuse: "Refuser",
     more: "En savoir plus",
@@ -398,13 +404,15 @@ export const site: SiteConfig = {
      site commercial. Le formulaire se présente comme un second canal, offert et
      normal — jamais comme un refuge pour qui n'ose pas décrocher.
 
-     Le tutoiement est proscrit ici comme partout : c'est Martin qui parle,
-     à la première personne, en vouvoyant. */
+     La voix est à « on » depuis le 2026-08-18 : ils sont deux à promener, et la
+     photo du binôme le montre dans « Il est entre de bonnes mains ». Jamais
+     « nous », qui sonne corporate, jamais « je », qui est faux désormais. Le
+     vouvoiement, lui, ne bouge pas, et le tutoiement reste proscrit. */
   contactForm: {
     eyebrow: "Par écrit",
-    title: "Écrivez-moi",
+    title: "Écrivez-nous",
     intro:
-      "Décrivez-moi votre besoin en quelques mots. Je réponds dans la journée, par email ou par téléphone, comme vous préférez.",
+      "Décrivez-nous votre besoin en quelques mots. On répond dans la journée, par email ou par téléphone, comme vous préférez.",
     nameLabel: "Votre prénom",
     namePlaceholder: "Julie",
     contactLabel: "Votre email ou votre téléphone",
@@ -416,13 +424,13 @@ export const site: SiteConfig = {
     sending: "Envoi…",
     successTitle: "C’est envoyé !",
     successDesc:
-      "Je vous réponds dans la journée. À très vite, et une caresse à votre chien de ma part.",
+      "On vous répond dans la journée. À très vite, et une caresse à votre chien de notre part.",
     /* Un échec d'envoi ne doit jamais être un cul-de-sac : le téléphone, lui,
        ne dépend d'aucun serveur. */
     error:
-      "L’envoi a échoué. Réessayez dans un instant, ou appelez-moi directement :",
+      "L’envoi a échoué. Réessayez dans un instant, ou appelez-nous directement :",
     privacy:
-      "Vos coordonnées me servent uniquement à vous répondre. Elles ne sont ni revendues, ni utilisées pour de la publicité.",
+      "Vos coordonnées nous servent uniquement à vous répondre. Elles ne sont ni revendues, ni utilisées pour de la publicité.",
     previewNotice:
       "Aperçu client : le formulaire n’envoie rien ici. Il fonctionne sur le site en ligne.",
   },

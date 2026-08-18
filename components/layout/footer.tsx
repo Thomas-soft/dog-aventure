@@ -11,7 +11,7 @@ import { asset } from "@/lib/utils";
 const NAV = [
   { label: "La promenade", href: asset("/#service") },
   { label: "Confiance", href: asset("/#confiance") },
-  { label: "Où j'interviens", href: asset("/#zones") },
+  { label: "Où on intervient", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },
   { label: "Contact", href: asset("/#contact") },
 ];
@@ -46,7 +46,7 @@ export function Footer() {
             {site.description}
           </p>
           <p className="text-sm text-smoke">
-            Basé à {site.base.city} ({site.base.zip}) — {site.base.region}
+            Basés à {site.base.city} ({site.base.zip}) — {site.base.region}
             <br />
             <a href={site.phoneHref} className="transition-colors hover:text-ink">
               {site.phone}
@@ -90,7 +90,7 @@ export function Footer() {
 
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-smoke">
-            J&rsquo;interviens à
+            On intervient à
           </p>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
             {site.towns.map((town) => (

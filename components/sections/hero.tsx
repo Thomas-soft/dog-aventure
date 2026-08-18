@@ -31,7 +31,7 @@ export function Hero() {
 
           <StaggerItem>
             <h1 className="font-display text-5xl uppercase leading-[1.02] tracking-tight sm:text-6xl xl:text-7xl">
-              Je le promène,
+              On le promène,
               <br />
               <span className="font-script normal-case tracking-normal text-flame">
                 vous profitez du reste&nbsp;!

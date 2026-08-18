@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   CalendarCheck,
   Camera,
@@ -21,6 +22,7 @@ const ICONS: Record<TrustIcon, LucideIcon> = {
 
 export function TrustSection() {
   const { credential, insurance, points, signature } = site.trust;
+  const { team, teamAlt } = site.images;
 
   return (
     // `border-b` et non `border-y` : depuis le 2026-08-16 la section suit
@@ -32,7 +34,7 @@ export function TrustSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
-          overline={<>Pourquoi me confier votre chien&nbsp;?</>}
+          overline={<>Pourquoi nous confier votre chien&nbsp;?</>}
           title={
             <>
               Il est entre de{" "}
@@ -43,6 +45,33 @@ export function TrustSection() {
           }
           sub="Vous confiez votre chien à quelqu’un pendant une heure. Voilà ce que vous êtes en droit de savoir avant de le faire."
         />
+
+        {/* La photo du binôme, juste sous le titre : « il est entre de bonnes
+            mains » appelle un visage, et c'est ici que le visiteur découvre à
+            QUI il confie son chien — avant les preuves, qui ne sont que du
+            texte. Elle porte aussi le « on » employé partout dans la page.
+
+            Placée avant la carte ACACED et non après : la qualification reste
+            le premier ARGUMENT de la section, la photo n'en est pas un.
+
+            `max-w-2xl` : au-delà, une photo de deux personnes en pied écrase
+            le bandeau de qualification qui la suit et pousse les quatre points
+            hors de l'écran. Pas de `preload` — elle est bien en dessous de la
+            ligne de flottaison, l'élément LCP reste la photo du hero. */}
+        {team && (
+          <Reveal className="mb-8 md:mb-10">
+            <div className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-line bg-cream shadow-sm">
+              <Image
+                src={team}
+                alt={teamAlt ?? ""}
+                width={1452}
+                height={1162}
+                sizes="(min-width: 768px) 672px, calc(100vw - 2rem)"
+                className="h-auto w-full"
+              />
+            </div>
+          </Reveal>
+        )}
 
         {/* La qualification passe avant tout le reste : c’est la seule preuve
             vérifiable de la page, les autres arguments sont des engagements. */}
