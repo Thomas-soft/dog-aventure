@@ -66,7 +66,7 @@ export function TrustSection() {
                 src={team}
                 alt={teamAlt ?? ""}
                 width={1452}
-                height={1162}
+                height={1220}
                 sizes="(min-width: 768px) 672px, calc(100vw - 2rem)"
                 className="h-auto w-full"
               />

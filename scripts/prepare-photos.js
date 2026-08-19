@@ -49,13 +49,23 @@ const PHOTOS = [
        QUI est ce « on » employé partout dans les textes depuis le même jour —
        sans elle, le pluriel n'est qu'une tournure.
 
-       Cadrage 5/4 serré : au-dessus de y=250 il n'y a que du thuya, et il faut
-       descendre jusqu'à 1412 pour que le logo imprimé sur le t-shirt de gauche
-       tienne entier dans le cadre — c'est lui qui fait le lien avec la marque,
-       le rogner serait perdre l'essentiel du bas de l'image. */
+       Cadrage recalé le 2026-08-19 : le crâne de la personne de droite culmine
+       à y=245 dans l'original, l'ancien `top: 250` le rasait donc exactement —
+       une tête qui touche le bord de cadre, c'est le défaut le plus visible
+       d'un portrait. Le haut remonte à 160, ce qui lui laisse 85 px de ciel
+       (7 % de la hauteur) sans faire entrer autre chose que du thuya.
+
+       Le bas, lui, ne descend plus jusqu'à 1412 : le dernier trait vert du
+       logo imprimé sur le t-shirt de gauche s'arrête à y=1310 et tout ce qui
+       suit n'est que du noir. On s'arrête à 1380 — 70 px de marge sous le
+       logo, qui reste entier (c'est lui qui fait le lien avec la marque).
+
+       Conséquence : le cadre n'est plus en 5/4 mais en 1,19 (1452 × 1220), un
+       cheveu plus haut. `components/sections/trust.tsx` porte les mêmes
+       dimensions en dur — les deux se relisent ensemble. */
     name: "equipe",
     src: "equipe.jpg",
-    crop: { left: 0, top: 250, width: 1452, height: 1162 },
+    crop: { left: 0, top: 160, width: 1452, height: 1220 },
     reference: [1452, 62],
     /* Affichée au plus large dans un conteneur de 768 px CSS : le slot 1200
        (servi aux écrans 2×) est plafonné à 1100 px, au-delà on paie du poids
