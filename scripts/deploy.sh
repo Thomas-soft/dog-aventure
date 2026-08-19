@@ -44,6 +44,19 @@ for i in $(seq 1 60); do
   sleep 1
 done
 
+# Le cache de l'optimiseur next/image vit dans le volume `image-cache`, qui
+# survit volontairement à la recréation du conteneur. Sa clé est
+# (fichier, largeur, qualité) : une photo REGÉNÉRÉE SOUS LE MÊME NOM continue
+# donc d'être servie dans sa version d'avant, jusqu'à 4 h (le max-age de la
+# réponse). Constaté le 2026-08-19 sur equipe.webp — le HTML était à jour, la
+# photo non, et seulement sur une partie des largeurs : celles déjà en cache.
+# On ne purge que si le déploiement a touché public/images/, sinon le volume
+# perdrait tout son intérêt. PURGE_IMAGE_CACHE=1 force la purge.
+if [ "${PURGE_IMAGE_CACHE:-0}" = "1" ] || ! git diff --quiet "$BEFORE" "$AFTER" -- public/images; then
+  echo "▸ Purge du cache de l'optimiseur d'images"
+  docker exec "$CONTAINER" sh -lc 'rm -rf /app/.next/cache/images/*' && echo "  vidé"
+fi
+
 echo "▸ Vérification publique"
 # Le healthcheck vert ne dit qu'une chose : Next.js répond DANS le conteneur.
 # Traefik, lui, redécouvre le conteneur recréé via l'API Docker, et il existe
