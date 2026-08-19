@@ -10,7 +10,7 @@ export const site: SiteConfig = {
   activity: "Promenades canines",
   slogan: "On le promène, vous profitez du reste !",
   subSlogan: "Simple, locale & de confiance",
-  tagline: "Moins de temps pour vous, plus de bonheur pour votre chien. ♡",
+  tagline: "Plus de temps pour vous, plus de bonheur pour votre chien. ♡",
   description:
     "On vient chercher votre chien chez vous pour une promenade individuelle d’1 heure — ou 20 minutes en dépannage — et on le raccompagne à votre domicile, dépensé, hydraté et heureux.",
 

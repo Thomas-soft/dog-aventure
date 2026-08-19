@@ -11,6 +11,7 @@ import {
 import { site } from "@/content/site.config";
 import type { TrustIcon } from "@/content/types";
 import { SectionHeader } from "@/components/sections/section-header";
+import { FirstMeeting } from "@/components/sections/first-meeting";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 
 const ICONS: Record<TrustIcon, LucideIcon> = {
@@ -154,6 +155,15 @@ export function TrustSection() {
             {signature}
           </p>
         </Reveal>
+
+        {/* « Première rencontre offerte » ferme la section depuis le
+            2026-08-19 (demande client : Martin la veut haut dans la page).
+            Elle vivait jusque-là en fin de section « La promenade ». Ici,
+            elle n'est plus un argument de prix mais le premier pas concret
+            de la réassurance — on se rencontre avant de confier le chien —
+            et elle arrive juste avant les tarifs, pas après. Cf. le
+            commentaire du composant. */}
+        <FirstMeeting />
       </div>
     </section>
   );

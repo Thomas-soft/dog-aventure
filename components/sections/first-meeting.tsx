@@ -3,17 +3,25 @@ import { site } from "@/content/site.config";
 import { Reveal } from "@/components/motion/reveal";
 
 /**
- * « Première rencontre offerte » — bandeau de fin de la section « La promenade ».
+ * « Première rencontre offerte » — bandeau de fin de la section « Il est entre
+ * de bonnes mains » (`#confiance`).
  *
- * Placé APRÈS les carnets, donc après tous les prix de la page, et juste avant
- * le formulaire : c'est le seul endroit où « gratuite et sans engagement »
- * répond à une objection que le visiteur vient réellement de se poser. Le
- * remonter au-dessus des offres le transformerait en information de plus.
+ * Déplacé le 2026-08-19, à la demande du client : Martin la veut haut dans la
+ * page. Elle fermait jusque-là la section « La promenade », après tous les
+ * prix — l'argument « gratuite et sans engagement » y répondait à une objection
+ * de tarif que le visiteur venait de se poser. Ce ressort est perdu ; ce qu'on
+ * gagne à la place, c'est qu'elle se lit désormais comme le dernier argument de
+ * réassurance et le premier pas concret : on se rencontre AVANT que le chien
+ * soit confié, et avant que le moindre prix soit annoncé. Chronologiquement,
+ * c'est aussi le bon ordre.
  *
- * Fond sombre, à la différence du reste de la section : il ferme le bloc
- * crème → surface → crème sur un contraste, et c'est le seul argument de la
- * section qui ne se lit pas comme un tarif. Ne pas le passer en carte claire,
- * il se fondrait dans les carnets qui le précèdent immédiatement.
+ * Elle ferme la section, après la phrase manuscrite : deux lignes en script
+ * l'une derrière l'autre (la `note` du bandeau puis la signature) se
+ * concurrenceraient si on l'insérait avant.
+ *
+ * Fond sombre, seul de la section : il tranche sur le `bg-surface` du bloc et
+ * sur les cartes crème, et il marque la fin de la réassurance avant les tarifs.
+ * Ne pas le passer en carte claire, il se fondrait dans les quatre points.
  *
  * ⚠️ Ce n'est PAS la « visite à domicile » retirée du site le 2026-08-10 :
  * celle-là était une prestation payante que le client n'avait ni tarifée ni
