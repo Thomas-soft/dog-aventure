@@ -307,8 +307,8 @@ export interface SiteConfig {
   firstMeeting: FirstMeeting;
   /** Arguments de confiance — section « Pourquoi nous confier votre chien » */
   trust: Trust;
-  /** Les chiens de la meute, galerie `#chiens` — juste avant les avis :
-   *  d'abord les chiens, ensuite ce que leurs maîtres en disent. */
+  /** Les chiens de la meute, galerie `#chiens` — juste avant les tarifs :
+   *  d'abord les chiens qu'on promène, ensuite seulement le prix. */
   dogs: Dogs;
   /** Avis affichés dans `#avis`. Tableau vide = section masquée. */
   reviews: Review[];

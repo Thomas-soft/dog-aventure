@@ -25,12 +25,15 @@ export default function Home() {
             plaçait le formulaire juste sous le hero. La section de réservation
             (appel + SMS) reste en fin de page pour conclure. */}
         <TrustSection />
+        {/* La meute AVANT les tarifs (demande client du 2026-08-22, en
+            remplacement de sa place initiale entre `#zones` et `#avis`) :
+            on montre les chiens qu'on promène, ensuite seulement le prix.
+            Elle prolonge la réassurance de `#confiance` sur un ton plus léger
+            et sert de respiration avant les deux cartes d'offres. */}
+        <DogsSection />
         <ServiceSection />
         <ContactFormSection />
         <ZonesSection />
-        {/* La meute avant les avis : d'abord les chiens qu'on promène,
-            ensuite ce que leurs maîtres en disent. */}
-        <DogsSection />
         <ReviewsSection />
         <ContactSection />
       </main>

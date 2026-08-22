@@ -237,9 +237,8 @@ export function ReviewsSection() {
         <SectionHeader
           align="center"
           /* « Ils nous font confiance » est passé à la galerie `#chiens`
-             (2026-08-22), qui précède immédiatement cette section : deux
-             sur-titres identiques à un écran d'intervalle se lisaient comme
-             un bug. Celui-ci dit maintenant d'où viennent les avis, ce que le
+             (2026-08-22) : une même page ne peut pas annoncer deux fois la
+             même chose. Celui-ci dit d'où viennent les avis, ce que le
              titre « Les maîtres en parlent » ne dit pas — et c'est exactement
              ce que la section « Avis des clients » des mentions légales
              promet. Surtout PAS « Avis vérifiés » : la formule est une marque

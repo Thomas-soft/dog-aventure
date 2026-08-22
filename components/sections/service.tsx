@@ -216,12 +216,19 @@ export function ServiceSection() {
                   </li>
                 ))}
               </ol>
-              {/* Le chien qui vient chercher sa caresse, à hauteur des tarifs
-                  (demande client du 2026-08-22). Cette carte ne remplissait
-                  qu'environ la moitié de la hauteur des deux cartes d'offres
-                  qu'elle longe : le `mt-auto` de la phrase manuscrite ne
-                  faisait que rendre ce vide visible. La photo l'occupe, et un
-                  museau en face des prix vaut mieux que du blanc.
+              {/* Le chien qui vient chercher sa caresse.
+
+                  Le client avait d'abord demandé « là où y'a les prix », puis
+                  a retiré la consigne le jour même (« je me suis mal exprimé,
+                  place-la où tu veux »). Elle reste ici parce que c'est le seul
+                  endroit de la page qui avait un VRAI trou : cette carte ne
+                  remplissait qu'environ la moitié de la hauteur des deux cartes
+                  d'offres qu'elle longe, et le `mt-auto` de la phrase manuscrite
+                  ne faisait que rendre ce vide visible. Les deux colonnes se
+                  terminent maintenant à la même hauteur. La déplacer ailleurs
+                  rouvrirait ce trou et en créerait un autre — les deux autres
+                  candidats (`#contact` et `#reserver`) sont des cartes sombres
+                  centrées, déjà denses, où une photo tomberait mal.
 
                   C'est elle qui porte le `mt-auto` quand elle est là — sinon
                   la carte se replierait vers le haut et le vide reviendrait

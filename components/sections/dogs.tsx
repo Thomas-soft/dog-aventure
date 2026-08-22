@@ -6,26 +6,35 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 /** Section « Ils nous font confiance » (`#chiens`) — la meute.
  *
  *  Demande client du 2026-08-22. Les photos et les légendes viennent de lui,
- *  une phrase par chien. Ce sont de vrais chiens de vrais clients : ne jamais
- *  en ajouter un « pour remplir la grille ». Elle est posée juste avant les
- *  avis Google, et un chien inventé jetterait le doute sur ceux-là aussi.
+ *  une phrase par chien, et leurs maîtres ont donné leur accord (confirmé le
+ *  même jour). Ce sont de vrais chiens de vrais clients : ne jamais en ajouter
+ *  un « pour remplir la grille » — la page porte aussi de vrais avis Google, et
+ *  un chien inventé jetterait le doute sur ceux-là.
+ *
+ *  Placée **avant `#service`**, donc avant les tarifs — demande du client le
+ *  jour même, en remplacement de sa place initiale entre `#zones` et `#avis` :
+ *  on montre les chiens qu'on promène, ensuite seulement le prix.
  *
  *  Tableau vide = pas de section, même convention que `#avis` : mieux vaut rien
  *  qu'un vide habillé.
  *
  *  ⚠️ L'accroche « Ils nous font confiance » servait de sur-titre à la section
- *  des avis jusqu'à ce jour. Elle lui a été retirée en même temps que cette
- *  section est née (`reviews.tsx` dit maintenant « Avis Google vérifiés ») :
- *  les deux sections se suivent, le doublon se serait lu comme un bug.
+ *  des avis jusqu'à ce jour. Elle lui a été retirée quand cette section est née
+ *  (`reviews.tsx` dit maintenant « Repris de la fiche Google »). Les deux
+ *  sections ne se suivent plus depuis la remontée, mais la même page ne peut
+ *  pas annoncer deux fois la même chose — et le nouveau sur-titre dit en plus
+ *  d'où viennent les avis. Ne pas le « rendre » aux avis.
  */
 export function DogsSection() {
   const { items, note } = site.dogs;
   if (items.length === 0) return null;
 
   return (
-    // `border-b` seulement : au-dessus il y a `#zones`, qui est en `bg-ink` —
-    // un filet entre du sombre et du surface ne se voit pas. Celui du bas, lui,
-    // sépare le surface de la crème de `#avis`.
+    // `bg-surface` comme `#confiance`, qui la précède : les deux ne se
+    // confondent pas pour autant, le bandeau sombre « Première rencontre
+    // offerte » ferme `#confiance` et fait la coupure. `border-b` seulement —
+    // `#confiance` porte déjà le sien, en ajouter un en haut ferait une ligne
+    // de 2 px ; celui du bas sépare le surface de la crème de `#service`.
     <section
       id="chiens"
       className="border-b border-line bg-surface py-24 md:py-32"
