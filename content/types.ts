@@ -332,11 +332,12 @@ export interface SiteConfig {
      *  section démarre directement sur les offres. */
     walk?: string;
     walkAlt?: string;
-    /** Le chien qui vient chercher une caresse, au bas de la carte
-     *  « Comment ça marche ? » — à hauteur des tarifs. Absente = la carte se
-     *  referme sur sa phrase manuscrite, sans trou. */
-    greeting?: string;
-    greetingAlt?: string;
+    /** La photo du bas de la carte « Comment ça marche ? », à hauteur des
+     *  tarifs. Nommée par sa PLACE et non par son sujet : elle a déjà changé
+     *  une fois (un shiba, puis le binôme en sous-bois) et changera encore.
+     *  Absente = la carte se referme sur sa phrase manuscrite, sans trou. */
+    walkAside?: string;
+    walkAsideAlt?: string;
     /** Logo complet, texte en arc compris — footer */
     logo: string;
     logoAlt: string;

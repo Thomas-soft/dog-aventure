@@ -25,7 +25,7 @@ const FEATURE_ICONS: Record<FeatureIcon, ElementType> = {
 };
 
 export function ServiceSection() {
-  const { walk, walkAlt, greeting, greetingAlt } = site.images;
+  const { walk, walkAlt, walkAside, walkAsideAlt } = site.images;
 
   return (
     <section id="service" className="py-24 md:py-32">
@@ -216,31 +216,36 @@ export function ServiceSection() {
                   </li>
                 ))}
               </ol>
-              {/* Le chien qui vient chercher sa caresse.
+              {/* Le binôme en sous-bois — un gros plan de shiba jusqu'au
+                  2026-08-22, remplacé le jour même à la demande du client.
 
-                  Le client avait d'abord demandé « là où y'a les prix », puis
-                  a retiré la consigne le jour même (« je me suis mal exprimé,
-                  place-la où tu veux »). Elle reste ici parce que c'est le seul
-                  endroit de la page qui avait un VRAI trou : cette carte ne
-                  remplissait qu'environ la moitié de la hauteur des deux cartes
-                  d'offres qu'elle longe, et le `mt-auto` de la phrase manuscrite
-                  ne faisait que rendre ce vide visible. Les deux colonnes se
-                  terminent maintenant à la même hauteur. La déplacer ailleurs
-                  rouvrirait ce trou et en créerait un autre — les deux autres
-                  candidats (`#contact` et `#reserver`) sont des cartes sombres
-                  centrées, déjà denses, où une photo tomberait mal.
+                  Pourquoi une photo ICI : c'est le seul endroit de la page qui
+                  avait un VRAI trou. Cette carte ne remplissait qu'environ la
+                  moitié de la hauteur des deux cartes d'offres qu'elle longe, et
+                  le `mt-auto` de la phrase manuscrite ne faisait que rendre ce
+                  vide visible. Les deux colonnes se terminent maintenant à la
+                  même hauteur. Le client avait demandé « là où y'a les prix »,
+                  puis retiré la consigne (« place-la où tu veux ») : c'est donc
+                  un choix de mise en page, et il tient tout seul.
+
+                  ⚠️ Elle et `walk`, servie en tête de la même section, viennent
+                  de la même balade — même forêt, même tenue. Ce qui les sauve du
+                  collage : deux personnes contre une, un plan d'épaule contre un
+                  plan large, une pente contre un sentier plat, et 800 px entre
+                  les deux. Si l'une des deux change un jour, vérifier que ces
+                  écarts tiennent toujours.
 
                   C'est elle qui porte le `mt-auto` quand elle est là — sinon
                   la carte se replierait vers le haut et le vide reviendrait
                   entre la photo et la phrase. Sans photo, le `mt-auto`
                   retourne à la phrase et rien ne bouge. */}
-              {greeting && (
+              {walkAside && (
                 <div className="mt-auto overflow-hidden rounded-2xl">
                   <Image
-                    src={greeting}
-                    alt={greetingAlt ?? ""}
-                    width={720}
-                    height={540}
+                    src={walkAside}
+                    alt={walkAsideAlt ?? ""}
+                    width={878}
+                    height={659}
                     sizes="(min-width: 1024px) 420px, (min-width: 640px) calc(100vw - 7rem), calc(100vw - 5.5rem)"
                     className="h-auto w-full"
                   />
@@ -250,7 +255,7 @@ export function ServiceSection() {
               <p
                 className={cn(
                   "font-script text-2xl leading-snug text-flame",
-                  !greeting && "mt-auto",
+                  !walkAside && "mt-auto",
                 )}
               >
                 {site.slogan}

@@ -357,11 +357,14 @@ export const site: SiteConfig = {
     walk: "/images/balade-foret.webp",
     walkAlt:
       "Un promeneur de Dog Aventure de dos, en t-shirt « Promeneur de chiens », marchant en forêt avec un malinois tenu en longe",
-    /* Le shiba qui vient chercher sa caresse, au bas de « Comment ça marche ? »,
-       à hauteur des tarifs. */
-    greeting: "/images/caresse.webp",
-    greetingAlt:
-      "Un shiba inu roux qui lève la tête et pose son menton dans la main de son promeneur",
+    /* Le binôme en sous-bois, au bas de « Comment ça marche ? », à hauteur des
+       tarifs. Elle remplace depuis le 2026-08-22 un gros plan de shiba
+       (`scripts/photos/caresse.jpg`, conservé), à la demande du client.
+       C'est la seule photo qui montre les DEUX promeneurs en action — le
+       « on » des textes en situation, là où `images.team` est un portrait posé. */
+    walkAside: "/images/balade-duo.webp",
+    walkAsideAlt:
+      "Vue depuis l’épaule d’une promeneuse de Dog Aventure : son collègue et un malinois en longe descendent un sentier en sous-bois",
     // Générés par scripts/trace-logo.js — ne pas éditer à la main
     logo: "/images/logo.svg",
     logoAlt: "Dog Aventure — promeneur avec ses deux chiens en laisse",

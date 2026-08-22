@@ -95,27 +95,37 @@ const PHOTOS = [
        source, inutile de sur-échantillonner le slot 1200. */
     variants: { 640: [640, 58], 828: [828, 55], 1080: [1080, 55], 1200: [1242, 55] },
   },
-  /* ─── Le shiba qui vient chercher sa caresse (2026-08-22) ───────────────
-     Posée au bas de la carte « Comment ça marche ? », la colonne qui longe les
-     tarifs : elle comble les ~450 px de vide que cette carte laissait face aux
-     deux cartes d'offres, et met un museau à hauteur des prix.
+  /* ─── Le binôme en sous-bois (2026-08-22) ──────────────────────────────
+     Vue à hauteur d'épaule : la seconde promeneuse au premier plan, l'autre
+     promeneur et le malinois devant, sur un sentier en pente. Posée au bas de
+     la carte « Comment ça marche ? », la colonne qui longe les tarifs, où elle
+     remplace le shiba (demande client).
 
-     ⚠️ La source est une capture d'écran : 720 × 1560 avec des BANDES NOIRES
-     en 0..139 et 1420..1559. Le contenu réel ne fait que 720 × 1280 — un
-     cadrage qui ignore l'extraction ci-dessous ramène du noir dans la carte.
+     C'est la seule photo du site qui montre les DEUX promeneurs en action —
+     le « on » des textes, en situation et pas en portrait posé, comme l'est
+     `equipe`. C'est aussi ce qui la distingue de `balade-foret`, servie plus
+     haut dans la même section : angle, nombre de personnes et terrain
+     diffèrent, sans quoi les deux se liraient comme un doublon.
 
-     4/3 et non carré : le carré (top 250) montre la queue enroulée en entier et
-     rend mieux, mais il ajoute ~110 px à une carte qui dépasserait alors la
-     colonne des offres. Le paysage garde la tête, le menton et la main. */
+     Cadrage : la promeneuse de premier plan a le crâne à y≈655, d'où un `top`
+     à 600 et pas plus bas — une tête coupée au bord dans un plan d'épaule, ça
+     ne se lit pas comme un cadrage mais comme une erreur. Plus haut (top 560)
+     on gagne du feuillage et on perd les sujets, qui descendent trop bas. */
   {
-    name: "caresse",
-    src: "caresse.jpg",
-    crop: { left: 0, top: 345, width: 720, height: 540 },
-    reference: [720, 62],
-    /* 720 px est la largeur de la source, il n'y a pas plus : les quatre slots
-       y sont plafonnés. Affichée au plus large à ~430 px CSS. */
-    variants: { 640: [640, 58], 828: [720, 58], 1080: [720, 58], 1200: [720, 58] },
+    name: "balade-duo",
+    src: "balade-duo.jpg",
+    crop: { left: 0, top: 600, width: 878, height: 659 },
+    reference: [878, 62],
+    /* Affichée au plus large à ~420 px CSS, soit 840 px en écran 2× : les
+       slots hauts sont plafonnés à 878 px, la largeur de la source. */
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [878, 55], 1200: [878, 55] },
   },
+  /* scripts/photos/caresse.jpg (un shiba qui pose son menton dans la main du
+     promeneur, capture d'écran 720 × 1560 avec des BANDES NOIRES en 0..139 et
+     1420..1559) a occupé cette place le 2026-08-22, puis a été remplacé par la
+     photo ci-dessus le jour même, à la demande du client. L'original est
+     conservé pour la replacer ailleurs le jour venu — le cadrage qui marchait,
+     4/3 sur la tête et la main : crop { left: 0, top: 345, width: 720, height: 540 } */
   /* ─── Les quatre chiens de la galerie `#chiens` (2026-08-22) ────────────
      Tous en 3/4, et ce n'est pas une contrainte qu'on leur impose : `sam`,
      `rubis` et `pain` sortent du téléphone en 1170 × 1560, soit exactement 3/4,
