@@ -161,6 +161,37 @@ Idée du client : tout le monde n'ose pas appeler un inconnu. Le formulaire est 
 - **Décoché**, parce qu'il contredirait frontalement les mentions légales, qui promettent que le message ne transite par aucun prestataire tiers. Repère utile : quand la case est cochée, le bouton final s'intitule « Accepter et terminer » ; décochée, il redevient « Terminer ». C'est le consentement aux conditions de traitement de Google qui disparaît avec elle.
 - À ne pas réactiver sans réécrire la section « Données personnelles » — et sans en reparler au client, puisque ce sont les données de ses prospects.
 
+## La meute — section « Ils nous font confiance » (2026-08-22)
+
+Nouvelle section `#chiens` (`components/sections/dogs.tsx`), **entre `#zones` et `#avis`** : d'abord les chiens qu'on promène, ensuite ce que leurs maîtres en disent. Quatre photos fournies par le client, une légende de sa main par chien, dans l'ordre qu'il a demandé — **Saïka en premier, parce que c'est la photo aux deux chiens**.
+
+- **L'accroche « Ils nous font confiance » a été RETIRÉE des avis** pour être donnée à cette section : c'était le sur-titre de `reviews.tsx` jusqu'à ce jour, et les deux sections se suivent désormais — le doublon se serait lu comme un bug. Les avis portent maintenant **« Repris de la fiche Google »**, qui dit en plus d'où ils viennent, exactement ce que promettent les mentions légales. **Surtout pas « Avis vérifiés »** : la formule est une marque déposée et revendiquerait un contrôle que personne n'exerce ici.
+- La phrase du client passe en **h2** (« Ils nous font **confiance** », le second mot en `font-script`) et non en sur-titre : c'est SA formule, elle mérite le grand caractère. Le sur-titre « La meute » est de nous.
+- **Légendes recorrigées** (accents, `du tout` → `de tous`, `la` → `là`, apostrophes courbes). Ce ne sont pas des avis de consommateurs : la règle du mot-pour-mot ne vaut que pour `site.reviews`. Le champ `caption` est **optionnel** — un chien peut arriver avant sa phrase, sa carte se rend alors avec le seul prénom (c'était le cas de Pain pendant une heure).
+- **« Et bien d'autres encore… »** ferme la section, en manuscrit, comme la signature de `#confiance`. Quatre photos ne sont pas quatre clients, et la ligne le dit sans avancer un chiffre invérifiable.
+- **⚠️ Ne jamais ajouter un chien qui n'existe pas.** La galerie est collée aux avis Google : un chien inventé jetterait le doute sur ceux-là aussi, et c'est le travail qui a été fait le 2026-08-16 en supprimant les faux avis. Même raison pour l'absence de compteur (« 30 chiens promenés ») : rien de chiffré qu'on ne puisse produire.
+- **⚠️ Ce sont les chiens de tiers.** Leur maître doit être d'accord pour la publication — à confirmer par Martin, ce n'est pas une question technique.
+- **Le second chien de la photo de Saïka n'a pas de prénom connu** (fauve et blanc, yeux bleus) : il n'apparaît que dans le `alt`. À demander, pas à inventer.
+- Grille **`grid-cols-2 md:grid-cols-4`**, et pas `sm:grid-cols-2` : en une seule colonne, une carte mobile ferait 390 px de large en 3/4, soit plus de 2 000 px à faire défiler pour quatre chiens — l'inverse de ce que veut Martin. En deux colonnes dès le plus petit écran, la section fait 1 180 px.
+- Fond `bg-surface` + **`border-b` seulement** : `#zones` au-dessus est en `bg-ink`, un filet entre du sombre et du surface ne se voit pas. Même raisonnement que `trust.tsx`.
+- Tableau vide = section absente, comme pour les avis.
+
+### Les deux autres photos du 2026-08-22
+
+- **La balade en forêt** (`images.walk`, le promeneur de dos, t-shirt floqué, malinois en longe) ouvre **`#service`, entre le titre et les tarifs** — demande client : « juste avant les tarifs et les prix ». Le visiteur voit la prestation, puis son prix. **Pas dans `#chiens`** : ce n'est pas un portrait de chien, c'est la seule image du site qui montre le service en train de se faire. Pas non plus en fin de `#confiance`, qui se termine délibérément sur le bandeau sombre « Première rencontre offerte ».
+  - `max-w-3xl` centré sous un titre aligné à gauche, comme la photo du binôme de `#confiance`. En pleine largeur elle ferait **864 px de haut** et pousserait les prix hors de l'écran.
+- **Le shiba qui vient chercher sa caresse** (`images.greeting`) est **au bas de la carte « Comment ça marche&nbsp;? »**, la colonne qui longe les tarifs. Cette carte ne remplissait qu'environ la moitié de la hauteur des deux cartes d'offres ; le `mt-auto` de la phrase manuscrite ne faisait que rendre ce vide visible. Depuis, c'est **la photo qui porte le `mt-auto`** et la phrase suit — sans photo, le `mt-auto` retourne à la phrase et rien ne bouge. Les deux colonnes se terminent maintenant à la même hauteur.
+- Les deux champs sont **optionnels** dans `site.images` : vides, la section démarre sur les offres et la carte se referme sur sa phrase, sans trou.
+
+### Génération des six photos (`scripts/prepare-photos.js`)
+
+- **Les quatre chiens sont en 3/4, et ce n'est pas un cadrage imposé** : `sam`, `rubis` et `pain` sortent du téléphone en 1170 × 1560, soit exactement 3/4. Les cadrages ne font que resserrer sur le chien.
+- **⚠️ Deux sources portent des bandes unies, à retirer impérativement** : `saika.jpg` a des bandes **grises** en 0..194 et 1365..1559 (contenu réel 878 × 1170, encore du 3/4) et `caresse.jpg`, qui est une capture d'écran, des bandes **noires** en 0..139 et 1420..1559. Un cadrage qui les ignore ramène du noir dans la carte. Le contrôle qui les détecte, à rejouer sur toute nouvelle photo : mesurer l'écart-type par ligne sur une colonne réduite à 16 px, une ligne unie a un σ < 3.
+- **Variantes des chiens plafonnées à 560 px** (et non 640) : une carte fait 245 px CSS au plus large, soit 490 px en écran 2×. C'est `pain` qui a tranché — son sol jonché de prunes coûte 86 Ko à 640 px contre 68 à 560. **Baisser la qualité n'y change presque rien** (74 Ko à q44, pour un chien abîmé) : ce qui pèse est la texture du fond, pas l'encodage. La bonne poignée est la largeur.
+- Le cadre du composant est déclaré **900 × 1200 pour les quatre** : les sources étant toutes en 3/4 exact, ces dimensions ne servent qu'à fixer le rapport — et un ratio commun est ce qui aligne les prénoms d'une carte à l'autre.
+- Cadrages retenus, avec ce qui les borne : `saika` {0, 195, 878, 1170} — les jambes du maître en haut à gauche ne peuvent pas sortir sans raser les oreilles du chien fauve, qui commencent à la même hauteur (y≈370) ; `sam` {210, 280, 960, 1280} ; `rubis` {165, 80, 975, 1300} — oreilles à y=148 ; `pain` {250, 520, 780, 1040}, le plus recadré des quatre (dans l'original le chien ne remplit que 58 % de la hauteur) ; `balade-foret` {0, 800, 1242, 932} — le promeneur tient de la tête (y=890) aux semelles (y=1630), au-delà du 4/3 il ne reste plus de marge ; `caresse` {0, 345, 720, 540}.
+- **Méthode de cadrage, qui a payé** : générer des aperçus quadrillés (une ligne tous les 5 % avec la coordonnée source écrite dessus), puis des candidats à 300 px qu'on regarde. Estimer un `top` « à l'œil » sur la photo brute est exactement ce qui a coûté un second passage sur `equipe.webp` le 2026-08-19.
+
 ## Avis (2026-08-16)
 
 La section `#avis` affiche les **vrais avis de la fiche Google**, recopiés dans `site.reviews`. **Quatre au 2026-08-18** (5,0 ★), contre deux au 2026-08-16.

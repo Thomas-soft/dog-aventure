@@ -1,4 +1,5 @@
 import type { ElementType } from "react";
+import Image from "next/image";
 import {
   Droplets,
   Home,
@@ -24,6 +25,8 @@ const FEATURE_ICONS: Record<FeatureIcon, ElementType> = {
 };
 
 export function ServiceSection() {
+  const { walk, walkAlt, greeting, greetingAlt } = site.images;
+
   return (
     <section id="service" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -39,6 +42,31 @@ export function ServiceSection() {
           }
           sub="Pas de garderie, pas de meute : une promenade individuelle, adaptée au rythme de votre chien, de votre porte à votre porte."
         />
+
+        {/* La balade en forêt, entre le titre et les tarifs (demande client du
+            2026-08-22 : « juste avant les tarifs et les prix »). Elle montre la
+            prestation — tenue, longe, chien devant — pour que le prix qui suit
+            s'applique à quelque chose que le visiteur a vu.
+
+            Pas dans la galerie `#chiens` : ce n'est pas un portrait de chien.
+
+            `max-w-3xl` centré sous un titre aligné à gauche, comme la photo du
+            binôme de `#confiance`. En pleine largeur (`max-w-6xl`) elle ferait
+            864 px de haut et pousserait les prix hors de l'écran. */}
+        {walk && (
+          <Reveal className="mb-12 md:mb-16">
+            <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-line bg-surface shadow-sm">
+              <Image
+                src={walk}
+                alt={walkAlt ?? ""}
+                width={1242}
+                height={932}
+                sizes="(min-width: 768px) 768px, calc(100vw - 2rem)"
+                className="h-auto w-full"
+              />
+            </div>
+          </Reveal>
+        )}
 
         <div className="grid gap-8 lg:grid-cols-5 lg:gap-12">
           {/* Offres — une carte par service, la 2ᵉ offre s'ajoutera ici toute seule */}
@@ -188,7 +216,36 @@ export function ServiceSection() {
                   </li>
                 ))}
               </ol>
-              <p className="mt-auto font-script text-2xl leading-snug text-flame">
+              {/* Le chien qui vient chercher sa caresse, à hauteur des tarifs
+                  (demande client du 2026-08-22). Cette carte ne remplissait
+                  qu'environ la moitié de la hauteur des deux cartes d'offres
+                  qu'elle longe : le `mt-auto` de la phrase manuscrite ne
+                  faisait que rendre ce vide visible. La photo l'occupe, et un
+                  museau en face des prix vaut mieux que du blanc.
+
+                  C'est elle qui porte le `mt-auto` quand elle est là — sinon
+                  la carte se replierait vers le haut et le vide reviendrait
+                  entre la photo et la phrase. Sans photo, le `mt-auto`
+                  retourne à la phrase et rien ne bouge. */}
+              {greeting && (
+                <div className="mt-auto overflow-hidden rounded-2xl">
+                  <Image
+                    src={greeting}
+                    alt={greetingAlt ?? ""}
+                    width={720}
+                    height={540}
+                    sizes="(min-width: 1024px) 420px, (min-width: 640px) calc(100vw - 7rem), calc(100vw - 5.5rem)"
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <p
+                className={cn(
+                  "font-script text-2xl leading-snug text-flame",
+                  !greeting && "mt-auto",
+                )}
+              >
                 {site.slogan}
               </p>
             </div>

@@ -117,6 +117,41 @@ export interface Trust {
   signature: string;
 }
 
+/** Un chien de la meute, affiché dans la galerie `#chiens`.
+ *
+ *  Ce sont de VRAIS chiens de clients, photographiés par le promeneur, et les
+ *  légendes sont de la main du client — une phrase par chien, sur son
+ *  caractère. Ne pas en inventer un « pour équilibrer la grille » : le jour où
+ *  un maître reconnaît un chien qui n'a jamais été promené, c'est toute la
+ *  galerie qui devient suspecte, avis Google compris (ils sont juste en
+ *  dessous). Un chien sans légende se rend très bien — le champ est optionnel
+ *  exactement pour ça.
+ *
+ *  ⚠️ Ce sont les chiens de tiers : leur maître doit être d'accord pour que la
+ *  photo soit publiée. C'est au client de l'obtenir, pas à nous de le supposer. */
+export interface Dog {
+  /** Identifiant stable (kebab-case) — sert de clé de rendu */
+  id: string;
+  name: string;
+  /** La phrase du client sur ce chien. Optionnelle : un chien peut arriver
+   *  avant sa légende, sa carte se rend alors avec le seul prénom. */
+  caption?: string;
+  /** Chemin de la photo, en 3/4 — variantes générées par
+   *  scripts/prepare-photos.js. Le format est commun aux quatre cartes : une
+   *  photo au ratio différent casserait l'alignement de la grille. */
+  image: string;
+  alt: string;
+}
+
+/** La galerie « Ils nous font confiance ». Tableau vide = section masquée,
+ *  même convention que `reviews`. */
+export interface Dogs {
+  items: Dog[];
+  /** Ligne de clôture sous la grille — la meute ne se limite pas aux photos
+   *  affichées. Rendue en manuscrit, comme la signature de `#confiance`. */
+  note?: string;
+}
+
 /** Textes du bandeau de consentement aux cookies publicitaires. Le bandeau
  *  n'existe que si `googleAdsId` est renseigné : sans balise, aucun cookie,
  *  donc rien à demander. */
@@ -272,6 +307,9 @@ export interface SiteConfig {
   firstMeeting: FirstMeeting;
   /** Arguments de confiance — section « Pourquoi nous confier votre chien » */
   trust: Trust;
+  /** Les chiens de la meute, galerie `#chiens` — juste avant les avis :
+   *  d'abord les chiens, ensuite ce que leurs maîtres en disent. */
+  dogs: Dogs;
   /** Avis affichés dans `#avis`. Tableau vide = section masquée. */
   reviews: Review[];
   /** La fiche Google, pour le lien « voir les avis sur Google » sous la
@@ -288,6 +326,17 @@ export interface SiteConfig {
      *  la section se rend sans photo, sans trou dans la mise en page. */
     team?: string;
     teamAlt?: string;
+    /** La balade en forêt — ouvre la section « La promenade », juste avant les
+     *  tarifs. C'est la seule photo du site qui montre la prestation en train
+     *  de se faire, et le t-shirt y porte le numéro de téléphone. Absente = la
+     *  section démarre directement sur les offres. */
+    walk?: string;
+    walkAlt?: string;
+    /** Le chien qui vient chercher une caresse, au bas de la carte
+     *  « Comment ça marche ? » — à hauteur des tarifs. Absente = la carte se
+     *  referme sur sa phrase manuscrite, sans trou. */
+    greeting?: string;
+    greetingAlt?: string;
     /** Logo complet, texte en arc compris — footer */
     logo: string;
     logoAlt: string;

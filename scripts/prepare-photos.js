@@ -1,10 +1,10 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Recadrage et encodage des photos client du hero — à relancer si les
-   originaux ou les cadrages changent.
+   Recadrage et encodage de toutes les photos client du site — à relancer si
+   les originaux ou les cadrages changent.
 
      node scripts/prepare-photos.js
 
-   Originaux dans scripts/photos/ (878 × 1560, sorties de téléphone). Produit
+   Originaux dans scripts/photos/ (sorties de téléphone). Produit
    pour chaque photo le fichier de référence `<nom>.webp` — celui que lit
    l'optimiseur Next en production — et les quatre variantes
    `<nom>-{640,828,1080,1200}.webp` qu'exige lib/image-loader.ts en préview.
@@ -71,6 +71,99 @@ const PHOTOS = [
        (servi aux écrans 2×) est plafonné à 1100 px, au-delà on paie du poids
        que personne ne voit. */
     variants: { 640: [640, 58], 828: [828, 55], 1080: [1080, 55], 1200: [1100, 55] },
+  },
+  /* ─── La balade en forêt (2026-08-22) ──────────────────────────────────
+     Le promeneur de dos, t-shirt floqué et numéro lisible, malinois en longe.
+     Ouvre la section « La promenade », juste avant les tarifs — le visiteur
+     voit la prestation, puis son prix.
+
+     Ce n'est PAS un portrait de chien : elle n'a rien à faire dans la galerie
+     `#chiens`, c'est la seule photo du site qui montre le service en train de
+     se faire.
+
+     Le cadrage est contraint par le sujet, pas choisi : le promeneur tient de
+     la tête (y=890) aux semelles (y=1630), soit 740 px sur une source large de
+     1242. Au-delà du 4/3, il ne reste plus de marge ni au-dessus du crâne ni
+     sous les pieds — un 3/2 laisserait 28 px sous les semelles. D'où
+     932 px de haut : ~90 px de ciel, ~100 px de sentier. */
+  {
+    name: "balade-foret",
+    src: "balade-foret.jpg",
+    crop: { left: 0, top: 800, width: 1242, height: 932 },
+    reference: [1242, 62],
+    /* Affichée en `max-w-3xl` (768 px CSS) : 1242 px est la largeur de la
+       source, inutile de sur-échantillonner le slot 1200. */
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [1080, 55], 1200: [1242, 55] },
+  },
+  /* ─── Le shiba qui vient chercher sa caresse (2026-08-22) ───────────────
+     Posée au bas de la carte « Comment ça marche ? », la colonne qui longe les
+     tarifs : elle comble les ~450 px de vide que cette carte laissait face aux
+     deux cartes d'offres, et met un museau à hauteur des prix.
+
+     ⚠️ La source est une capture d'écran : 720 × 1560 avec des BANDES NOIRES
+     en 0..139 et 1420..1559. Le contenu réel ne fait que 720 × 1280 — un
+     cadrage qui ignore l'extraction ci-dessous ramène du noir dans la carte.
+
+     4/3 et non carré : le carré (top 250) montre la queue enroulée en entier et
+     rend mieux, mais il ajoute ~110 px à une carte qui dépasserait alors la
+     colonne des offres. Le paysage garde la tête, le menton et la main. */
+  {
+    name: "caresse",
+    src: "caresse.jpg",
+    crop: { left: 0, top: 345, width: 720, height: 540 },
+    reference: [720, 62],
+    /* 720 px est la largeur de la source, il n'y a pas plus : les quatre slots
+       y sont plafonnés. Affichée au plus large à ~430 px CSS. */
+    variants: { 640: [640, 58], 828: [720, 58], 1080: [720, 58], 1200: [720, 58] },
+  },
+  /* ─── Les quatre chiens de la galerie `#chiens` (2026-08-22) ────────────
+     Tous en 3/4, et ce n'est pas une contrainte qu'on leur impose : `sam`,
+     `rubis` et `pain` sortent du téléphone en 1170 × 1560, soit exactement 3/4,
+     et `saika` fait 878 × 1560 mais porte des BANDES GRISES en 0..194 et
+     1365..1559 — son contenu réel est 878 × 1170, encore du 3/4. Les cadrages
+     ne font donc que resserrer sur le chien, jamais changer de format.
+
+     Les quatre slots sont plafonnés à 560 px : une carte fait 245 px CSS au
+     plus large (4 colonnes dans `max-w-5xl`), soit 490 px sur un écran 2×.
+     Au-delà, c'est du poids que personne ne voit — et sur `pain`, dont le sol
+     est jonché de prunes, chaque pixel coûte cher : 86 Ko à 640 px contre 68 à
+     560. Baisser la qualité n'y change presque rien (74 Ko à q44, pour un chien
+     abîmé) : ce qui pèse, c'est la texture du fond, pas l'encodage. */
+  {
+    name: "saika",
+    /* Le seul cadrage qui n'en est pas un : le contenu utile fait pile 3/4,
+       on retire les bandes et c'est tout. Les jambes en haut à gauche sont
+       celles du maître — impossible de les sortir sans raser les oreilles du
+       chien fauve, qui commencent à la même hauteur (y≈370). */
+    src: "saika.jpg",
+    crop: { left: 0, top: 195, width: 878, height: 1170 },
+    reference: [878, 62],
+    variants: { 640: [560, 58], 828: [560, 58], 1080: [560, 58], 1200: [560, 58] },
+  },
+  {
+    name: "sam",
+    src: "sam.jpg",
+    // Le chien occupe la droite du cadre, le tiers gauche n'est que du sol.
+    crop: { left: 210, top: 280, width: 960, height: 1280 },
+    reference: [960, 62],
+    variants: { 640: [560, 58], 828: [560, 58], 1080: [560, 58], 1200: [560, 58] },
+  },
+  {
+    name: "rubis",
+    // Oreilles dressées à y=148 : 68 px de marge au-dessus, pas moins.
+    src: "rubis.jpg",
+    crop: { left: 165, top: 80, width: 975, height: 1300 },
+    reference: [975, 62],
+    variants: { 640: [560, 58], 828: [560, 58], 1080: [560, 58], 1200: [560, 58] },
+  },
+  {
+    name: "pain",
+    /* Le plus recadré des quatre : dans l'original le chien ne remplit que
+       58 % de la hauteur, il se perdrait dans une carte de 245 px. */
+    src: "pain.jpg",
+    crop: { left: 250, top: 520, width: 780, height: 1040 },
+    reference: [780, 62],
+    variants: { 640: [560, 58], 828: [560, 58], 1080: [560, 58], 1200: [560, 58] },
   },
   /* scripts/photos/balade-chemin.jpg (le promeneur de dos sur un chemin) a
      servi à un médaillon dans le coin du hero, retiré : deux photos de la

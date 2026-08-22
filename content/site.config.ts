@@ -201,6 +201,56 @@ export const site: SiteConfig = {
     signature: "On s’occupe de chaque chien comme s’il était le nôtre.",
   },
 
+  /* La meute — galerie « Ils nous font confiance » (`#chiens`, 2026-08-22).
+
+     Photos et légendes fournies par le client, une phrase par chien. Les
+     légendes sont recopiées de ses messages et remises à la typographie du
+     site (accents, apostrophes courbes) : ce ne sont PAS des avis de
+     consommateurs, la règle du mot-pour-mot ne vaut que pour `reviews`.
+
+     L'ordre est celui demandé : Saïka d'abord, parce que c'est la photo aux
+     deux chiens.
+
+     ⚠️ Le second chien de la photo de Saïka (fauve et blanc, yeux bleus) n'a
+     pas de prénom connu — il n'apparaît donc que dans le `alt`. À demander au
+     client, pas à inventer. */
+  dogs: {
+    items: [
+      {
+        id: "saika",
+        name: "Saïka",
+        caption: "La labrador la plus gourmande de tous les labradors",
+        image: "/images/saika.webp",
+        alt: "Saïka, labrador noire couchée sur un chemin, à côté d’un autre chien fauve et blanc aux yeux bleus",
+      },
+      {
+        id: "sam",
+        name: "Sam",
+        caption:
+          "Le malinois le mieux éduqué de France, mais un peu foufou avec les feuilles",
+        image: "/images/sam.webp",
+        alt: "Sam, berger belge malinois au poil charbonné, assis en laisse au bord d’un chemin",
+      },
+      {
+        id: "rubis",
+        name: "Rubis",
+        caption: "Toujours là quand il s’agit de jouer",
+        image: "/images/rubis.webp",
+        alt: "Rubis, chien de berger fauve aux oreilles dressées, assis sur un terrain sablonneux",
+      },
+      {
+        id: "pain",
+        name: "Pain",
+        caption: "Le chien pisteur par excellence",
+        image: "/images/pain.webp",
+        alt: "Pain, chien noir au poitrail tacheté de blanc, assis sous un arbre dans un jardin",
+      },
+    ],
+    // Quatre photos ne sont pas quatre clients : la ligne le dit sans avoir à
+    // avancer un chiffre qu'on ne pourrait pas justifier.
+    note: "Et bien d’autres encore…",
+  },
+
   /* Les QUATRE avis réels de la fiche Google « DogAventure », relevés le
      2026-08-18 (5,0 ★, 4 avis — les deux premiers sont arrivés la veille).
      Recopiés **mot pour mot**, fautes de frappe et ponctuation comprises :
@@ -300,6 +350,18 @@ export const site: SiteConfig = {
     team: "/images/equipe.webp",
     teamAlt:
       "Les deux promeneurs de Dog Aventure en t-shirt « Promeneur de chiens », devant une haie",
+    /* La balade en forêt (2026-08-22), en ouverture de « La promenade ».
+       C'est la seule image du site qui montre le service en train de se faire :
+       le promeneur de dos, en tenue, longe tendue, chien devant. Elle est là
+       pour que le prix qui suit s'applique à quelque chose de vu. */
+    walk: "/images/balade-foret.webp",
+    walkAlt:
+      "Un promeneur de Dog Aventure de dos, en t-shirt « Promeneur de chiens », marchant en forêt avec un malinois tenu en longe",
+    /* Le shiba qui vient chercher sa caresse, au bas de « Comment ça marche ? »,
+       à hauteur des tarifs. */
+    greeting: "/images/caresse.webp",
+    greetingAlt:
+      "Un shiba inu roux qui lève la tête et pose son menton dans la main de son promeneur",
     // Générés par scripts/trace-logo.js — ne pas éditer à la main
     logo: "/images/logo.svg",
     logoAlt: "Dog Aventure — promeneur avec ses deux chiens en laisse",

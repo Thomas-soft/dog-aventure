@@ -6,6 +6,7 @@ import { TownsMarquee } from "@/components/sections/towns-marquee";
 import { ServiceSection } from "@/components/sections/service";
 import { TrustSection } from "@/components/sections/trust";
 import { ZonesSection } from "@/components/sections/zones";
+import { DogsSection } from "@/components/sections/dogs";
 import { ReviewsSection } from "@/components/sections/reviews";
 import { ContactSection } from "@/components/sections/contact";
 import { ContactFormSection } from "@/components/sections/contact-form-section";
@@ -27,6 +28,9 @@ export default function Home() {
         <ServiceSection />
         <ContactFormSection />
         <ZonesSection />
+        {/* La meute avant les avis : d'abord les chiens qu'on promène,
+            ensuite ce que leurs maîtres en disent. */}
+        <DogsSection />
         <ReviewsSection />
         <ContactSection />
       </main>
