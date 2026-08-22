@@ -51,6 +51,7 @@ export const site: SiteConfig = {
     "Lamorlaye",
     "Chantilly",
     "Gouvieux",
+    "Senlis",
   ],
   townsSuffix: "et alentours",
   mapsEmbedUrl: "https://www.google.com/maps?q=Louvres+95380&output=embed",
