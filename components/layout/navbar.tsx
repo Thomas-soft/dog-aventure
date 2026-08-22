@@ -49,18 +49,34 @@ export function Navbar() {
             et le navigateur remonte en haut, comme avant. Depuis la page
             légale, c'est un retour à l'accueil. */}
         <a href={asset("/#")} className="flex items-center gap-2.5">
-          {/* Marque seule : à 40 px, le texte en arc du logo complet ne serait
-              qu'un anneau de taches. alt vide — le nom est déjà dans le texte
-              à côté. Fichier plutôt qu'inline : la barre étant un composant
-              client, un SVG inline pèserait deux fois (HTML + bundle JS).
-              h-10 w-auto et non size-10 : la marque n'est pas carrée (1,243). */}
+          {/* LOGO COMPLET, pas la marque seule — demande client du 2026-08-22 :
+              « le logo dans la barre n'a pas de texte, ce n'est pas celui de
+              Martin ». Le logo de Martin, c'est le rond avec « DOG AVENTURE »
+              écrit en arc ; le personnage seul n'est pas reconnu comme sa
+              marque. Ne pas revenir à `logoMark` en relisant le commentaire
+              d'avant, qui disait le contraire.
+
+              D'où le passage de h-10 à **h-12** : à 40 px le texte en arc
+              n'était qu'un anneau de taches, à 48 px il se lit. Pas plus haut —
+              à h-14, l'anneau touche presque le bord d'une barre de 64 px.
+
+              Le nom reste écrit à côté et ce n'est pas un doublon fautif : les
+              deux échelles sont trop éloignées pour se concurrencer, le rond se
+              lit comme un emblème et le texte comme le nom. Sans lui, la marque
+              ne serait plus lisible qu'en tout petit dans l'arc — essayé, la
+              barre y perd son ancrage.
+
+              alt vide — le nom est déjà dans le texte à côté. Fichier plutôt
+              qu'inline : la barre étant un composant client, un SVG inline
+              pèserait deux fois (HTML + bundle JS). w-auto et non size-* : le
+              logo n'est pas carré (1,160). */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={asset(site.images.logoMark)}
+            src={asset(site.images.logo)}
             alt=""
-            width={50}
-            height={40}
-            className="h-10 w-auto shrink-0"
+            width={56}
+            height={48}
+            className="h-12 w-auto shrink-0"
           />
           <span className="flex flex-col">
             <span className="font-display text-lg uppercase leading-none tracking-wide">

@@ -368,13 +368,16 @@ Photo fournie par le client : deux personnes en t-shirt « Promeneur de chiens �
 ## Logo (2026-08-09, source remplacée le même jour)
 
 - Quatre assets, tous générés par `scripts/trace-logo.js` — **ne jamais les éditer à la main** :
-  `public/images/logo.svg` (complet, footer), `public/images/logo-mark.svg` (marque seule, barre de navigation), `app/icon.svg` (favicon) et `app/favicon.ico` (le même, rasterisé — cf. « Favicon » ci-dessous).
+  `public/images/logo.svg` (complet, **barre de navigation et footer**), `public/images/logo-mark.svg` (marque seule, **plus utilisé nulle part depuis le 2026-08-22** — conservé, il resservira si un format très petit se présente), `app/icon.svg` (favicon) et `app/favicon.ico` (le même, rasterisé — cf. « Favicon » ci-dessous).
 - Source : `scripts/logo-source.jpg`, **1254×1254 px**, le dessin y occupe 1024×881 px **d'un seul vert `#327E1C`**. Elle remplace la première capture d'écran où le logo ne faisait que 160×149 px et mêlait deux verts ; toute la machinerie de séparation colorimétrique (profondeur au fond, germes, BFS) a disparu du script avec elle — un seuil de couverture suffit désormais.
 - Relancer : `npm i --no-save potrace && node scripts/trace-logo.js`. Le script cadre tout seul sur le dessin (`contentBox`) — pas de constante de crop à ajuster si la source change.
 - Deux tris purement géométriques dans le script : `RING_R` (340 px source) sépare les onze lettres, dont le centre est à r ≥ 387, des morceaux du personnage, tous à r ≤ 307 ; `removeGroundLine()` retire le trait de sol de la **marque seule** (avec lui, la marque fait 1,24 de ratio et à 40 px le bandeau mange toute la largeur).
 - Le favicon est retracé à part sur un masque réduit à 200 px avec une tolérance large : 5,9 Ko au lieu de 15-20 Ko, pour un rendu identique à 32 px.
-- Ratios à respecter côté composants : logo complet **1,160**, marque **1,243**. La marque n'est **pas carrée** — `h-10 w-auto` dans la barre, jamais `size-10`.
-- Marque seule dans la barre de navigation, logo complet dans le footer : à 40 px, le texte en arc n'est qu'un anneau de taches.
+- Ratios à respecter côté composants : logo complet **1,160**, marque **1,243**. Ni l'un ni l'autre n'est carré — toujours `w-auto`, jamais `size-*`.
+- **Logo complet dans la barre de navigation depuis le 2026-08-22** (demande client : « le logo dans la barre n'a pas de texte, ce n'est pas celui de Martin »), en `h-12` — et non plus la marque seule en `h-10`. Le logo de Martin, pour lui, c'est le rond avec « DOG AVENTURE » écrit en arc : le personnage seul ne le représente pas. Trois choses à ne pas défaire :
+  - **`h-12` et pas plus.** À 40 px l'arc n'est qu'un anneau de taches — c'était la raison de la marque seule, elle était juste ; à 48 px il se lit. À `h-14`, essayé, l'anneau touche presque le bord d'une barre de 64 px (`h-16`).
+  - **Le nom reste écrit à côté**, et le doublon avec l'arc est assumé : les deux échelles sont trop éloignées pour se concurrencer, le rond se lit comme un emblème et le texte comme le nom. La variante sans lui (logo + « Promenades canines » seul) a été essayée et écartée — la marque n'y était plus lisible qu'en tout petit dans l'arc.
+  - Le footer, lui, ne bouge pas : logo complet en `h-24`, où l'arc est confortable.
 - Servis en `<img>` (via `asset()`), pas en SVG inline ni en `next/image` : l'optimiseur Next refuse les SVG, et un SVG inline dans la barre — composant client — pèserait deux fois, dans le HTML **et** dans le bundle JS. Mesuré : +5,9 Ko en fichier contre +12,5 Ko en inline.
 - Le fichier vectoriel d'origine (SVG/AI/PDF) reste préférable, mais ce n'est plus un problème pour le web : à 1024 px de source, le tracé est propre. C'est pour l'impression (flyer, marquage véhicule) qu'il faudra le demander.
 
