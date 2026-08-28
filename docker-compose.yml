@@ -81,13 +81,13 @@ services:
     labels:
       - "traefik.enable=true"
       # doogaventure.fr est le domaine réel depuis le 2026-08-12.
-      # dog-aventure.com est SERVI, mais plus jamais annoncé : le canonical
-      # désigne le .fr, donc pas de contenu dupliqué. Il est là uniquement le
-      # temps que le DNS du .fr se propage ; sans lui le site tomberait
-      # pendant la bascule. À RETIRER une fois le .fr confirmé en ligne.
-      # Surtout ne PAS le rediriger en 301 vers le .fr : ce serait transmettre
-      # au nouveau domaine la réputation qui a fait refuser Google Ads.
-      - "traefik.http.routers.dogaventure.rule=Host(`doogaventure.fr`) || Host(`www.doogaventure.fr`) || Host(`dog-aventure.com`) || Host(`www.dog-aventure.com`)"
+      # dog-aventure.com a été RETIRÉ du routeur le 2026-08-28, à la demande :
+      # le .fr est confirmé en ligne. Le .com n'est donc plus servi (Traefik
+      # répond 404) et son certificat ne sera plus renouvelé.
+      # S'il fallait le remettre un jour, surtout ne PAS le rediriger en 301
+      # vers le .fr : ce serait transmettre au nouveau domaine la réputation
+      # qui a fait refuser Google Ads.
+      - "traefik.http.routers.dogaventure.rule=Host(`doogaventure.fr`) || Host(`www.doogaventure.fr`)"
       - "traefik.http.routers.dogaventure.entrypoints=websecure"
       - "traefik.http.routers.dogaventure.tls.certresolver=letsencrypt"
       - "traefik.http.services.dogaventure.loadbalancer.server.port=3000"
@@ -96,9 +96,9 @@ services:
       - "traefik.http.middlewares.dogaventure-compress.compress=true"
 
       # www → apex, en 301 : le canonical du site désigne l'apex.
-      # Le domaine est capturé pour que chaque www retombe sur SON PROPRE
-      # apex — www.dog-aventure.com ne doit pas atterrir sur le .fr.
-      - "traefik.http.middlewares.dogaventure-www-redirect.redirectregex.regex=^https://www\\.(doogaventure\\.fr|dog-aventure\\.com)/(.*)"
+      # Le groupe de capture est gardé bien qu'il ne reste qu'un domaine
+      # depuis le retrait du .com : $${1} s'appuie dessus.
+      - "traefik.http.middlewares.dogaventure-www-redirect.redirectregex.regex=^https://www\\.(doogaventure\\.fr)/(.*)"
       - "traefik.http.middlewares.dogaventure-www-redirect.redirectregex.replacement=https://$${1}/$${2}"
       - "traefik.http.middlewares.dogaventure-www-redirect.redirectregex.permanent=true"
 
