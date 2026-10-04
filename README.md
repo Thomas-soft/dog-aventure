@@ -10,7 +10,7 @@ desservies partout, JSON-LD `LocalBusiness` avec `areaServed`).
 
 Next.js · TypeScript · Tailwind CSS v4 · shadcn/ui (base-ui) · Motion. Même
 architecture rebrandable que la famille de templates restaurants
-(`../exemple1` à `../exemple5`) — effets Magic UI vendorés dans
+(`../../Thomas/business/sites-demo/exemple1` à `exemple5`) — effets Magic UI vendorés dans
 `components/fx/`.
 
 ```bash
