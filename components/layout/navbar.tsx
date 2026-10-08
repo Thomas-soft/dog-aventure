@@ -15,7 +15,7 @@ import { asset, cn } from "@/lib/utils";
    `scroll-smooth` du CSS — et depuis la page légale c'est une vraie
    navigation. asset() ajoute le basePath, que Next ne met pas ici. */
 const NAV = [
-  { label: "Balades", href: asset("/#service") },
+  { label: "Promenades", href: asset("/#service") },
   { label: "Aventure en forêt", href: asset(site.groupWalk.slug) },
   { label: "Garde", href: asset(site.boarding.slug) },
   { label: "Confiance", href: asset("/#confiance") },

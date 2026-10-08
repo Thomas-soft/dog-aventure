@@ -136,13 +136,19 @@ export const site: SiteConfig = {
      Tarifs du client : 29,90 € la sortie, Pack 5 à 139,90 €, Pack 10 à
      259,90 €. Comme pour `packs`, seuls `quantity` et `total` sont saisis —
      les « 27,98 € » et « 25,99 € » par sortie sont recalculés à l'affichage
-     et tombent juste. */
+     et tombent juste.
+
+     Le « dès » affiché (en-tête, encadré de tarifs, vignette de l'accueil)
+     est le prix le plus bas PAR SORTIE, carnets compris — 25,99 € — et non
+     les 29,90 € à l'unité de son texte d'origine : correction du client du
+     2026-10-08. Il est calculé (`lowestUnitPrice`), sauf dans la meta
+     description ci-dessous, à tenir à jour à la main. */
   groupWalk: {
     slug: "/balade-foret",
     seo: {
       title: "Balade collective en forêt pour chiens | Dog Aventure",
       description:
-        "2 h en forêt de Chantilly, d’Ermenonville ou de Pontarmé avec d’autres chiens compatibles. Prise en charge à domicile, photos et vidéos. Dès 29,90 €.",
+        "2 h en forêt de Chantilly, d’Ermenonville ou de Pontarmé avec d’autres chiens compatibles. Prise en charge à domicile, photos et vidéos. Dès 25,99 €.",
     },
     card: {
       name: "Dog Aventure 2 h",

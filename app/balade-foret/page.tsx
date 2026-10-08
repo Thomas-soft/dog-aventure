@@ -6,7 +6,10 @@ import { StickyCallBar } from "@/components/layout/sticky-call-bar";
 import { OfferHero } from "@/components/offer/offer-hero";
 import { OfferBlock } from "@/components/offer/offer-block";
 import { FirstMeeting } from "@/components/sections/first-meeting";
-import { PriceGrid } from "@/components/sections/price-grid";
+import {
+  PriceGrid,
+  lowestUnitPrice,
+} from "@/components/sections/price-grid";
 import { ContactSection } from "@/components/sections/contact";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
@@ -39,12 +42,13 @@ export default function BaladeForet() {
   const { hero, tagline, blocks, firstMeeting, pricing, forests, closing } =
     groupWalk;
   let photoIndex = 0;
+  const fromPrice = lowestUnitPrice(pricing.unitPrice, pricing.packs);
 
   return (
     <>
       <Navbar />
       <main className="flex-1">
-        <OfferHero hero={hero} fromPrice={pricing.unitPrice} />
+        <OfferHero hero={hero} fromPrice={fromPrice} />
 
         <section className="border-y border-line bg-surface px-4 py-12 sm:px-6 md:py-16">
           <Reveal>
@@ -78,7 +82,7 @@ export default function BaladeForet() {
             <SectionHeader
               overline="Les tarifs"
               title={pricing.title}
-              sub={`2 heures en forêt avec les copains, dès ${formatPrice(pricing.unitPrice)}\u00a0!`}
+              sub={`2 heures en forêt avec les copains, dès ${formatPrice(fromPrice)}\u00a0!`}
             />
             <Reveal>
               <PriceGrid

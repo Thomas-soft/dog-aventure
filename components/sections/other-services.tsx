@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { site } from "@/content/site.config";
 import type { OfferCard } from "@/content/types";
+import { lowestUnitPrice } from "@/components/sections/price-grid";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { asset, formatPrice } from "@/lib/utils";
@@ -26,7 +27,10 @@ export function OtherServices() {
     {
       card: groupWalk.card,
       href: groupWalk.slug,
-      from: groupWalk.pricing.unitPrice,
+      from: lowestUnitPrice(
+        groupWalk.pricing.unitPrice,
+        groupWalk.pricing.packs,
+      ),
     },
     {
       card: boarding.card,

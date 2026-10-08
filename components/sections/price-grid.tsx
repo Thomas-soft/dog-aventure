@@ -1,6 +1,19 @@
 import type { Pack } from "@/content/types";
 import { cn, formatPrice } from "@/lib/utils";
 
+/** Prix d'une sortie dans un carnet. Arrondi au centime : 139,9 / 5 doit
+ *  s'afficher 27,98 €, pas 27,979999… */
+export function packUnitPrice(pack: Pack) {
+  return Math.round((pack.total / pack.quantity) * 100) / 100;
+}
+
+/** Le « dès » d'une offre vendue en carnets : le prix le plus bas par sortie,
+ *  carnets compris — et non le prix à l'unité. Demande client du 2026-10-08 :
+ *  « la promenade de 2h t'a mis dès 29,90 € alors que c'est dès 25,99 € ». */
+export function lowestUnitPrice(unitPrice: number, packs: Pack[]) {
+  return Math.min(unitPrice, ...packs.map(packUnitPrice));
+}
+
 /**
  * Grille dégressive « à l'unité → carnets ». Sert les carnets de la balade
  * d'1 h (accueil) et ceux de la Dog Aventure 2 h (/balade-foret).
@@ -47,8 +60,7 @@ export function PriceGrid({
       return {
         id: pack.id,
         name: pack.name,
-        // Même arrondi : 139,9 / 5 doit s'afficher 27,98 €, pas 27,979999…
-        perUnit: Math.round((pack.total / pack.quantity) * 100) / 100,
+        perUnit: packUnitPrice(pack),
         desc: `${formatPrice(pack.total)} ${packWord}, soit ${formatPrice(saved)} d’économie.`,
         badge: pack.badge,
         highlight: pack.highlight,
