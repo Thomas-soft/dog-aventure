@@ -13,6 +13,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${site.url}${site.groupWalk.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${site.url}${site.boarding.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${site.url}/mentions-legales`,
       lastModified: new Date(),
       changeFrequency: "yearly",

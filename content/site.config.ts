@@ -100,8 +100,6 @@ export const site: SiteConfig = {
         { icon: "home", label: "Aller et retour à votre domicile" },
       ],
     },
-    // Plus tard : { id: "dog-aventure-2h", name: "Dog Aventure", duration: "2 heures",
-    // price: 29.9, desc: "2 heures de balade en forêt de Chantilly…", … }
   ],
 
   /* Carnets dégressifs, demande client du 2026-08-11. La grille se lit
@@ -126,6 +124,350 @@ export const site: SiteConfig = {
       },
     ],
     note: "Les carnets portent sur la balade d’1 heure. Rien à régler en ligne : on en parle au téléphone.",
+  },
+
+  /* ─── Page « Dog Aventure 2 h » — /balade-foret (2026-10-08) ────────────
+     Texte fourni par le client sur WhatsApp, repris presque tel quel. Trois
+     retouches seulement, toutes de forme : le « nous » sujet passe à « on »
+     (la voix du site depuis le 2026-08-18), les émojis des titres tombent (le
+     site n'en a nulle part ailleurs) et les apostrophes deviennent courbes.
+     Le gras du client est conservé là où il dit ce qu'il faut retenir.
+
+     Tarifs du client : 29,90 € la sortie, Pack 5 à 139,90 €, Pack 10 à
+     259,90 €. Comme pour `packs`, seuls `quantity` et `total` sont saisis —
+     les « 27,98 € » et « 25,99 € » par sortie sont recalculés à l'affichage
+     et tombent juste. */
+  groupWalk: {
+    slug: "/balade-foret",
+    seo: {
+      title: "Balade collective en forêt pour chiens | Dog Aventure",
+      description:
+        "2 h en forêt de Chantilly, d’Ermenonville ou de Pontarmé avec d’autres chiens compatibles. Prise en charge à domicile, photos et vidéos. Dès 29,90 €.",
+    },
+    card: {
+      name: "Dog Aventure 2 h",
+      tagline: "2 heures en forêt avec les copains",
+      desc: "Une aventure collective en pleine forêt, en petit groupe de chiens compatibles. On vient le chercher chez vous et on vous le ramène.",
+      priceUnit: "la sortie",
+      photo: {
+        src: "/images/balade-chemin.webp",
+        alt: "Un promeneur de Dog Aventure de dos sur un chemin de campagne, un chien noir trottinant devant lui",
+        width: 878,
+        height: 878,
+      },
+    },
+    hero: {
+      overline: "Dog Aventure 2 h",
+      title: "2 heures en forêt",
+      titleScript: "avec les copains !",
+      lead: "Et si votre chien avait lui aussi ses sorties entre copains ?",
+      intro:
+        "Chez Dog Aventure, on propose bien plus qu’une simple promenade : **de véritables aventures collectives de 2 heures en pleine forêt, entouré d’autres chiens !**",
+      priceUnit: "la sortie de 2 h",
+      photo: {
+        src: "/images/balade-foret.webp",
+        alt: "Un promeneur de Dog Aventure de dos, en t-shirt « Promeneur de chiens », marchant en forêt avec un malinois tenu en longe",
+        width: 1242,
+        height: 932,
+      },
+    },
+    tagline:
+      "Pendant que vous profitez de votre journée, votre chien part à l’aventure avec ses copains !",
+    blocks: [
+      {
+        id: "copains",
+        title: "Des copains, des découvertes et des moments de partage !",
+        paragraphs: [
+          "Imaginez votre compagnon partir retrouver ses copains, explorer les sentiers, découvrir de nouvelles odeurs, partager des moments de jeu et profiter d’une grande balade en groupe.",
+          "Les chiens sont des animaux sociaux, et pour ceux qui apprécient leurs congénères, partager des activités avec d’autres chiens peut être une expérience particulièrement enrichissante. C’est tout l’intérêt de nos **Dog Aventures collectives** ! Pendant 2 heures en forêt, votre compagnon peut :",
+        ],
+        bullets: [
+          {
+            title: "Retrouver ses copains",
+            desc: "et créer des liens au fil des aventures.",
+          },
+          {
+            title: "Partager des moments de jeu et de complicité",
+            desc: "avec d’autres chiens.",
+          },
+          {
+            title: "Explorer la forêt en groupe,",
+            desc: "découvrir de nouvelles odeurs et de nouveaux environnements.",
+          },
+          {
+            title: "Se dépenser physiquement et mentalement,",
+            desc: "tout en profitant d’une activité stimulante.",
+          },
+          {
+            title: "Développer et entretenir ses compétences sociales",
+            desc: "grâce à des interactions positives et adaptées.",
+          },
+        ],
+        after: [
+          "Et parce que les chiens peuvent se retrouver régulièrement, **votre compagnon pourra progressivement retrouver des copains qu’il connaît déjà**, dans un groupe où il prend ses repères.",
+        ],
+        highlight:
+          "L’objectif ? Qu’il attende ses prochaines Dog Aventures avec impatience !",
+        photo: {
+          src: "/images/saika.webp",
+          alt: "Saïka, labrador noire, couchée sur un chemin à côté d’un copain fauve et blanc aux yeux bleus",
+          width: 878,
+          height: 1170,
+        },
+      },
+      {
+        id: "petit-groupe",
+        title: "2 heures de promenade en forêt, en petit groupe",
+        paragraphs: [
+          "Oubliez les petites sorties habituelles autour du quartier !",
+          "Avec Dog Aventure, votre chien profite de **2 heures de promenade effective en pleine nature, accompagné de plusieurs copains à quatre pattes.**",
+          "Au programme : sentiers forestiers, nouvelles odeurs, exploration, moments de jeu lorsque les conditions le permettent et découvertes partagées.",
+          "Chaque chien peut avancer à son rythme, explorer et profiter du groupe sans être obligé de jouer ou d’interagir en permanence.",
+        ],
+        highlight:
+          "Ce qui rend nos sorties uniques, ce n’est pas seulement la forêt : c’est le plaisir de vivre cette aventure ensemble.",
+        photo: {
+          src: "/images/balade-duo.webp",
+          alt: "Deux promeneurs de Dog Aventure et un malinois en longe descendant un sentier en sous-bois",
+          width: 878,
+          height: 659,
+        },
+      },
+      {
+        id: "groupes",
+        title: "Des groupes adaptés pour que chacun trouve sa place",
+        paragraphs: [
+          "Pour que chaque aventure soit un plaisir, on constitue des **petits groupes de chiens compatibles**, en tenant compte de leur caractère, de leur sociabilité, de leur taille lorsque cela est pertinent et de leur niveau d’énergie.",
+          "Un chien joueur pourra profiter de compagnons qui aiment s’amuser, tandis qu’un chien plus tranquille pourra apprécier la présence de ses congénères sans être constamment sollicité.",
+          "Les rencontres et les interactions sont encadrées avec attention, dans le respect du tempérament et des limites de chacun.",
+        ],
+        highlight:
+          "Notre priorité est que chaque chien se sente à l’aise, en confiance et heureux au sein du groupe.",
+      },
+      {
+        id: "domicile",
+        title: "On vient chercher votre chien, et on vous le ramène !",
+        paragraphs: [
+          "**Vous n’avez rien à organiser, on s’occupe de tout !**",
+          "On vient récupérer votre compagnon directement à votre domicile, puis on l’emmène rejoindre ses copains pour **2 heures d’aventure collective en forêt**.",
+          "Une fois la promenade terminée, on le raccompagne chez lui pour qu’il puisse retrouver ses habitudes et se reposer après sa sortie.",
+        ],
+        highlight:
+          "Votre chien profite d’une véritable activité entre copains, sans que vous ayez besoin de vous déplacer.",
+        photo: {
+          src: "/images/chiot-rue.webp",
+          alt: "Le promeneur de Dog Aventure penché sur un chiot malinois en longe, au pied d’un immeuble",
+          width: 1100,
+          height: 1375,
+        },
+      },
+      {
+        id: "photos",
+        title: "Suivez ses aventures avec ses copains !",
+        paragraphs: [
+          "Vous aimeriez voir votre chien s’amuser, explorer et profiter de ses nouveaux amis ?",
+          "On partage avec vous **des photos et des vidéos de ses Dog Aventures**, pour vous permettre de découvrir ses sorties, ses rencontres et ses meilleurs moments.",
+          "De quoi profiter de votre journée en sachant que votre compagnon passe lui aussi un excellent moment !",
+        ],
+      },
+    ],
+    firstMeeting: {
+      title: "Une première rencontre offerte !",
+      paragraphs: [
+        "Avant sa première aventure, on prend le temps de rencontrer votre chien pour découvrir sa personnalité, ses habitudes et sa manière d’interagir avec ses congénères.",
+        "Cette rencontre nous permet de vérifier que **les promenades collectives lui correspondent** et de lui proposer un groupe adapté.",
+      ],
+      note: "Parce que pour nous, une belle aventure commence par des rencontres positives !",
+    },
+    pricing: {
+      title: "Nos tarifs – Dog Aventure 2 h",
+      unitPrice: 29.9,
+      unitLabel: "À l’unité",
+      unitDesc: "Le prix d’une sortie réservée seule.",
+      packs: [
+        { id: "pack-5", name: "Pack 5 aventures", quantity: 5, total: 139.9 },
+        {
+          id: "pack-10",
+          name: "Pack 10 aventures",
+          quantity: 10,
+          total: 259.9,
+          highlight: true,
+        },
+      ],
+      includedTitle: "Tout est inclus",
+      included: [
+        "Récupération à votre domicile dans notre zone d’intervention",
+        "Transport aller-retour sécurisé",
+        "2 heures de promenade effective en forêt",
+        "Aventure collective avec des chiens compatibles",
+        "Encadrement et surveillance du groupe",
+        "Photos et vidéos",
+        "Retour de votre compagnon à domicile",
+      ],
+    },
+    forests: {
+      title: "Où partent les copains ?",
+      items: [
+        {
+          name: "La forêt de Chantilly",
+          desc: "Pour ses grands sentiers et ses paysages variés.",
+        },
+        {
+          name: "La forêt d’Ermenonville",
+          desc: "Pour ses chemins forestiers et ses espaces naturels.",
+        },
+        {
+          name: "La forêt de Pontarmé",
+          desc: "Pour ses sentiers verdoyants et son environnement paisible.",
+        },
+      ],
+      note: "Les itinéraires sont sélectionnés en fonction du groupe, de la météo et des conditions de sécurité.",
+    },
+    closing: {
+      title: "Des copains, une forêt, 2 heures d’aventure… et un chien heureux !",
+      paragraphs: [
+        "Pourquoi se contenter d’une simple promenade quand votre chien peut partager une véritable aventure avec ses copains ?",
+        "Chez Dog Aventure, on lui offre l’occasion de sortir de sa routine, de retrouver d’autres chiens, d’explorer la nature et de vivre des moments de partage. **Offrez-lui ses propres sorties entre copains !**",
+      ],
+      signature: "Réservez sa prochaine Dog Aventure dès maintenant !",
+    },
+  },
+
+  /* ─── Page « Garde avec nuitée » — /garde-chien (2026-10-08) ────────────
+     Texte et grilles fournis par le client le même jour. Mêmes retouches que
+     pour la page Dog Aventure (« nous » sujet → « on », pas d'émojis). Les
+     trois cartes reprennent ses phrases, découpées : leurs titres sont les
+     seuls mots de nous.
+
+     ⚠️ Héberger des chiens contre rémunération est une activité de « garde »
+     au sens de l'article L214-6-1 du code rural (déclaration en préfecture,
+     ACACED, locaux conformes). C'est au client de s'en assurer — le site, lui,
+     ne fait que la décrire. */
+  boarding: {
+    slug: "/garde-chien",
+    seo: {
+      title: "Garde de chien en famille à Louvres | Dog Aventure",
+      description:
+        "Garde de chien avec nuitée à Louvres (95) : chez nous, sans cage ni chenil, peu de chiens à la fois, photos et vidéos. De 24,90 € à 32,90 € la nuit.",
+    },
+    card: {
+      name: "Garde avec nuitée",
+      tagline: "Une garde comme à la maison",
+      desc: "Pas de cage, pas de box, pas de chenil : votre chien partage notre quotidien, avec un nombre limité de pensionnaires et des nouvelles régulières.",
+      priceUnit: "la nuit",
+      photo: {
+        src: "/images/chiot-maison.webp",
+        alt: "Un chiot berger australien couché sur le carrelage d’une entrée, qui regarde l’objectif",
+        width: 1200,
+        height: 1200,
+      },
+    },
+    hero: {
+      overline: "Garde avec nuitée",
+      title: "Une garde comme à la maison",
+      titleScript: "loin des cages et des chenils",
+      lead: "Parce que votre chien mérite de se sentir chez lui, même lorsque vous êtes absent.",
+      intro:
+        "Chez Dog Aventure, on a une vision différente de la garde canine : votre chien n’est pas simplement un animal qu’on héberge, **c’est un véritable membre de la famille qu’on accueille chez nous.**",
+      priceUnit: "la nuit",
+      photo: {
+        src: "/images/malinois-couverture.webp",
+        alt: "Un jeune malinois assis sur sa couverture, qui croque la friandise qu’on lui tend",
+        width: 900,
+        height: 1125,
+      },
+    },
+    intro: {
+      title: "Ici, pas de cage, pas de box et pas de chenil",
+      paragraphs: [
+        "Votre compagnon **partage notre quotidien** dans un environnement familial, chaleureux et rassurant.",
+        "On prend soin de lui **comme s’il s’agissait de notre propre chien** : promenades quotidiennes, moments de jeu, câlins, repos et surtout beaucoup d’attention.",
+      ],
+      photo: {
+        src: "/images/selfie-chien.webp",
+        alt: "La promeneuse de Dog Aventure, tout sourire, qui serre dans ses bras un berger noir dans un salon",
+        width: 720,
+        height: 900,
+      },
+    },
+    points: [
+      {
+        icon: "users",
+        title: "Un nombre limité de chiens",
+        desc: "Pour garantir le bien-être de chaque pensionnaire, on accueille volontairement un nombre limité de chiens, afin de consacrer à chacun le temps et l’attention qu’il mérite.",
+      },
+      {
+        icon: "heart-handshake",
+        title: "Ses habitudes respectées",
+        desc: "On respecte ses habitudes, son rythme et ses besoins pour qu’il se sente le plus possible comme à la maison.",
+      },
+      {
+        icon: "camera",
+        title: "Des nouvelles régulières",
+        desc: "Parce qu’on sait qu’il n’est jamais facile de laisser son compagnon, on vous envoie régulièrement des nouvelles, des photos et des vidéos pour que vous puissiez profiter de votre absence l’esprit tranquille.",
+      },
+    ],
+    signature:
+      "Chez Dog Aventure, votre chien ne vient pas simplement en pension. Il vient passer ses propres vacances, entouré d’attention et d’affection. ♡",
+    gallery: [
+      {
+        src: "/images/chiot-maison.webp",
+        alt: "Un chiot berger australien couché sur le carrelage d’une entrée",
+        width: 1200,
+        height: 1200,
+      },
+      {
+        src: "/images/berger-australien.webp",
+        alt: "Un berger australien bleu merle sur un carrelage noir et blanc",
+        width: 1200,
+        height: 1200,
+      },
+    ],
+    pricing: {
+      title: "Nos tarifs – Garde avec nuitée",
+      sub: "Le prix de la nuit baisse avec la durée du séjour.",
+      nights: [
+        { label: "1 nuit", price: 32.9 },
+        { label: "2 à 3 nuits", price: 31.9 },
+        { label: "4 à 6 nuits", price: 29.9 },
+        { label: "7 à 13 nuits", price: 27.9 },
+        { label: "14 à 29 nuits", price: 26.9 },
+        { label: "30 nuits et plus", price: 24.9 },
+      ],
+      note: "Les promenades quotidiennes classiques restent incluses dans le prix de la garde, sans supplément.",
+    },
+    options: {
+      title: "Les options",
+      items: [
+        {
+          label: "Dog Aventure forêt 2 h",
+          price: 19.9,
+          href: "/balade-foret",
+        },
+        { label: "Pack de 3 sorties forêt", price: 49.9, href: "/balade-foret" },
+        { label: "Récupération du chien à domicile", price: 14.9, from: true },
+        { label: "Récupération + retour à domicile", price: 24.9, from: true },
+        {
+          label: "Deuxième chien de la même famille",
+          price: 19.9,
+          perNight: true,
+        },
+        { label: "Supplément jour férié", price: 10, perNight: true },
+      ],
+    },
+    firstMeeting: {
+      title: "Première rencontre offerte",
+      paragraphs: [
+        "Pour faire connaissance et préparer son séjour en toute confiance.",
+      ],
+    },
+    closing: {
+      title: "On prépare son séjour ?",
+      paragraphs: [
+        "Un appel ou un SMS suffit : vous nous donnez les dates, vous nous parlez de votre chien, et on cale la première rencontre.",
+      ],
+      signature: "Il vient passer ses propres vacances. ♡",
+    },
   },
 
   steps: [
@@ -253,8 +595,11 @@ export const site: SiteConfig = {
     note: "Et bien d’autres encore…",
   },
 
-  /* Les QUATRE avis réels de la fiche Google « DogAventure », relevés le
-     2026-08-18 (5,0 ★, 4 avis — les deux premiers sont arrivés la veille).
+  /* Les SIX avis réels de la fiche Google « DogAventure », relevés le
+     2026-10-08 (5,0 ★, 6 avis — Yannick 95 et Océane Lefebvre sont arrivés
+     depuis le relevé du 2026-08-18). Celui d'audrey carlier n'est plus
+     affiché par Maps sans connexion (« affichage limité », 5 avis sur 6) : il
+     est repris du relevé précédent, et c'est bien le sixième du compte.
      Recopiés **mot pour mot**, fautes de frappe et ponctuation comprises :
      corriger l'orthographe d'un client, c'est déjà réécrire son avis.
 
@@ -285,6 +630,36 @@ export const site: SiteConfig = {
       text: "Merci à Martin ! Il s’est super bien occupé de mon petit chien :)",
       source: {
         visitDate: "août 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+    {
+      /* « a », « s occuper », « passages,c est », « recommande.merci » : c'est
+         ce qu'il a tapé, à recopier tel quel. Il parle de passages à domicile,
+         une prestation que le site ne vend pas — un avis ne se trie pas pour
+         autant. */
+      author: "Yannick 95",
+      // « -ba12- » retiré, comme pour nicolas : pastille « Local Guide »
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a/ACg8ocJlFA3IBy_tcxTOEtgjKaW4K5wMGxiL-jqfU15-oQITWU2Z7A=w72-h72-p-rp-mo-br100",
+      localGuide: true,
+      rating: 5,
+      text: "Service au top pour des passages a mon domicile pour s occuper de mon chien et lui donner a manger... photos et vidéos lors des passages,c est rassurant,je recommande.merci.",
+      source: {
+        visitDate: "octobre 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+    {
+      // Émojis compris : ils font partie de l'avis.
+      author: "Océane Lefebvre",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a-/ALV-UjWJHo04fjhq_3vuciAufubSKFBpkpgtlDwOs8dG4OZ342GTzfBy=w72-h72-p-rp-mo-br100",
+      rating: 5,
+      text: "J’ai eu l’occasion de faire plusieurs balades avec Martin et ma chienne, et ça a été une super expérience. Il est vraiment à l’écoute, patient et prend le temps de comprendre le chien et son comportement. Il donne de bons conseils et surtout, il sait s’adapter sans jamais brusquer les choses.\n\nJ’ai aussi beaucoup apprécié le fait qu’il prenne le temps de m’expliquer les choses et de répondre à mes questions. On voit qu’il aime vraiment ce qu’il fait et qu’il le fait avec passion.\n\nMerci encore pour ton aide, tes conseils et ta patience ! Je recommande vraiment Martin pour vos loulous 🐶😊",
+      source: {
+        // « Visité en mai » sur Maps, sans année : celle de l'affichage.
+        visitDate: "mai 2026",
         reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
       },
     },
@@ -343,9 +718,28 @@ export const site: SiteConfig = {
   images: {
     // Vraie photo du client (août 2026) — recadrage et variantes générés
     // par scripts/prepare-photos.js
-    hero: "/images/hero.webp",
+    /* « Alterne les images, même la première — je pense que c'est pas la
+       meilleure, fais comme tu le penses » (client, 2026-10-08). Le hero passe
+       donc à trois photos en fondu lent. La première reste l'élément LCP :
+       préchargée, jamais animée — les deux autres ne se chargent qu'après coup
+       et viennent se poser par-dessus. Cf. hero.tsx. */
+    hero: "/images/pause-chemin.webp",
     heroAlt:
-      "Le promeneur de Dog Aventure accroupi aux côtés d’un grand chien noir, pendant une balade",
+      "Le promeneur de Dog Aventure accroupi sur un chemin, la main sur le harnais d’un malinois assis qui tire la langue",
+    heroMobilePosition: "50% 15%",
+    heroSlides: [
+      {
+        src: "/images/selfie-chien.webp",
+        alt: "La promeneuse de Dog Aventure, tout sourire, joue contre joue avec un berger noir",
+        mobilePosition: "50% 10%",
+      },
+      {
+        // L'ancienne photo d'ouverture, gardée en troisième position.
+        src: "/images/hero.webp",
+        alt: "Le promeneur de Dog Aventure accroupi aux côtés d’un grand chien noir, pendant une balade",
+        mobilePosition: "50% 13%",
+      },
+    ],
     /* Photo du binôme (2026-08-18), section « Il est entre de bonnes mains ».
        Elle est ce qui rend le « on » des textes crédible : le visiteur voit
        les deux personnes à qui il confie son chien, en tenue Dog Aventure. */

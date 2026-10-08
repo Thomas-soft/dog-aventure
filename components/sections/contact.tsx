@@ -1,14 +1,27 @@
+import type { ReactNode } from "react";
 import { MessageCircle, PawPrint, Phone } from "lucide-react";
 import { site } from "@/content/site.config";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import { RichText } from "@/components/ui/rich-text";
 import { WhatsappIcon } from "@/components/ui/whatsapp-icon";
 
 /* L'ancre `#contact` a suivi le formulaire vers le haut de page : la barre de
    navigation, le menu mobile et le pied de page y mènent tous. Cette section
    porte donc `#reserver`. Ne pas lui rendre `#contact` sans déplacer les trois
-   liens en même temps — ils atterriraient de nouveau tout en bas. */
-export function ContactSection() {
+   liens en même temps — ils atterriraient de nouveau tout en bas.
+
+   Les pages Garde et Dog Aventure ferment sur ce même bandeau, avec leur
+   propre titre et leur propre texte : sans argument, c'est celui de l'accueil. */
+export function ContactSection({
+  title,
+  paragraphs,
+  signature = site.tagline,
+}: {
+  title?: ReactNode;
+  paragraphs?: string[];
+  signature?: string;
+} = {}) {
   return (
     <section id="reserver" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -31,16 +44,31 @@ export function ContactSection() {
                 Réservation
               </span>
               <h2 className="font-display text-4xl uppercase tracking-tight text-balance sm:text-5xl md:text-6xl">
-                On cale sa{" "}
-                <span className="font-script normal-case text-leaf">
-                  première balade
-                </span>
-                &nbsp;?
+                {title ?? (
+                  <>
+                    On cale sa{" "}
+                    <span className="font-script normal-case text-leaf">
+                      première balade
+                    </span>
+                    &nbsp;?
+                  </>
+                )}
               </h2>
-              <p className="max-w-lg leading-relaxed text-cream/70 md:text-lg">
-                Un appel ou un SMS suffit : on parle de votre chien, on cale un
-                créneau, et on vient le chercher chez vous.
-              </p>
+              {paragraphs ? (
+                paragraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="max-w-lg leading-relaxed text-cream/70 md:text-lg"
+                  >
+                    <RichText text={paragraph} strongClassName="text-cream" />
+                  </p>
+                ))
+              ) : (
+                <p className="max-w-lg leading-relaxed text-cream/70 md:text-lg">
+                  Un appel ou un SMS suffit : on parle de votre chien, on cale
+                  un créneau, et on vient le chercher chez vous.
+                </p>
+              )}
               <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
                 <Button
                   size="lg"
@@ -89,7 +117,7 @@ export function ContactSection() {
                   formulaires identiques sur une page unique brouillent la
                   lecture autant que les statistiques. */}
               <p className="mt-8 font-script text-2xl text-cream/85 md:text-3xl">
-                {site.tagline}
+                {signature}
               </p>
             </div>
           </div>

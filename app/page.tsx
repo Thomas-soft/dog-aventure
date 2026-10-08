@@ -4,6 +4,7 @@ import { StickyCallBar } from "@/components/layout/sticky-call-bar";
 import { Hero } from "@/components/sections/hero";
 import { TownsMarquee } from "@/components/sections/towns-marquee";
 import { ServiceSection } from "@/components/sections/service";
+import { OtherServices } from "@/components/sections/other-services";
 import { TrustSection } from "@/components/sections/trust";
 import { ZonesSection } from "@/components/sections/zones";
 import { DogsSection } from "@/components/sections/dogs";
@@ -32,6 +33,9 @@ export default function Home() {
             et sert de respiration avant les deux cartes d'offres. */}
         <DogsSection />
         <ServiceSection />
+        {/* Les deux formules ajoutées le 2026-10-08 (garde, sortie forêt),
+            en vignettes vers leur page, juste après les prix des balades. */}
+        <OtherServices />
         <ContactFormSection />
         <ZonesSection />
         <ReviewsSection />

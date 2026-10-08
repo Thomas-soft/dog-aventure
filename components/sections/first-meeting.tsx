@@ -1,6 +1,8 @@
 import { Gift } from "lucide-react";
 import { site } from "@/content/site.config";
+import type { FirstMeeting as FirstMeetingContent } from "@/content/types";
 import { Reveal } from "@/components/motion/reveal";
+import { RichText } from "@/components/ui/rich-text";
 
 /**
  * « Première rencontre offerte » — bandeau de fin de la section « Il est entre
@@ -26,10 +28,16 @@ import { Reveal } from "@/components/motion/reveal";
  * ⚠️ Ce n'est PAS la « visite à domicile » retirée du site le 2026-08-10 :
  * celle-là était une prestation payante que le client n'avait ni tarifée ni
  * décrite, celle-ci est un préalable gratuit à la première balade. La règle
- * « le site ne vend que des balades » tient toujours.
+ * « le site ne vend que des balades » tenait jusqu'au 2026-10-08 ; depuis, la
+ * garde et la sortie collective ont leur page, et chacune passe ici son propre
+ * texte (`content`). Sans argument, c'est celui de l'accueil.
  */
-export function FirstMeeting() {
-  const { firstMeeting } = site;
+export function FirstMeeting({
+  content = site.firstMeeting,
+}: {
+  content?: FirstMeetingContent;
+}) {
+  const firstMeeting = content;
 
   return (
     <Reveal className="mt-14">
@@ -43,20 +51,22 @@ export function FirstMeeting() {
 
         <div className="max-w-2xl">
           <h3 className="font-display text-2xl uppercase tracking-tight md:text-3xl">
-            {firstMeeting.title}
+            <RichText text={firstMeeting.title} />
           </h3>
 
           {firstMeeting.paragraphs.map((paragraph) => (
             <p key={paragraph} className="mt-3 leading-relaxed text-cream/75">
-              {paragraph}
+              <RichText text={paragraph} strongClassName="text-cream" />
             </p>
           ))}
 
           {/* Sortie du corps du texte : c'est la phrase qui lève l'objection,
               elle doit être lisible sans lire les deux paragraphes du dessus. */}
-          <p className="mt-5 font-script text-2xl leading-snug text-leaf">
-            {firstMeeting.note}
-          </p>
+          {firstMeeting.note && (
+            <p className="mt-5 font-script text-2xl leading-snug text-leaf">
+              <RichText text={firstMeeting.note} />
+            </p>
+          )}
         </div>
       </div>
     </Reveal>

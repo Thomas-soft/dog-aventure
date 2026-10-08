@@ -133,8 +133,8 @@ export default function MentionsLegales() {
             </p>
             <p>
               Il s&rsquo;agit d&rsquo;une reprise manuelle, mise à jour au{" "}
-              <strong className="font-semibold text-ink">mois d&rsquo;août
-              2026</strong>&nbsp;: la fiche Google peut donc comporter des avis
+              <strong className="font-semibold text-ink">mois
+              d&rsquo;octobre 2026</strong>&nbsp;: la fiche Google peut donc comporter des avis
               plus récents que ceux affichés ici. Elle fait foi.
             </p>
             <p>
@@ -157,7 +157,8 @@ export default function MentionsLegales() {
               <strong className="font-semibold text-ink">email ou votre
               téléphone</strong> (au choix) et votre{" "}
               <strong className="font-semibold text-ink">message</strong>. Elles
-              servent uniquement à vous répondre et à organiser la promenade. Elles
+              servent uniquement à vous répondre et à organiser la prestation
+              demandée — promenade, sortie en forêt ou garde. Elles
               ne sont ni revendues, ni cédées, ni utilisées pour vous adresser de
               la publicité.
             </p>

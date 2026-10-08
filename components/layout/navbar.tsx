@@ -15,11 +15,18 @@ import { asset, cn } from "@/lib/utils";
    `scroll-smooth` du CSS — et depuis la page légale c'est une vraie
    navigation. asset() ajoute le basePath, que Next ne met pas ici. */
 const NAV = [
-  { label: "La promenade", href: asset("/#service") },
+  { label: "Balades", href: asset("/#service") },
+  { label: "Aventure en forêt", href: asset(site.groupWalk.slug) },
+  { label: "Garde", href: asset(site.boarding.slug) },
   { label: "Confiance", href: asset("/#confiance") },
-  { label: "Où on intervient", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },
 ];
+
+/* « Où on intervient » a quitté la barre le 2026-10-08 pour faire place aux
+   deux pages Garde et Dog Aventure : six liens ne tenaient pas à côté du logo
+   et des deux boutons. Il reste dans le menu mobile et le pied de page, et la
+   section `#zones` garde son ancre. */
+const MOBILE_EXTRA = [{ label: "Où on intervient", href: asset("/#zones") }];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -88,8 +95,11 @@ export function Navbar() {
           </span>
         </a>
 
+        {/* Liens à partir de `lg` seulement (et non plus `md`) depuis qu'ils
+            sont cinq : entre 768 et 1023 px, ils chevauchaient le logo. Le
+            menu déroulant prend le relais en dessous. */}
         <nav
-          className="hidden items-center gap-8 md:flex"
+          className="hidden items-center gap-7 lg:flex"
           aria-label="Navigation principale"
         >
           {NAV.map((item) => (
@@ -139,7 +149,7 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -156,11 +166,11 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="overflow-hidden md:hidden"
+            className="overflow-hidden lg:hidden"
             aria-label="Navigation mobile"
           >
             <div className="flex flex-col gap-1 px-4 pb-4">
-              {NAV.map((item) => (
+              {[...NAV, ...MOBILE_EXTRA].map((item) => (
                 <a
                   key={item.href}
                   href={item.href}

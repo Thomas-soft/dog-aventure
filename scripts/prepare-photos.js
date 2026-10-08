@@ -26,7 +26,8 @@ const OUT = path.join(ROOT, "public/images");
    visages et les silhouettes. Mesuré sur la photo du hero à 640 px : 82 Ko
    sans rien, 70 Ko avec, et un visage plus propre qu'avec un median(3) (44 Ko
    mais un rendu lissé, plastique). */
-const denoise = (p) => p.blur(0.7).sharpen({ sigma: 0.8, m1: 0.5, m2: 2 });
+const denoise = (p, sigma = 0.7) =>
+  p.blur(sigma).sharpen({ sigma: 0.8, m1: 0.5, m2: 2 });
 
 /* La largeur réelle n'est pas celle du nom de fichier. lib/image-loader.ts
    choisit une variante dans [640, 828, 1080, 1200] à partir de la largeur
@@ -175,26 +176,107 @@ const PHOTOS = [
     reference: [780, 62],
     variants: { 640: [560, 58], 828: [560, 58], 1080: [560, 58], 1200: [560, 58] },
   },
+  /* ─── Les photos du 2026-10-08 ──────────────────────────────────────────
+     Six photos envoyées par le client avec les pages « Garde » et « Dog
+     Aventure 2 h », plus le retour de `balade-chemin`. Demande : « alterner
+     les images, même la première » — d'où un hero à plusieurs photos et une
+     répartition où aucune page ne répète la même image deux fois. */
+  {
+    /* Le nouveau premier visage du site : le promeneur accroupi près d'un
+       malinois assis, sur un chemin. Le duo tient de x 160 à 840 et de y 515
+       (crâne) à 1095 (semelles). Resserré dès le premier essai à l'écran : le
+       cadre du hero est plafonné à 600 px de haut, donc plus large que 4/5, et
+       un cadrage lâche y laissait la moitié basse au bitume. */
+    name: "pause-chemin",
+    src: "pause-chemin.jpg",
+    crop: { left: 70, top: 380, width: 860, height: 1075 },
+    /* C'est l'image LCP : la haie de thuyas et de brindilles est le pire fond
+       possible pour le WebP (91 Ko à 700 px avec le flou par défaut). Un flou
+       de 1,0 la ramène à 68 Ko, sous l'ancienne photo du hero (80 Ko), sans
+       que le visage ni le chien en pâtissent — vérifié sur un agrandissement. */
+    blur: 1.0,
+    reference: [860, 55],
+    variants: { 640: [640, 52], 828: [700, 50], 1080: [860, 50], 1200: [860, 50] },
+  },
+  {
+    /* Selfie de la promeneuse avec un berger noir, source en 16/9 : on ne
+       garde que la bande des deux visages, en 4/5 pour le cadre du hero. */
+    name: "selfie-chien",
+    src: "selfie-chien.jpg",
+    crop: { left: 420, top: 0, width: 720, height: 900 },
+    reference: [720, 62],
+    variants: { 640: [640, 58], 828: [720, 55], 1080: [720, 55], 1200: [720, 55] },
+  },
+  {
+    // Ouvre la page Garde : la couverture, la friandise, la maison.
+    name: "malinois-couverture",
+    src: "malinois-couverture.jpg",
+    crop: { left: 0, top: 280, width: 900, height: 1125 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
+  {
+    // Carrés : vignette de l'accueil et galerie de la page Garde, ~350 px CSS
+    // au plus large — plafonnés à 900 px.
+    name: "chiot-maison",
+    src: "chiot-maison.jpg",
+    crop: { left: 0, top: 300, width: 1200, height: 1200 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
+  {
+    name: "berger-australien",
+    src: "berger-australien.jpg",
+    crop: { left: 0, top: 400, width: 1200, height: 1200 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
+  {
+    /* Le promeneur et un chiot malinois au pied d'un immeuble : c'est la prise
+       en charge, pas la balade — d'où sa place sur « On vient chercher votre
+       chien » de la page Dog Aventure. Crâne à y=110 : top 20, pas plus bas. */
+    name: "chiot-rue",
+    src: "chiot-rue.jpg",
+    crop: { left: 35, top: 20, width: 1100, height: 1375 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
   /* scripts/photos/balade-chemin.jpg (le promeneur de dos sur un chemin) a
-     servi à un médaillon dans le coin du hero, retiré : deux photos de la
-     même personne, même tenue, même décor, l'une collée sur l'autre, ça
-     faisait collage. L'original est conservé pour la replacer ailleurs le
-     jour venu — recadrage qui marchait bien à petite taille :
-       crop { left: 120, top: 423, width: 700, height: 933 }  (3/4 resserré) */
+     servi à un médaillon dans le coin du hero, retiré le 2026-08-09 : deux
+     photos de la même personne, même tenue, même décor, l'une collée sur
+     l'autre, ça faisait collage. Elle revient le 2026-10-08, loin du hero :
+     vignette « Dog Aventure 2 h » de l'accueil et page du même nom. Carré
+     tête-pieds (crâne y≈571, semelles y≈1212). */
+  {
+    name: "balade-chemin",
+    src: "balade-chemin.jpg",
+    crop: { left: 0, top: 420, width: 878, height: 878 },
+    reference: [878, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [878, 55], 1200: [878, 55] },
+  },
 ];
+
+/* `node scripts/prepare-photos.js chiot-rue selfie-chien` ne régénère que ces
+   photos-là. Sans argument, tout repart — et chaque fichier réécrit sous le
+   même nom vide le cache d'images au déploiement suivant (cf. deploy.sh). */
+const only = process.argv.slice(2);
+const selected = only.length
+  ? PHOTOS.filter((p) => only.includes(p.name))
+  : PHOTOS;
 
 const encode = (photo, width, quality, file) =>
   denoise(
     sharp(path.join(SRC, photo.src))
       .extract(photo.crop)
       .resize({ width, kernel: "lanczos3" }),
+    photo.blur,
   )
     .webp({ quality, effort: 6 })
     .toFile(path.join(OUT, file));
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  for (const photo of PHOTOS) {
+  for (const photo of selected) {
     const files = [[`${photo.name}.webp`, photo.reference]].concat(
       Object.entries(photo.variants).map(([slot, spec]) => [
         `${photo.name}-${slot}.webp`,

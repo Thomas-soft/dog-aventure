@@ -55,8 +55,14 @@ export const metadata: Metadata = {
 };
 
 /* Fourchette dérivée des offres. Elle était écrite en dur et a menti dès le
-   premier changement de tarif — ne pas y revenir. */
-const prices = site.services.map((s) => s.price);
+   premier changement de tarif — ne pas y revenir. Prix unitaires seulement
+   (une balade, une sortie, une nuit) : les carnets, prépayés, la feraient
+   grimper à 400 € sans rien dire du prix d'une prestation. */
+const prices = [
+  ...site.services.map((s) => s.price),
+  site.groupWalk.pricing.unitPrice,
+  ...site.boarding.pricing.nights.map((n) => n.price),
+];
 
 /* Les carnets sont de vraies offres : sans eux, Google ne voit qu'un tarif
    unitaire là où la page en affiche trois. */
@@ -79,6 +85,56 @@ const packOffers = packUnit
       },
     }))
   : [];
+
+/* Les deux formules qui ont leur page depuis le 2026-10-08. La garde est
+   déclarée au tarif le plus bas, rapporté à la nuit : c'est le « dès » affiché
+   sur la page, et un `Offer` ne porte qu'un prix. */
+const { groupWalk, boarding } = site;
+const otherOffers = [
+  {
+    "@type": "Offer",
+    url: `${site.url}${groupWalk.slug}`,
+    itemOffered: {
+      "@type": "Service",
+      name: groupWalk.card.name,
+      serviceType: "Promenade collective de chiens",
+    },
+    price: groupWalk.pricing.unitPrice.toFixed(2),
+    priceCurrency: "EUR",
+  },
+  ...groupWalk.pricing.packs.map((pack) => ({
+    "@type": "Offer",
+    url: `${site.url}${groupWalk.slug}`,
+    name: `${pack.name} — ${groupWalk.card.name}`,
+    itemOffered: {
+      "@type": "Service",
+      name: groupWalk.card.name,
+      serviceType: "Promenade collective de chiens",
+    },
+    price: pack.total.toFixed(2),
+    priceCurrency: "EUR",
+    eligibleQuantity: {
+      "@type": "QuantitativeValue",
+      value: pack.quantity,
+      unitText: "sorties",
+    },
+  })),
+  {
+    "@type": "Offer",
+    url: `${site.url}${boarding.slug}`,
+    itemOffered: {
+      "@type": "Service",
+      name: boarding.card.name,
+      serviceType: "Garde de chiens",
+    },
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: Math.min(...boarding.pricing.nights.map((n) => n.price)).toFixed(2),
+      priceCurrency: "EUR",
+      unitText: "nuit",
+    },
+  },
+];
 
 /* Pas d'aggregateRating ni d'horaires : rien de réel à déclarer pour l'instant */
 const jsonLd = {
@@ -125,6 +181,7 @@ const jsonLd = {
       priceCurrency: "EUR",
     })),
     ...packOffers,
+    ...otherOffers,
   ],
 };
 

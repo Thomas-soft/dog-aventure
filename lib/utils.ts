@@ -18,3 +18,13 @@ export function formatPrice(price: number) {
     : price.toFixed(2).replace(".", ",")
   return `${amount} €`
 }
+
+/** Espace insécable devant « ! ? : ; » et à l'intérieur des guillemets : les
+ *  textes de la config sont saisis avec des espaces ordinaires, et un « ! »
+ *  rejeté seul en début de ligne se voit tout de suite. Appliqué par
+ *  `RichText`, donc à tout texte du client qui passe par lui. */
+export function frenchSpacing(text: string) {
+  return text
+    .replace(/ ([!?:;»])/g, "\u00a0$1")
+    .replace(/« /g, "«\u00a0")
+}

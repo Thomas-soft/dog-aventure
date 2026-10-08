@@ -9,7 +9,9 @@ import { asset } from "@/lib/utils";
    le pied de page est aussi rendu sur /mentions-legales, et un next/link vers
    « /#service » change l'URL sans défiler. */
 const NAV = [
-  { label: "La promenade", href: asset("/#service") },
+  { label: "Balades individuelles", href: asset("/#service") },
+  { label: "Dog Aventure 2 h en forêt", href: asset(site.groupWalk.slug) },
+  { label: "Garde avec nuitée", href: asset(site.boarding.slug) },
   { label: "Confiance", href: asset("/#confiance") },
   { label: "Où on intervient", href: asset("/#zones") },
   { label: "Avis", href: asset("/#avis") },

@@ -68,6 +68,142 @@ export interface Step {
   desc: string;
 }
 
+/** Une photo avec ses dimensions réelles (celles du cadrage produit par
+ *  scripts/prepare-photos.js) : `next/image` en tire le rapport, la photo se
+ *  rend donc entière, sans recadrage CSS. */
+export interface Photo {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+/** Une photo du hero de l'accueil. La première est l'élément LCP : elle est
+ *  préchargée et ne s'anime jamais ; les suivantes viennent par-dessus en
+ *  fondu, une fois la page chargée. */
+export interface HeroSlide {
+  src: string;
+  alt: string;
+  /** `object-position` sur mobile, où le cadre 4/5 devient carré. Les photos
+   *  sont cadrées en 4/5 : en carré centré on coupe le haut du crâne. */
+  mobilePosition?: string;
+}
+
+/** Un bloc de texte des pages de prestation, avec photo facultative.
+ *  Les chaînes acceptent `**gras**` — le texte du client en est plein, et ses
+ *  mises en avant disent ce qu'il veut qu'on retienne. */
+export interface OfferBlock {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  /** Liste à puces, chaque puce ouverte par un intitulé en gras */
+  bullets?: { title: string; desc: string }[];
+  /** Paragraphes rendus APRÈS la liste */
+  after?: string[];
+  /** La phrase qui conclut le bloc, rendue en manuscrit */
+  highlight?: string;
+  photo?: Photo;
+}
+
+/** Vignette d'une page de prestation sur l'accueil (`#formules`) */
+export interface OfferCard {
+  name: string;
+  tagline: string;
+  desc: string;
+  /** « la sortie », « la nuit » — accolé au prix d'appel */
+  priceUnit: string;
+  photo: Photo;
+}
+
+/** En-tête commun aux pages de prestation */
+export interface OfferHero {
+  overline: string;
+  title: string;
+  /** Seconde ligne du h1, en manuscrit */
+  titleScript: string;
+  lead: string;
+  intro: string;
+  /** « la sortie de 2 h », « la nuit » — sous le prix d'appel */
+  priceUnit: string;
+  photo: Photo;
+}
+
+/** Bandeau de fin des pages de prestation (appel, SMS, WhatsApp) */
+export interface OfferClosing {
+  title: string;
+  paragraphs: string[];
+  /** Ligne manuscrite sous les boutons */
+  signature: string;
+}
+
+/** Page « Dog Aventure 2 h » (/balade-foret) — sortie collective en forêt.
+ *  Texte du client du 2026-10-08, repris quasi tel quel : seuls le « nous »
+ *  sujet (passé à « on », la voix du site) et les émojis ont changé. */
+export interface GroupWalk {
+  slug: string;
+  seo: { title: string; description: string };
+  card: OfferCard;
+  hero: OfferHero;
+  /** La phrase de fin d'introduction, mise en avant sous le hero */
+  tagline: string;
+  blocks: OfferBlock[];
+  firstMeeting: FirstMeeting;
+  pricing: {
+    title: string;
+    /** Prix d'une sortie seule — ouvre la grille, sert au calcul des économies */
+    unitPrice: number;
+    unitLabel: string;
+    unitDesc: string;
+    /** Même règle que `site.packs` : seuls `quantity` et `total` sont saisis */
+    packs: Pack[];
+    includedTitle: string;
+    included: string[];
+  };
+  forests: {
+    title: string;
+    items: { name: string; desc: string }[];
+    note: string;
+  };
+  closing: OfferClosing;
+}
+
+/** Page « Garde avec nuitée » (/garde-chien). Texte et grille du client du
+ *  2026-10-08. */
+export interface Boarding {
+  slug: string;
+  seo: { title: string; description: string };
+  card: OfferCard;
+  hero: OfferHero;
+  intro: { title: string; paragraphs: string[]; photo: Photo };
+  points: { icon: BoardingIcon; title: string; desc: string }[];
+  signature: string;
+  gallery: Photo[];
+  pricing: {
+    title: string;
+    sub: string;
+    /** Prix par nuit selon la durée — le « dès » de l'en-tête en est le minimum */
+    nights: { label: string; price: number }[];
+    note: string;
+  };
+  options: {
+    title: string;
+    items: {
+      label: string;
+      price: number;
+      /** « Dès » devant le prix */
+      from?: boolean;
+      /** « /nuit » derrière le prix */
+      perNight?: boolean;
+      /** Lien vers une autre page du site (ex : la page Dog Aventure) */
+      href?: string;
+    }[];
+  };
+  firstMeeting: FirstMeeting;
+  closing: OfferClosing;
+}
+
+export type BoardingIcon = "users" | "heart-handshake" | "camera";
+
 /** La rencontre à domicile offerte, rendue en bandeau au bas de « La promenade ».
  *
  *  ⚠️ Ce n'est PAS la « visite à domicile » écartée du site le 2026-08-10 :
@@ -81,7 +217,7 @@ export interface FirstMeeting {
   title: string;
   paragraphs: string[];
   /** La phrase qui lève l'objection — mise en avant, séparée du corps */
-  note: string;
+  note?: string;
 }
 
 /** Icônes des arguments de confiance — résolues en composants lucide dans la section */
@@ -296,8 +432,14 @@ export interface SiteConfig {
   mapsEmbedUrl: string;
   /** Arguments courts affichés en chips sous le hero */
   heroChips: string[];
-  /** Une entrée par offre — ajouter « Dog Aventure 2 h » ici le moment venu */
+  /** Les balades individuelles de l'accueil. La sortie collective et la garde
+   *  ont chacune leur page (`groupWalk`, `boarding`) : elles ne vont pas ici,
+   *  le « à partir de » du hero se calcule sur ce seul tableau. */
   services: Service[];
+  /** Page « Dog Aventure 2 h », sortie collective en forêt */
+  groupWalk: GroupWalk;
+  /** Page « Garde avec nuitée » */
+  boarding: Boarding;
   /** Grille dégressive, rendue sous les offres dans la section « La promenade ».
    *  `items: []` masque le bloc entièrement. */
   packs: Packs;
@@ -322,6 +464,9 @@ export interface SiteConfig {
   images: {
     hero: string;
     heroAlt: string;
+    heroMobilePosition?: string;
+    /** Photos suivantes du hero, en fondu. Vide = une seule photo, fixe. */
+    heroSlides?: HeroSlide[];
     /** Le binôme, section « Il est entre de bonnes mains ». Vide ou absent =
      *  la section se rend sans photo, sans trou dans la mise en page. */
     team?: string;

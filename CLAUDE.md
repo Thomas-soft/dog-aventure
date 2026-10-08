@@ -75,6 +75,28 @@ La campagne est une **Performance Max** (`Promeneur Chien à Saint-Witz`, 4 €/
 - **Suivi : troisième action de conversion, `googleAdsWhatsappConversionLabel`, encore VIDE.** L'action n'est pas créée côté Ads, donc aucun événement n'est émis au clic WhatsApp — le bouton marche, il n'est pas compté. **Ne jamais le faire retomber sur le libellé de l'appel** : compter un clic WhatsApp comme un appel gonflerait la seule métrique sur laquelle la campagne optimise aujourd'hui. Le tracker (`conversion-tracker.tsx`) écoute désormais `tel:`, `sms:` **et** `https://wa.me/`, et route chaque canal vers son propre `send_to`.
 - Pas de modification de CSP : un lien externe est une navigation, que la CSP du site ne contraint pas (`navigate-to` n'y figure pas).
 
+## Pages Garde et Dog Aventure 2 h (2026-10-08)
+
+Demande client sur WhatsApp, textes et grilles fournis par lui : **`/garde-chien`** (garde avec nuitée, chez eux) et **`/balade-foret`** (sortie collective de 2 h en forêt). Contenu dans `site.boarding` et `site.groupWalk` ; les dossiers `app/garde-chien` et `app/balade-foret` doivent porter le même nom que leur `slug`.
+
+- **Textes du client repris presque tels quels.** Trois retouches de forme seulement : « nous » sujet → « on » (la voix du site), émojis des titres retirés, apostrophes courbes. Son **gras** est conservé via `**…**` dans la config, rendu par `components/ui/rich-text.tsx` — qui pose aussi les espaces insécables devant `! ? : ;` (la config n'en contient aucune). Les titres des trois cartes de la page Garde sont les seuls mots de nous.
+- **Tarifs : seuls `quantity` et `total` sont saisis**, comme pour `packs`. La logique vit désormais dans `components/sections/price-grid.tsx`, partagée par les carnets de l'accueil et ceux de la sortie forêt (27,98 € et 25,99 € par sortie sont recalculés, et tombent juste). Le « dès » des en-têtes est toujours un `Math.min` de la grille, jamais recopié.
+- **Les deux offres n'entrent PAS dans `site.services`** : le « à partir de 14,90 € la balade individuelle » du hero se calcule sur ce seul tableau. Elles sont présentées sur l'accueil par la section `#formules` (`other-services.tsx`, deux vignettes vers leur page), juste après `#service`. Elle n'a pas de `pt` et garde le `pb` que `#contact` attendait de `#service` — ne pas lui en ajouter, l'enchaînement crème → carte sombre du formulaire en dépend.
+- **« Pas de garderie, pas de meute : »** a été retiré du sous-titre de `#service` : le site ne peut pas dénigrer d'un côté ce qu'il vend de l'autre.
+- Barre de navigation : cinq liens, affichés à partir de **`lg`** (et non plus `md`, où ils chevauchaient le logo). « Où on intervient » en est sorti, il reste dans le menu mobile et le pied de page. À 1024 px, il reste 53 px de chaque côté des liens — mesuré.
+- JSON-LD : les deux offres sont dans `makesOffer` (la garde en `UnitPriceSpecification` par nuit), et `priceRange` couvre désormais les prix **unitaires** de toutes les offres (14,90 € – 32,90 €), carnets exclus.
+- **⚠️ Légal, à la charge du client** : héberger des chiens contre rémunération est une activité de « garde » au sens de l'article L214-6-1 du code rural (déclaration en préfecture, ACACED, locaux conformes). Le site ne fait que la décrire. Signalé le 2026-10-08.
+- Le texte de la sortie forêt dit « Oubliez les petites sorties habituelles autour du quartier ! » alors que l'accueil vend des balades individuelles : c'est **son** texte, laissé tel quel. À reprendre avec lui seulement s'il le souhaite.
+
+### Hero en fondu (2026-10-08)
+
+« Alterne les images, même la première — je pense que c'est pas la meilleure, fais comme tu le penses. » Le hero passe à **trois photos** (`images.hero` puis `images.heroSlides`) : `pause-chemin` (nouvelle ouverture), `selfie-chien`, puis l'ancienne `hero`.
+
+- **La règle LCP tient toujours** : la première photo est préchargée, rendue dans le HTML et **jamais animée**. Les suivantes ne sont montées qu'après 2,5 s et se posent PAR-DESSUS en fondu ; revenir à la première = les rendre transparentes. Vérifié dans le HTML de production : un seul `preload` d'image, et `selfie-chien` n'y figure pas.
+- Fondu toutes les 6 s. Pastilles cliquables en bas à droite ; un clic **arrête** le défilement (le moyen de pause qu'exige WCAG 2.2.2). Avec `prefers-reduced-motion`, rien ne défile seul.
+- Le cadre du hero est plafonné à 600 px de haut, donc **plus large que 4/5** sur grand écran : un cadrage lâche y laisse la moitié basse au sol. C'est ce qui a fait resserrer `pause-chemin` dès le premier essai à l'écran.
+- `scripts/prepare-photos.js` accepte désormais des noms en argument (`node scripts/prepare-photos.js chiot-rue`) pour ne régénérer qu'une photo, et un `blur` par photo — `pause-chemin` est à 1,0 pour tenir ~65 Ko à 700 px malgré la haie.
+
 ## Ordre des sections de l'accueil (2026-08-16)
 
 Demande client, qui **remplace** la remontée du formulaire du 2026-08-14 («&nbsp;il veut pas qu'on scroll beaucoup&nbsp;», après une conversation entre Martin et ChatGPT). Martin veut désormais qu'on rassure et qu'on annonce le prix **avant** de demander d'écrire :
@@ -200,7 +222,9 @@ Nouvelle section `#chiens` (`components/sections/dogs.tsx`), **entre `#confiance
 
 ## Avis (2026-08-16)
 
-La section `#avis` affiche les **vrais avis de la fiche Google**, recopiés dans `site.reviews`. **Quatre au 2026-08-18** (5,0 ★), contre deux au 2026-08-16.
+La section `#avis` affiche les **vrais avis de la fiche Google**, recopiés dans `site.reviews`. **Six au 2026-10-08** (5,0 ★ — Yannick 95 et Océane Lefebvre ajoutés), contre quatre au 2026-08-18 et deux au 2026-08-16.
+
+- **Piège du relevé du 2026-10-08** : sans connexion, Maps est en « affichage limité » et n'affiche que 5 avis sur 6 — le bouton « Voir plus d'avis (1) » ne charge rien. Le manquant est celui d'audrey carlier, repris du relevé précédent. Contrôle fait : les cinq visibles sont identiques au caractère près à `site.reviews` (comparaison par script, pas à l'œil).
 
 **Relever les avis se fait au navigateur, il n'y a pas d'autre chemin (2026-08-18).** Vérifié ce jour-là avant d'y perdre du temps : la page Maps ne sert qu'une coquille JS (aucune occurrence de « DogAventure » dans le HTML, quel que soit l'User-Agent — Googlebot compris), l'ancien endpoint `/maps/preview/review/listentitiesreviews` répond **404** et `/maps/rpc/listugcposts` **403** sans session, et la Places API reste fermée faute de compte de facturation. La recette : ouvrir `site.googleProfileUrl`, onglet **Avis**, puis extraire en JS plutôt qu'à l'œil —
 ```js
@@ -313,7 +337,7 @@ Une campagne Google Ads (« Promeneur Chien à Saint-Witz ») a vu son groupe de
 - **`site.tagline` dit « Plus de temps pour vous, plus de bonheur pour votre chien. ♡ » depuis le 2026-08-19** (demande client), en remplacement de « Moins de temps pour vous… ». La répétition de « plus » n'est pas une coquille : l'ancienne formule était une antithèse (moins de temps *de promenade* pour vous / plus de bonheur pour lui) que le client a jugée négative — ne pas « corriger » le premier « plus » en « moins ». Rendue à deux endroits (`contact.tsx`, `footer.tsx`), tous deux depuis `site.tagline`.
 - Le message doit rester cohérent : ce sont EUX qui promènent le chien, pas le client (une v1 du slogan disait « Promenez-le » — erreur déjà corrigée, ne pas la réintroduire).
 - Apostrophes typographiques (’) dans les chaînes, `&nbsp;` avant `!` et `?` dans le JSX.
-- **Le site ne vend que des balades (décision client, 2026-08-10).** Le texte fourni par le client mentionne aussi des « visites à domicile » et des « séances d'éducation » : elles sont volontairement absentes du site, faute de tarif et de description. Ne pas les ajouter sans que le client les ait cadrées. « Formé en éducation canine » (`trust.credential`) est une **qualification**, pas une prestation — c'est la seule occurrence autorisée du mot.
+- **~~Le site ne vend que des balades~~ (décision client du 2026-08-10, levée le 2026-10-08 pour la garde et la sortie collective, qui ont désormais tarif ET description — cf. « Pages Garde et Dog Aventure 2 h »).** Les « visites à domicile » et les « séances d'éducation » restent absentes, faute de tarif et de description. Ne pas les ajouter sans que le client les ait cadrées. « Formé en éducation canine » (`trust.credential`) est une **qualification**, pas une prestation — c'est la seule occurrence autorisée du mot.
 - **Rien de biographique.** Le client raconte volontiers son enfance et les chiens de sa vie ; ça n'aide pas un maître à décider et c'est écarté à la réécriture. Ne garder que ce qui rassure le client sur ce qui arrive à SON chien pendant l'heure où il n'est pas là.
 
 ## Photo du binôme (2026-08-18)

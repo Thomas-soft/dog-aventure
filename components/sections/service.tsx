@@ -40,7 +40,11 @@ export function ServiceSection() {
               </span>
             </>
           }
-          sub="Pas de garderie, pas de meute : une promenade individuelle, adaptée au rythme de votre chien, de votre porte à votre porte."
+          /* « Pas de garderie, pas de meute : » ouvrait cette phrase jusqu'au
+             2026-10-08. Il a sauté le jour où la garde et la sortie en groupe
+             ont eu leur page : le site ne peut pas dénigrer d'un côté ce qu'il
+             vend de l'autre. L'argument tient sans lui. */
+          sub="Une promenade individuelle, adaptée au rythme de votre chien, de votre porte à votre porte."
         />
 
         {/* La balade en forêt, entre le titre et les tarifs (demande client du
