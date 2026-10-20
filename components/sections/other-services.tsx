@@ -14,7 +14,8 @@ import { asset, formatPrice } from "@/lib/utils";
  * Vignettes et non sections complètes : les balades restent l'offre de
  * l'accueil, et Martin a déjà demandé qu'on ne fasse « pas beaucoup défiler ».
  * Chaque carte ne porte que ce qui décide le clic — une phrase, un prix d'appel
- * — et renvoie vers sa page.
+ * — et renvoie vers sa page. La garde n'a plus de prix d'appel depuis le
+ * 2026-10-20 (prix sur demande) : sa carte affiche « Sur demande » à la place.
  *
  * Pas de fond ni de `py` en haut : la section suit `#service`, crème, dont le
  * `pb` fait déjà la respiration. Son propre `pb` est celui que `#contact`
@@ -23,7 +24,7 @@ import { asset, formatPrice } from "@/lib/utils";
  */
 export function OtherServices() {
   const { groupWalk, boarding } = site;
-  const cards: { card: OfferCard; href: string; from: number }[] = [
+  const cards: { card: OfferCard; href: string; from?: number }[] = [
     {
       card: groupWalk.card,
       href: groupWalk.slug,
@@ -32,11 +33,7 @@ export function OtherServices() {
         groupWalk.pricing.packs,
       ),
     },
-    {
-      card: boarding.card,
-      href: boarding.slug,
-      from: Math.min(...boarding.pricing.nights.map((n) => n.price)),
-    },
+    { card: boarding.card, href: boarding.slug },
   ];
 
   return (
@@ -85,10 +82,10 @@ export function OtherServices() {
                   <div className="mt-auto flex flex-wrap items-end justify-between gap-3 pt-2">
                     <p className="flex flex-col">
                       <span className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-smoke">
-                        Dès
+                        {from === undefined ? "Prix" : "Dès"}
                       </span>
-                      <span className="font-display text-3xl leading-none text-flame">
-                        {formatPrice(from)}
+                      <span className="font-display text-3xl uppercase leading-none text-flame">
+                        {from === undefined ? "Sur demande" : formatPrice(from)}
                       </span>
                       <span className="text-xs font-semibold uppercase tracking-wide text-smoke">
                         {card.priceUnit}

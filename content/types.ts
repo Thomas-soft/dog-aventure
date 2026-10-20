@@ -110,7 +110,8 @@ export interface OfferCard {
   name: string;
   tagline: string;
   desc: string;
-  /** « la sortie », « la nuit » — accolé au prix d'appel */
+  /** « la sortie », « selon le séjour » — accolé au prix d'appel, ou à
+   *  « Sur demande » */
   priceUnit: string;
   photo: Photo;
 }
@@ -123,7 +124,8 @@ export interface OfferHero {
   titleScript: string;
   lead: string;
   intro: string;
-  /** « la sortie de 2 h », « la nuit » — sous le prix d'appel */
+  /** « la sortie de 2 h », « selon la durée du séjour » — à côté du prix
+   *  d'appel, ou de « Prix sur demande » quand la page n'en affiche pas */
   priceUnit: string;
   photo: Photo;
 }
@@ -178,25 +180,22 @@ export interface Boarding {
   points: { icon: BoardingIcon; title: string; desc: string }[];
   signature: string;
   gallery: Photo[];
+  /** Prix sur demande depuis le 2026-10-20 : aucun montant n'est saisi */
   pricing: {
     title: string;
-    sub: string;
-    /** Prix par nuit selon la durée — le « dès » de l'en-tête en est le minimum */
-    nights: { label: string; price: number }[];
+    /** Sous « Prix sur demande » : de quoi il dépend, comment l'obtenir */
+    desc: string;
     note: string;
   };
   options: {
     title: string;
     items: {
       label: string;
-      price: number;
-      /** « Dès » devant le prix */
-      from?: boolean;
-      /** « /nuit » derrière le prix */
-      perNight?: boolean;
       /** Lien vers une autre page du site (ex : la page Dog Aventure) */
       href?: string;
     }[];
+    /** Sous la liste : les options suivent le prix du séjour */
+    note: string;
   };
   firstMeeting: FirstMeeting;
   closing: OfferClosing;

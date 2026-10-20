@@ -15,13 +15,16 @@ import { formatPrice } from "@/lib/utils";
  * depuis une annonce ou un lien partagé sache tout de suite où il est.
  *
  * La photo est l'élément LCP de la page : préchargée, jamais animée.
+ *
+ * Sans `fromPrice`, le prix d'appel devient « Prix sur demande » (la garde,
+ * depuis le 2026-10-20).
  */
 export function OfferHero({
   hero,
   fromPrice,
 }: {
   hero: OfferHeroContent;
-  fromPrice: number;
+  fromPrice?: number;
 }) {
   return (
     <section className="px-4 pb-16 pt-24 sm:px-6 md:pb-24 md:pt-36">
@@ -62,10 +65,12 @@ export function OfferHero({
             <div className="flex items-center gap-4 rounded-2xl border border-line bg-surface px-5 py-3 shadow-sm">
               <span className="flex flex-col items-start">
                 <span className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-smoke">
-                  Dès
+                  {fromPrice === undefined ? "Prix" : "Dès"}
                 </span>
-                <span className="font-display text-4xl leading-none text-flame sm:text-5xl">
-                  {formatPrice(fromPrice)}
+                <span className="font-display text-4xl uppercase leading-none text-flame sm:text-5xl">
+                  {fromPrice === undefined
+                    ? "Sur demande"
+                    : formatPrice(fromPrice)}
                 </span>
               </span>
               <span className="text-sm font-semibold leading-snug text-ink/80">

@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import type { ElementType } from "react";
 import Image from "next/image";
-import { ArrowRight, Camera, HeartHandshake, Moon, Users } from "lucide-react";
+import {
+  ArrowRight,
+  Camera,
+  HeartHandshake,
+  MessageCircle,
+  Moon,
+  Phone,
+  Users,
+} from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { StickyCallBar } from "@/components/layout/sticky-call-bar";
@@ -10,10 +18,11 @@ import { FirstMeeting } from "@/components/sections/first-meeting";
 import { ContactSection } from "@/components/sections/contact";
 import { SectionHeader } from "@/components/sections/section-header";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { Button } from "@/components/ui/button";
 import { RichText } from "@/components/ui/rich-text";
 import { site } from "@/content/site.config";
 import type { BoardingIcon } from "@/content/types";
-import { asset, cn, formatPrice } from "@/lib/utils";
+import { asset } from "@/lib/utils";
 
 /* Page « Garde avec nuitée » (2026-10-08). Le dossier `app/garde-chien` doit
    porter le même nom que `site.boarding.slug` : c'est ce dernier que lisent
@@ -53,15 +62,13 @@ export default function GardeChien() {
     firstMeeting,
     closing,
   } = boarding;
-  // Le « dès » de l'en-tête est le tarif le plus bas de la grille, jamais un
-  // chiffre recopié : il suivra tout seul le jour où la grille bouge.
-  const fromPrice = Math.min(...pricing.nights.map((n) => n.price));
 
   return (
     <>
       <Navbar />
       <main className="flex-1">
-        <OfferHero hero={hero} fromPrice={fromPrice} />
+        {/* Pas de `fromPrice` : prix sur demande depuis le 2026-10-20. */}
+        <OfferHero hero={hero} />
 
         {/* Même construction que `#confiance` sur l'accueil : bandeau
             `bg-surface`, cartes crème, phrase manuscrite, et le bandeau sombre
@@ -134,65 +141,58 @@ export default function GardeChien() {
             `py` de crème, les deux s'additionneraient en un trou de 200 px. */}
         <section id="tarifs" className="pt-24 md:pt-32">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <SectionHeader
-              overline="Les tarifs"
-              title={pricing.title}
-              sub={pricing.sub}
-            />
+            <SectionHeader overline="Les tarifs" title={pricing.title} />
 
             <div className="grid gap-6 lg:grid-cols-12">
+              {/* La carte qui portait la grille des nuits. « Prix sur demande »
+                  sans moyen de le demander serait un cul-de-sac : d'où l'appel
+                  et le SMS ici même, sans attendre le bandeau de fin. */}
               <Reveal className="lg:col-span-5">
-                <div className="h-full rounded-3xl border-2 border-flame bg-surface p-7 shadow-lg md:p-8">
-                  <h3 className="flex items-center gap-2.5 font-display text-2xl uppercase tracking-tight">
-                    <Moon className="size-5 text-flame" aria-hidden />
-                    Prix par nuit
-                  </h3>
-                  <table className="mt-5 w-full text-left">
-                    <caption className="sr-only">
-                      Prix de la garde par nuit selon la durée du séjour
-                    </caption>
-                    <thead>
-                      <tr className="text-xs font-bold uppercase tracking-wide text-smoke">
-                        <th scope="col" className="pb-2 font-bold">
-                          Durée du séjour
-                        </th>
-                        <th scope="col" className="pb-2 text-right font-bold">
-                          La nuit
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pricing.nights.map((night) => {
-                        const best = night.price === fromPrice;
-                        return (
-                          <tr key={night.label} className="border-t border-line">
-                            <th
-                              scope="row"
-                              className="py-3 text-sm font-semibold text-ink/85"
-                            >
-                              {night.label}
-                            </th>
-                            <td
-                              className={cn(
-                                "py-3 text-right font-display text-2xl",
-                                best ? "text-flame" : "text-ink",
-                              )}
-                            >
-                              {formatPrice(night.price)}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                  <p className="mt-4 text-sm leading-relaxed text-smoke">
+                {/* `my-auto` : sur grand écran, la rangée prend la hauteur des
+                    deux photos, bien plus que ce bloc — centré, le vide se
+                    partage au lieu de tomber d'un seul tenant sous les boutons. */}
+                <div className="flex h-full flex-col rounded-3xl border-2 border-flame bg-surface p-7 shadow-lg md:p-8">
+                  <div className="my-auto">
+                    <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-smoke">
+                      <Moon className="size-4 shrink-0 text-flame" aria-hidden />
+                      La nuitée
+                    </p>
+                    <h3 className="mt-3 font-display text-5xl uppercase leading-none tracking-tight text-balance text-flame md:text-6xl">
+                      Prix sur demande
+                    </h3>
+                    <p className="mt-5 leading-relaxed text-smoke md:text-lg">
+                      <RichText text={pricing.desc} />
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <Button
+                        size="lg"
+                        nativeButton={false}
+                        render={<a href={site.phoneHref} />}
+                        className="h-12 rounded-full px-6 text-base font-semibold"
+                      >
+                        <Phone data-icon="inline-start" />
+                        {site.phone}
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        nativeButton={false}
+                        render={<a href={site.smsHref} />}
+                        className="h-12 rounded-full border-ink bg-transparent px-6 text-base hover:border-flame hover:bg-flame hover:text-primary-foreground"
+                      >
+                        <MessageCircle data-icon="inline-start" />
+                        Par SMS
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="pt-6 text-sm leading-relaxed text-smoke">
                     <RichText text={pricing.note} />
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={0.08} className="lg:col-span-4">
-                <div className="h-full rounded-3xl border border-line bg-surface p-7 md:p-8">
+                <div className="flex h-full flex-col rounded-3xl border border-line bg-surface p-7 md:p-8">
                   <h3 className="font-display text-2xl uppercase tracking-tight">
                     {options.title}
                   </h3>
@@ -200,7 +200,7 @@ export default function GardeChien() {
                     {options.items.map((option) => (
                       <li
                         key={option.label}
-                        className="flex items-baseline justify-between gap-4 border-t border-line py-3 first:border-t-0 first:pt-0"
+                        className="border-t border-line py-3 first:border-t-0 first:pt-0"
                       >
                         {option.href ? (
                           <a
@@ -218,23 +218,12 @@ export default function GardeChien() {
                             {option.label}
                           </span>
                         )}
-                        <span className="shrink-0 text-right text-sm font-bold text-ink">
-                          {option.from && (
-                            <span className="font-semibold text-smoke">
-                              Dès{" "}
-                            </span>
-                          )}
-                          +{formatPrice(option.price)}
-                          {option.perNight && (
-                            <span className="font-semibold text-smoke">
-                              {" "}
-                              / nuit
-                            </span>
-                          )}
-                        </span>
                       </li>
                     ))}
                   </ul>
+                  <p className="mt-auto pt-4 text-sm leading-relaxed text-smoke">
+                    {options.note}
+                  </p>
                 </div>
               </Reveal>
 

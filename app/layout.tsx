@@ -56,12 +56,12 @@ export const metadata: Metadata = {
 
 /* Fourchette dérivée des offres. Elle était écrite en dur et a menti dès le
    premier changement de tarif — ne pas y revenir. Prix unitaires seulement
-   (une balade, une sortie, une nuit) : les carnets, prépayés, la feraient
-   grimper à 400 € sans rien dire du prix d'une prestation. */
+   (une balade, une sortie) : les carnets, prépayés, la feraient grimper à
+   400 € sans rien dire du prix d'une prestation. La garde, sur demande depuis
+   le 2026-10-20, n'y entre plus. */
 const prices = [
   ...site.services.map((s) => s.price),
   site.groupWalk.pricing.unitPrice,
-  ...site.boarding.pricing.nights.map((n) => n.price),
 ];
 
 /* Les carnets sont de vraies offres : sans eux, Google ne voit qu'un tarif
@@ -87,8 +87,8 @@ const packOffers = packUnit
   : [];
 
 /* Les deux formules qui ont leur page depuis le 2026-10-08. La garde est
-   déclarée au tarif le plus bas, rapporté à la nuit : c'est le « dès » affiché
-   sur la page, et un `Offer` ne porte qu'un prix. */
+   déclarée sans prix : il est sur demande depuis le 2026-10-20, et le JSON-LD
+   ne doit pas annoncer un tarif que la page n'affiche plus. */
 const { groupWalk, boarding } = site;
 const otherOffers = [
   {
@@ -126,12 +126,6 @@ const otherOffers = [
       "@type": "Service",
       name: boarding.card.name,
       serviceType: "Garde de chiens",
-    },
-    priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      price: Math.min(...boarding.pricing.nights.map((n) => n.price)).toFixed(2),
-      priceCurrency: "EUR",
-      unitText: "nuit",
     },
   },
 ];

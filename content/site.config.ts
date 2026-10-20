@@ -354,13 +354,13 @@ export const site: SiteConfig = {
     seo: {
       title: "Garde de chien en famille à Louvres | Dog Aventure",
       description:
-        "Garde de chien avec nuitée à Louvres (95) : chez nous, sans cage ni chenil, peu de chiens à la fois, photos et vidéos. De 24,90 € à 32,90 € la nuit.",
+        "Garde de chien avec nuitée à Louvres (95) : chez nous, sans cage ni chenil, peu de chiens à la fois, photos et vidéos. Prix sur demande.",
     },
     card: {
       name: "Garde avec nuitée",
       tagline: "Une garde comme à la maison",
       desc: "Pas de cage, pas de box, pas de chenil : votre chien partage notre quotidien, avec un nombre limité de pensionnaires et des nouvelles régulières.",
-      priceUnit: "la nuit",
+      priceUnit: "selon le séjour",
       photo: {
         src: "/images/chiot-maison.webp",
         alt: "Un chiot berger australien couché sur le carrelage d’une entrée, qui regarde l’objectif",
@@ -375,7 +375,7 @@ export const site: SiteConfig = {
       lead: "Parce que votre chien mérite de se sentir chez lui, même lorsque vous êtes absent.",
       intro:
         "Chez Dog Aventure, on a une vision différente de la garde canine : votre chien n’est pas simplement un animal qu’on héberge, **c’est un véritable membre de la famille qu’on accueille chez nous.**",
-      priceUnit: "la nuit",
+      priceUnit: "selon la durée du séjour",
       photo: {
         src: "/images/malinois-couverture.webp",
         alt: "Un jeune malinois assis sur sa couverture, qui croque la friandise qu’on lui tend",
@@ -429,37 +429,27 @@ export const site: SiteConfig = {
         height: 1200,
       },
     ],
+    /* Prix sur demande depuis le 2026-10-20, demande de Martin (« Enlève les
+       prix de la garde et écris plutôt prix sur demande ») : ni la grille des
+       nuits ni celle des options ne sont plus affichées, nulle part — page,
+       vignette de l'accueil, meta description, JSON-LD. Les deux grilles du
+       2026-10-08 sont dans le commit c6ca9c9 s'il faut les remettre. */
     pricing: {
       title: "Nos tarifs – Garde avec nuitée",
-      sub: "Le prix de la nuit baisse avec la durée du séjour.",
-      nights: [
-        { label: "1 nuit", price: 32.9 },
-        { label: "2 à 3 nuits", price: 31.9 },
-        { label: "4 à 6 nuits", price: 29.9 },
-        { label: "7 à 13 nuits", price: 27.9 },
-        { label: "14 à 29 nuits", price: 26.9 },
-        { label: "30 nuits et plus", price: 24.9 },
-      ],
+      desc: "Il dépend de la durée du séjour : donnez-nous simplement vos dates, et on vous l’indique.",
       note: "Les promenades quotidiennes classiques restent incluses dans le prix de la garde, sans supplément.",
     },
     options: {
       title: "Les options",
       items: [
-        {
-          label: "Dog Aventure forêt 2 h",
-          price: 19.9,
-          href: "/balade-foret",
-        },
-        { label: "Pack de 3 sorties forêt", price: 49.9, href: "/balade-foret" },
-        { label: "Récupération du chien à domicile", price: 14.9, from: true },
-        { label: "Récupération + retour à domicile", price: 24.9, from: true },
-        {
-          label: "Deuxième chien de la même famille",
-          price: 19.9,
-          perNight: true,
-        },
-        { label: "Supplément jour férié", price: 10, perNight: true },
+        { label: "Dog Aventure forêt 2 h", href: "/balade-foret" },
+        { label: "Pack de 3 sorties forêt", href: "/balade-foret" },
+        { label: "Récupération du chien à domicile" },
+        { label: "Récupération + retour à domicile" },
+        { label: "Deuxième chien de la même famille" },
+        { label: "Supplément jour férié" },
       ],
+      note: "Leur prix vous est donné avec celui du séjour.",
     },
     firstMeeting: {
       title: "Première rencontre offerte",
