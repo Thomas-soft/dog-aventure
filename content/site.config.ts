@@ -249,6 +249,13 @@ export const site: SiteConfig = {
         ],
         highlight:
           "Notre priorité est que chaque chien se sente à l’aise, en confiance et heureux au sein du groupe.",
+        // Photo du 2026-11-18 : deux gabarits différents qui marchent ensemble.
+        photo: {
+          src: "/images/duo-champ.webp",
+          alt: "La promeneuse de Dog Aventure penchée sur un chien fauve, un beagle qui flaire l’herbe à côté, dans un champ",
+          width: 1020,
+          height: 765,
+        },
       },
       {
         id: "domicile",
@@ -275,6 +282,13 @@ export const site: SiteConfig = {
           "On partage avec vous **des photos et des vidéos de ses Dog Aventures**, pour vous permettre de découvrir ses sorties, ses rencontres et ses meilleurs moments.",
           "De quoi profiter de votre journée en sachant que votre compagnon passe lui aussi un excellent moment !",
         ],
+        // Photo du 2026-11-18 : exactement le genre de photo envoyée aux maîtres.
+        photo: {
+          src: "/images/griffon-foret.webp",
+          alt: "La promeneuse de Dog Aventure, tout sourire, tenant contre elle un griffon tricolore dans une forêt d’automne",
+          width: 1170,
+          height: 1462,
+        },
       },
     ],
     firstMeeting: {
@@ -415,12 +429,16 @@ export const site: SiteConfig = {
     ],
     signature:
       "Chez Dog Aventure, votre chien ne vient pas simplement en pension. Il vient passer ses propres vacances, entouré d’attention et d’affection. ♡",
+    /* `duo-maison` (2026-11-18) a pris la place de `chiot-maison`, qui reste
+       la vignette « Garde » de l'accueil. Deux photos et pas trois : sur grand
+       écran la galerie est une colonne à la hauteur des cartes de tarifs, une
+       troisième la ferait déborder. */
     gallery: [
       {
-        src: "/images/chiot-maison.webp",
-        alt: "Un chiot berger australien couché sur le carrelage d’une entrée",
-        width: 1200,
-        height: 1200,
+        src: "/images/duo-maison.webp",
+        alt: "Un beagle et un chien fauve assis sur le carrelage noir et blanc de la maison, qui fixent la balle qu’on leur tend",
+        width: 900,
+        height: 900,
       },
       {
         src: "/images/berger-australien.webp",
@@ -591,17 +609,26 @@ export const site: SiteConfig = {
     note: "Et bien d’autres encore…",
   },
 
-  /* Les SIX avis réels de la fiche Google « DogAventure », relevés le
-     2026-10-08 (5,0 ★, 6 avis — Yannick 95 et Océane Lefebvre sont arrivés
-     depuis le relevé du 2026-08-18). Celui d'audrey carlier n'est plus
-     affiché par Maps sans connexion (« affichage limité », 5 avis sur 6) : il
-     est repris du relevé précédent, et c'est bien le sixième du compte.
+  /* HUIT des DIX avis réels de la fiche Google « DogAventure » (5,0 ★).
+
+     Relevé du 2026-11-18 : la fiche est passée de 6 à 10 avis. Sans
+     connexion, Maps est en « affichage limité » et n'en montre que 5 (Dramard
+     Marie, Thomas Tofil, audrey carlier, Amine Essabid, Lestage Juliette) ;
+     « Voir plus d'avis (5) » et le tri exigent un compte. Les deux nouveaux
+     visibles — Dramard Marie et Amine Essabid — sont ajoutés en tête ; les
+     six autres viennent du relevé du 2026-10-08. **Deux avis de la fiche
+     manquent donc ici**, à reprendre depuis une session Google connectée.
+     Tous les dix sont à 5 ★ (la moyenne affichée par Google est 5,0) : il ne
+     s'agit pas d'un tri, seulement de ce qui est lisible sans compte.
+
      Recopiés **mot pour mot**, fautes de frappe et ponctuation comprises :
      corriger l'orthographe d'un client, c'est déjà réécrire son avis.
 
-     Ordre = celui de la fiche au moment du relevé. Il place les avis de tiers
-     avant celui de Thomas Tofil, qui est en conflit d'intérêts (cf. CLAUDE.md)
-     — le garder en tête de section n'aurait aucune raison d'être.
+     Ordre : les nouveaux d'abord, du plus récent au plus ancien, puis ceux
+     du relevé précédent dans leur ordre d'alors. Maps classe aujourd'hui
+     l'avis de Thomas Tofil en 2ᵉ position ; il reste en avant-dernière ici,
+     où il était — il est en conflit d'intérêts (cf. CLAUDE.md), le remonter
+     serait un choix, pas une mise à jour.
 
      ⚠️ Ce ne sont PAS des textes à retoucher, ni à compléter. Les quatre avis
      qui vivaient ici jusqu'à ce jour étaient inventés — noms, villes, chiens —
@@ -618,6 +645,38 @@ export const site: SiteConfig = {
      Ni `town` ni `dog` : Google ne les fournit pas, et les inventer
      fabriquerait du détail crédible autour d'un avis réel. */
   reviews: [
+    {
+      /* Les deux chiens de sa garde d'une journée sont sur les photos
+         `duo-maison` et `duo-champ`. Espaces simples (pas insécables) devant
+         « : » et « ! » : c'est ce qu'elle a tapé. */
+      author: "Dramard Marie",
+      // « -ba12- » retiré : pastille « Local Guide », cf. nicolas
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a-/ALV-UjVnt861cf0F7TdCV0JQgB-yKT14JPmLURPeS_mBHBrYrgNGmtx_=w72-h72-p-rp-mo-br100",
+      localGuide: true,
+      rating: 5,
+      text: "Je recommande Martin pour la garde de toutous même stressés, nous lui avons laissé nos deux chiens pendant la journée et ils ont été bien chouchoutés : promenades, câlins et photos pour les maîtres ! Nous sommes ravis !",
+      source: {
+        visitDate: "novembre 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
+    {
+      /* « .l’equipe », « des besoin », « de très bonne mains », « animaux! »
+         et le « … » final (U+2026, présent dans le texte et non une
+         troncature de Maps : il n'y a pas de bouton « Plus ») : tel quel.
+         Le cœur est écrit en échappement parce qu'il porte un sélecteur de
+         variante (U+FE0F) invisible, qu'une réécriture de la ligne perdrait. */
+      author: "Amine Essabid",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a-/ALV-UjVv-OAfPUE-oJfvFRPNbAuaMf8I52o0gyf0teNL9wy6ObsHvxc=w72-h72-p-rp-mo-br100",
+      rating: 5,
+      text: "Ma femme et moi sommes ravis de faire appel à eux pour mon chien 🐶 .l’equipe est professionnelle, attentionnée à l’écoute des besoin de nos compagnons à quatre pattes. Mon chien est entré de très bonne mains et partons l’esprit tranquille.\nUn grand merci pour votre amour des animaux! Nous recommandons les yeux fermés ! 🐾❤️ …",
+      source: {
+        visitDate: "octobre 2026",
+        reviewUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLWa88eeiaygRZCrsdYgnldQ",
+      },
+    },
     {
       author: "Lestage Juliette",
       avatarUrl:
@@ -730,10 +789,16 @@ export const site: SiteConfig = {
         mobilePosition: "50% 10%",
       },
       {
-        // L'ancienne photo d'ouverture, gardée en troisième position.
-        src: "/images/hero.webp",
-        alt: "Le promeneur de Dog Aventure accroupi aux côtés d’un grand chien noir, pendant une balade",
-        mobilePosition: "50% 13%",
+        /* Photo de Martin du 2026-11-18. Elle remplace l'ancienne photo
+           d'ouverture (`hero.webp`, le promeneur accroupi près d'un chien
+           noir), qui répétait la pose de `pause-chemin` deux photos plus tôt
+           dans le même défilement. L'original reste dans
+           `scripts/photos/promeneur-et-chien.jpg`.
+           Plan en pied : en carré (mobile), on centre le corps entier plutôt
+           que le haut du cadre, sans quoi les pieds et le chien sautent. */
+        src: "/images/pouce-foret.webp",
+        alt: "Le promeneur de Dog Aventure en forêt, en automne, pouce levé, un épagneul noir et blanc en laisse",
+        mobilePosition: "50% 55%",
       },
     ],
     /* Photo du binôme (2026-08-18), section « Il est entre de bonnes mains ».

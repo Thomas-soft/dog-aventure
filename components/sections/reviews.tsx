@@ -262,7 +262,14 @@ export function ReviewsSection() {
             avec un vide à droite, et quatre y laisseraient une carte seule sur
             la dernière ligne — d'où les deux colonnes à 4, qui donnent un carré
             plein. Les classes sont écrites en entier : Tailwind ne voit pas les
-            noms assemblés à l'exécution et ne générerait pas le CSS. */}
+            noms assemblés à l'exécution et ne générerait pas le CSS.
+
+            À partir de 5, trois cartes par ligne sur grand écran — posées sur
+            une grille de SIX colonnes, chaque carte en couvrant deux, pour
+            pouvoir CENTRER une dernière ligne incomplète (2026-11-18, passage
+            à 8 avis) : à 8, les deux dernières cartes se calaient à gauche
+            avec un trou à droite, sous un en-tête centré. Le décalage ne porte
+            que sur `lg` : en deux colonnes, un nombre pair remplit tout. */}
         <Stagger
           stagger={0.1}
           className={cn(
@@ -271,14 +278,29 @@ export function ReviewsSection() {
             reviews.length === 2 && "max-w-3xl sm:grid-cols-2",
             reviews.length === 3 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-3",
             reviews.length === 4 && "max-w-4xl sm:grid-cols-2",
-            reviews.length >= 5 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-3",
+            reviews.length >= 5 && "max-w-5xl sm:grid-cols-2 lg:grid-cols-6",
           )}
         >
-          {reviews.map((review, i) => (
-            <StaggerItem key={`${review.author}-${i}`} y={20} className="h-full">
-              <ReviewCard review={review} />
-            </StaggerItem>
-          ))}
+          {reviews.map((review, i) => {
+            const n = reviews.length;
+            const lastRow = n % 3;
+            return (
+              <StaggerItem
+                key={`${review.author}-${i}`}
+                y={20}
+                className={cn(
+                  "h-full",
+                  n >= 5 && "lg:col-span-2",
+                  // Dernière ligne à deux cartes : la première part de la 2e colonne.
+                  n >= 5 && lastRow === 2 && i === n - 2 && "lg:col-start-2",
+                  // Dernière ligne à une carte : elle part de la 3e colonne.
+                  n >= 5 && lastRow === 1 && i === n - 1 && "lg:col-start-3",
+                )}
+              >
+                <ReviewCard review={review} />
+              </StaggerItem>
+            );
+          })}
         </Stagger>
 
         {site.googleProfileUrl && (

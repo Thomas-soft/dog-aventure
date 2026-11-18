@@ -94,12 +94,31 @@ Demande client sur WhatsApp, textes et grilles fournis par lui : **`/garde-chien
 
 ### Hero en fondu (2026-10-08)
 
-« Alterne les images, même la première — je pense que c'est pas la meilleure, fais comme tu le penses. » Le hero passe à **trois photos** (`images.hero` puis `images.heroSlides`) : `pause-chemin` (nouvelle ouverture), `selfie-chien`, puis l'ancienne `hero`.
+« Alterne les images, même la première — je pense que c'est pas la meilleure, fais comme tu le penses. » Le hero passe à **trois photos** (`images.hero` puis `images.heroSlides`) : `pause-chemin` (nouvelle ouverture), `selfie-chien`, puis l'ancienne `hero` — **remplacée le 2026-11-18 par `pouce-foret`** (cf. « Photos et avis du 2026-11-18 »).
 
 - **La règle LCP tient toujours** : la première photo est préchargée, rendue dans le HTML et **jamais animée**. Les suivantes ne sont montées qu'après 2,5 s et se posent PAR-DESSUS en fondu ; revenir à la première = les rendre transparentes. Vérifié dans le HTML de production : un seul `preload` d'image, et `selfie-chien` n'y figure pas.
 - Fondu toutes les 6 s. Pastilles cliquables en bas à droite ; un clic **arrête** le défilement (le moyen de pause qu'exige WCAG 2.2.2). Avec `prefers-reduced-motion`, rien ne défile seul.
 - Le cadre du hero est plafonné à 600 px de haut, donc **plus large que 4/5** sur grand écran : un cadrage lâche y laisse la moitié basse au sol. C'est ce qui a fait resserrer `pause-chemin` dès le premier essai à l'écran.
 - `scripts/prepare-photos.js` accepte désormais des noms en argument (`node scripts/prepare-photos.js chiot-rue`) pour ne régénérer qu'une photo, et un `blur` par photo — `pause-chemin` est à 1,0 pour tenir ~65 Ko à 700 px malgré la haie.
+
+## Photos et avis du 2026-11-18
+
+Demande de Martin sur WhatsApp (« Met c'est photos sur le site et actualise les avis stp », 4 photos d'automne), relayée par Thomas, qui a demandé des captures avant/après et le déploiement. Captures dans `rapports/captures-2026-11-18/` (non versionné).
+
+- **Où sont les quatre photos** (originaux dans `scripts/photos/`, cadrages commentés dans `prepare-photos.js`) :
+  - `pouce-foret` (Martin pouce levé en forêt, un épagneul) → **3ᵉ photo du hero**, à la place de l'ancienne `hero`.
+  - `duo-champ` (la promeneuse et deux chiens dans un champ) → bloc « Des groupes adaptés » de `/balade-foret`, qui n'avait pas de photo.
+  - `griffon-foret` (la promeneuse et un griffon) → bloc « Suivez ses aventures » de `/balade-foret`, idem.
+  - `duo-maison` (les deux mêmes chiens sur le carrelage de la maison) → galerie de `/garde-chien`, à la place de `chiot-maison`.
+- **Une seule suppression, et c'est un doublon** : l'ancienne `hero` (Martin accroupi près d'un chien noir) répétait la pose de `pause-chemin` dans le même défilement. Ses `hero*.webp` ont quitté `public/images/` ; l'original et son cadrage sont gardés. `chiot-maison` n'est PAS supprimée : elle reste la vignette « Garde » de l'accueil. La galerie Garde reste à **deux** photos : sur grand écran c'est une colonne calée sur la hauteur des cartes de tarifs, une troisième déborderait.
+- Écart toléré relevé, pas corrigé : `balade-foret` (#service) et `balade-chemin` (vignette Dog Aventure 2 h) sont toutes deux un promeneur de dos avec un chien devant, mais à ~2 000 px d'écart et dans deux décors — pas un doublon visible.
+- `duo-maison` et `duo-champ` montrent **les deux chiens de Dramard Marie**, l'autrice d'un des nouveaux avis (photos jointes à son avis Google). Leurs prénoms ne sont pas connus : ils ne peuvent donc pas entrer dans `#chiens` (la galerie exige un prénom — cf. « La meute »). À demander à Martin, pas à inventer.
+- `pouce-foret` a un `blur` de 1,2 : feuilles mortes + troncs, 196 Ko → 106 Ko de référence, sous l'ancienne `hero` (130).
+
+**Avis : 8 affichés pour 10 sur la fiche.** Sans connexion Google, Maps n'en montre que 5 et « Voir plus d'avis (5) » comme le tri exigent un compte ; la recherche Google n'en montre que 3. Les deux nouveaux lisibles (Dramard Marie, novembre ; Amine Essabid, octobre) sont ajoutés en tête, les six autres viennent du relevé du 2026-10-08. **Deux avis manquent**, tous deux à 5 ★ (moyenne Google 5,0) : à reprendre depuis une session connectée. Le paragraphe des mentions légales dit désormais « novembre 2026 » et précise que la fiche peut porter des avis « pas encore repris » — sans ça, il aurait affirmé un relevé complet qui ne l'est pas.
+- Le « … » final de l'avis d'Amine Essabid est un vrai caractère (U+2026) de son texte, pas une troncature de Maps (aucun bouton « Plus »). Recopié tel quel. Le cœur ❤️ est écrit `\u2764\uFE0F` dans la config pour ne pas perdre le sélecteur de variante invisible.
+- Contrôle fait par script (`tsx` sur `site.config.ts` contre le JSON extrait de Maps) : les 5 textes visibles sont identiques au caractère près.
+- **Grille des avis à 5+ : six colonnes sur `lg`, chaque carte en couvre deux**, pour centrer une dernière ligne incomplète (8 = 3 + 3 + 2 centrées). Avant, les deux dernières cartes se calaient à gauche avec un trou à droite.
 
 ## Ordre des sections de l'accueil (2026-08-16)
 
@@ -226,7 +245,7 @@ Nouvelle section `#chiens` (`components/sections/dogs.tsx`), **entre `#confiance
 
 ## Avis (2026-08-16)
 
-La section `#avis` affiche les **vrais avis de la fiche Google**, recopiés dans `site.reviews`. **Six au 2026-10-08** (5,0 ★ — Yannick 95 et Océane Lefebvre ajoutés), contre quatre au 2026-08-18 et deux au 2026-08-16.
+La section `#avis` affiche les **vrais avis de la fiche Google**, recopiés dans `site.reviews`. **Huit au 2026-11-18, pour dix sur la fiche** (Dramard Marie et Amine Essabid ajoutés ; deux avis illisibles sans compte Google — cf. « Photos et avis du 2026-11-18 »), contre six au 2026-10-08, quatre au 2026-08-18 et deux au 2026-08-16.
 
 - **Piège du relevé du 2026-10-08** : sans connexion, Maps est en « affichage limité » et n'affiche que 5 avis sur 6 — le bouton « Voir plus d'avis (1) » ne charge rien. Le manquant est celui d'audrey carlier, repris du relevé précédent. Contrôle fait : les cinq visibles sont identiques au caractère près à `site.reviews` (comparaison par script, pas à l'œil).
 
@@ -299,7 +318,7 @@ La version qui lisait la fiche **en direct** a été écrite, testée et déploy
 - **Le domaine a changé le 2026-08-12** : `dog-aventure.com` → `doogaventure.fr`, pour la raison exposée dans « Réputation du domaine » ci-dessous. Oui, il y a **deux « o »** : `dogaventure.fr` et `dog-aventure.fr` étaient déjà pris (Hostinger, 2026-07-06) et `dogaventure.com` aussi (GoDaddy). Le logo, lui, épelle « DOG AVENTURE » en onze lettres et n'est pas modifiable — la marque et le domaine ne s'écrivent donc pas pareil, c'est assumé, ne pas « corriger » l'un vers l'autre.
 - **`dog-aventure.com` n'est plus servi depuis le 2026-08-28.** Il a été retiré de la règle `Host` du routeur Traefik (`docker-compose.yml`), le `.fr` étant confirmé en ligne depuis plus de deux semaines — c'était le dernier point ouvert de la bascule du 2026-08-12. Vérifié le jour même : `https://doogaventure.fr/` → **200**, `https://dog-aventure.com/` → **404** (et `http://` → 301 vers le même 404). Son certificat Let's Encrypt ne sera plus renouvelé.
   - **Ne jamais le rediriger en 301 vers `doogaventure.fr`** — ni aujourd'hui, ni s'il fallait le remettre un jour. Une redirection transmet les signaux de réputation, et c'est exactement ce qu'on fuit (cf. « Réputation du domaine » ci-dessous). **Le 404 est le comportement voulu, pas un oubli à corriger.**
-  - **⚠️ Conséquence immédiate : la fiche Google Business Profile envoie désormais sur une page morte.** Son bouton « Site Web » pointe toujours sur `http://dog-aventure.com/`. C'était un retard à rattraper, c'est devenu urgent — cf. « À faire avant mise en ligne ».
+  - ~~Conséquence immédiate : la fiche Google Business Profile envoyait sur une page morte~~ — **réglé** : constaté le 2026-11-18, son bouton « Site Web » pointe sur `http://doogaventure.fr/`.
   - Le groupe de capture de la redirection `www` → apex a été **gardé** bien qu'il ne reste qu'un seul domaine : le `$${1}` du `replacement` s'appuie dessus.
 - **Deux certificats, aucun chez IONOS** : Cloudflare Universal SSL côté visiteur, Let's Encrypt via Traefik côté origine. IONOS n'est plus que registrar — son alerte « pas de SSL » ne concerne que son propre hébergement, vide. Ne rien y acheter.
 - Serveurs de noms délégués à Cloudflare (`dara` + `mario.ns.cloudflare.com` — Cloudflare réutilise la même paire pour toutes les zones d'un même compte, celle de voice-doc.com était donc la bonne).
@@ -424,7 +443,7 @@ Photo fournie par le client : deux personnes en t-shirt « Promeneur de chiens �
 - Le conteneur ICO est écrit à la main (~25 lignes) plutôt qu'avec une dépendance : en-tête de 6 octets, une entrée de 16 par taille, puis les PNG bout à bout — le format accepte du PNG tel quel depuis Vista, pas de BMP à produire. Contrôle après génération : `file app/favicon.ico` doit annoncer « MS Windows icon resource - 4 icons », et l'offset + la longueur de la dernière entrée doivent tomber pile sur la taille du fichier.
 - **Next émet les deux balises en production, mais pas en export statique** : le build normal sort `<link rel="icon" … type="image/x-icon" sizes="64x64">` **et** celle du SVG ; avec `GITHUB_PAGES=true`, `out/favicon.ico` est bien écrit mais seule la balise du SVG figure dans le HTML. Sans conséquence — la préview n'a pas à être indexée — mais ne pas s'en servir pour vérifier le comportement réel.
 - Le `href` porte un hash (`/favicon.ico?favicon.<hash>.ico`). **Vérifier le chemin nu en plus** : `/favicon.ico` sans query doit répondre 200 en `image/x-icon`, c'est celui-là que sondent les robots.
-- Reste côté Google, hors code : la fiche Business Profile pointe encore sur `http://dog-aventure.com/`, **qui répond 404 depuis le retrait du domaine le 2026-08-28** (cf. « À faire avant mise en ligne »).
+- La fiche Business Profile pointe sur `http://doogaventure.fr/` depuis (au plus tard) le 2026-11-18 — même nom d'hôte que le site, donc même favicon.
 
 ### Globe gris sur l'ANNONCE, logo sur le résultat naturel (2026-08-18)
 
@@ -454,7 +473,7 @@ Symptôme signalé par Thomas : le logo apparaît sur « doog aventure » mais p
 - [x] ~~Brancher Google Search Console~~ — **la propriété existe**, validée par DNS : `doogaventure.fr` porte un TXT `google-site-verification=Dh5gFWzlwksnAmY8hZdwI2xYgZyVBjtx73HeJIFDjyk` (constaté le 2026-08-13). Validation par DNS = propriété de type « Domaine », qui couvre le `www` et tous les sous-domaines. L'ancien domaine a la sienne, différente.
   - **Sitemap soumis le 2026-08-14** : `https://doogaventure.fr/sitemap.xml`, état « Opération effectuée », **2 pages découvertes** (accueil + mentions légales — le compte attendu). Il ne l'avait jamais été : la validation de propriété et la soumission du sitemap sont deux étapes distinctes, et seule la première avait eu lieu. Enjeu faible pour autant — `robots.txt` le déclarait déjà et Google avait indexé le site en 24 h — mais on a désormais le rapport de couverture.
   - **Indexation demandée le 2026-08-14** sur l'accueil (Inspection de l'URL), pour hâter le passage de `Googlebot-Image` sur le favicon. Google prévient que **redemander ne change ni la priorité ni la position dans la file** : inutile de recliquer.
-- [ ] **⚠️ URGENT — corriger le bouton « Site Web » de la fiche Google Business Profile.** Il pointe sur `http://dog-aventure.com/`, qui répond **404 depuis le retrait du domaine le 2026-08-28** : chaque visiteur qui clique depuis la fiche Google tombe sur une page morte, et cette fiche apparaît dans le pack local sur « promeneur de chien louvres 95 ». Y mettre **`https://doogaventure.fr/`**, en `https` et **sans `www`** : c'est exactement le piège qui a coûté le favicon de l'annonce Ads (cf. « Globe gris sur l'ANNONCE »), Google stockant le favicon par nom d'hôte. À faire **par le client**, c'est sa fiche — nous n'y avons pas la main.
+- [x] ~~**URGENT — corriger le bouton « Site Web » de la fiche Google Business Profile.**~~ **Fait côté client — constaté le 2026-11-18** : le bouton mène à `http://doogaventure.fr/` (en `http`, ce qui ajoute une redirection 301 vers `https` mais garde le bon nom d'hôte, sans `www`). Rien à faire de plus. Historique : il pointait sur `http://dog-aventure.com/`, qui répond **404 depuis le retrait du domaine le 2026-08-28** : chaque visiteur qui clique depuis la fiche Google tombe sur une page morte, et cette fiche apparaît dans le pack local sur « promeneur de chien louvres 95 ». Y mettre **`https://doogaventure.fr/`**, en `https` et **sans `www`** : c'est exactement le piège qui a coûté le favicon de l'annonce Ads (cf. « Globe gris sur l'ANNONCE »), Google stockant le favicon par nom d'hôte. À faire **par le client**, c'est sa fiche — nous n'y avons pas la main.
 - [ ] **Durcir le DNS contre l'usurpation d'e-mail.** `doogaventure.fr` n'a ni MX, ni SPF, ni DMARC (vérifié le 2026-08-13) — c'est cohérent, aucun mail ne part du domaine (Martin utilise `Dogflow@outlook.fr`), mais un domaine sans SPF/DMARC peut être usurpé pour envoyer du phishing en son nom. Trois enregistrements gratuits dans Cloudflare le ferment :
   - `TXT @` → `v=spf1 -all` (aucun serveur autorisé à envoyer)
   - `TXT _dmarc` → `v=DMARC1; p=reject;`

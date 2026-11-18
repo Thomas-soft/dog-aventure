@@ -134,8 +134,9 @@ export default function MentionsLegales() {
             <p>
               Il s&rsquo;agit d&rsquo;une reprise manuelle, mise à jour au{" "}
               <strong className="font-semibold text-ink">mois
-              d&rsquo;octobre 2026</strong>&nbsp;: la fiche Google peut donc comporter des avis
-              plus récents que ceux affichés ici. Elle fait foi.
+              de novembre 2026</strong>&nbsp;: la fiche Google peut donc comporter des avis
+              plus récents que ceux affichés ici, ou qui n&rsquo;y sont pas
+              encore repris. Elle fait foi.
             </p>
             <p>
               Ces avis <strong className="font-semibold text-ink">ne font

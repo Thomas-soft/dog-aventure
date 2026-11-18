@@ -36,14 +36,15 @@ const denoise = (p, sigma = 0.7) =>
    pour ne pas sur-échantillonner une source de 878 px, et pour que le
    médaillon, jamais affiché au-delà de 168 px CSS, reste léger. */
 const PHOTOS = [
-  {
-    name: "hero",
-    src: "promeneur-et-chien.jpg",
-    // 4/5 — le sujet occupe y 450→1390, on lui laisse ~78 px de marge en haut
-    crop: { left: 0, top: 372, width: 878, height: 1097 },
-    reference: [878, 62],
-    variants: { 640: [640, 58], 828: [700, 52], 1080: [878, 52], 1200: [878, 52] },
-  },
+  /* scripts/photos/promeneur-et-chien.jpg (le promeneur accroupi près d'un
+     grand chien noir) a été la photo d'ouverture du site, puis la 3ᵉ du
+     défilement du hero. Retirée le 2026-11-18 au profit de `pouce-foret` :
+     même pose que `pause-chemin`, dans le même défilement. Ses fichiers
+     `hero*.webp` ont quitté public/images. Pour la reprendre, le cadrage qui
+     marchait — 4/5, le sujet occupe y 450→1390 :
+       name: "hero", crop { left: 0, top: 372, width: 878, height: 1097 },
+       reference [878, 62],
+       variants { 640: [640, 58], 828: [700, 52], 1080: [878, 52], 1200: [878, 52] } */
   {
     /* Le binôme en t-shirt « Promeneur de chiens », posé dans la section
        « Il est entre de bonnes mains » (2026-08-18). C'est la photo qui montre
@@ -253,6 +254,67 @@ const PHOTOS = [
     crop: { left: 0, top: 420, width: 878, height: 878 },
     reference: [878, 62],
     variants: { 640: [640, 58], 828: [828, 55], 1080: [878, 55], 1200: [878, 55] },
+  },
+  /* ─── Les photos du 2026-11-18 ──────────────────────────────────────────
+     Quatre photos d'automne envoyées par Martin sur WhatsApp (« Met c'est
+     photos sur le site »). `duo-maison` et `duo-champ` montrent les deux
+     chiens de Dramard Marie — ceux de son avis Google du même mois, gardés
+     une journée. */
+  {
+    /* Martin debout en forêt, pouce levé, un épagneul noir et blanc en laisse.
+       Troisième photo du hero, à la place de `hero` : celle-ci montrait la
+       même pose que `pause-chemin` (le promeneur accroupi près d'un chien),
+       deux photos sur trois du même défilement se répétaient.
+
+       Plan en pied : le sujet tient de la tête (y≈467) aux semelles (y≈1307)
+       et le chien de x≈360 à 520. Le cadre du hero sur ordinateur (≈ 0,9) mange
+       ~65 px en haut et en bas d'un 4/5 : il reste ~100 px au-dessus du crâne
+       et ~50 sous les pieds. Ne pas resserrer davantage. */
+    name: "pouce-foret",
+    src: "pouce-foret.jpg",
+    crop: { left: 200, top: 300, width: 900, height: 1125 },
+    /* Tapis de feuilles mortes + rideau de troncs : le pire fond pour le WebP,
+       pire encore que la haie de `pause-chemin` (196 Ko de référence et 106 à
+       640 px avec le flou par défaut). Un flou de 1,2 la ramène à 106 et 53 Ko,
+       sous l'ancienne `hero` qu'elle remplace (130 et 70) ; le visage reste
+       net — vérifié sur un agrandissement. */
+    blur: 1.2,
+    reference: [900, 55],
+    variants: { 640: [640, 52], 828: [828, 50], 1080: [900, 50], 1200: [900, 50] },
+  },
+  {
+    /* La promeneuse et un griffon tricolore, en forêt — le genre de photo
+       qu'on envoie aux maîtres : bloc « Suivez ses aventures » de la page
+       Dog Aventure 2 h. En 4/5, affichée à 448 px CSS au plus large. */
+    name: "griffon-foret",
+    src: "griffon-foret.jpg",
+    crop: { left: 0, top: 98, width: 1170, height: 1462 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
+  {
+    /* La promeneuse penchée sur les deux chiens de Dramard Marie (un beagle et
+       un croisé fauve), dans un champ : bloc « Des groupes adaptés » de la
+       page Dog Aventure 2 h — deux gabarits différents qui marchent ensemble.
+       4/3 resserré : la source est un portrait où les sujets n'occupent que
+       le quart du cadre, le reste est du ciel et des pylônes. */
+    name: "duo-champ",
+    src: "duo-champ.jpg",
+    crop: { left: 60, top: 380, width: 1020, height: 765 },
+    reference: [1020, 62],
+    variants: { 640: [640, 58], 828: [828, 55], 1080: [900, 55], 1200: [900, 55] },
+  },
+  {
+    /* Les deux mêmes chiens sur le carrelage noir et blanc de la maison, la
+       balle au premier plan : galerie de la page Garde, à côté des tarifs.
+       Carré comme ses voisines de galerie ; la source est en 9/16, on garde
+       la tête du croisé (oreilles à y≈253) et on sacrifie les pattes du beagle.
+       Affichée à 270 px CSS au plus large : plafonnée à 640 px. */
+    name: "duo-maison",
+    src: "duo-maison.jpg",
+    crop: { left: 0, top: 200, width: 900, height: 900 },
+    reference: [900, 62],
+    variants: { 640: [640, 58], 828: [640, 58], 1080: [640, 58], 1200: [640, 58] },
   },
 ];
 
